@@ -1,0 +1,126 @@
+#
+# Speech PROcessing tools - CHANGES
+#
+# $Author: ggravier $
+# $Date: 2003/04/09 16:11:49 $
+# $Revision: 1.2 $
+#
+
+This document describes the changes in SPro between successive
+releases.
+
+Changes from Spro 3.3.1 to 4.0
+==============================
+
+SPro 4.0 is *not* compatible with previous releases and exhibits major
+changes in its structure. The main difference is the introduction of
+feature streams (much alike the signal streams used for input). This
+new feature I/O mechanisms enables the processing of continuous (or
+very large) audio streams.
+
+As introducing feature streams required a *major* redesign of the
+source code, all the library files have been profondly modified and,
+to avoid confusions, old spro_*.c names have been changed. Aslo, the
+SPRO FEATURE FILE FORMAT HAS CHANGED to accomodate for streams
+(e.g. number of frames unknown)...
+
+It is impossible to describe all the changes bteween releases 3.3.1
+and 4.0 but here are the main ones:
+
+  - feature I/O via feature streams
+  - redefined SPro feature file format (included the addition of an
+    optional variable length ASCII header)
+  - added LSF computation in slpc
+  - added normalization qualifier (R)
+  - delta, delta-delta, CMS can be computed directly in the main tools
+
+Changes from SPro 3.3 to 3.3.1
+==============================
+
+Changed signal input mechanism to enable streaming so that we can read
+big files without trusting the memory. Release 3.3.1 is fully
+compatible with release 3.3 (except for the library signal I/O
+functions). This release also introduces the concept of feature
+buffers as a preparation to the migration to releases 4.x. Many
+functionnalities added to scopy (scaling, bin extraction, linear
+transform, etc.).
+
+Changes from SPro 3.2 to 3.3
+============================
+
+SPro 3.3 is *not* compatible with previous releases. This is mainly
+due to the introduction of a new, GPL-distributable FFT algorithm. The
+current release is back to the stand-alone philosophy and no more
+external libraries are needed. Configuration and installation now made
+easy through automake and autoconf.
+
+The list of changes is:
+
+  - replaced numerical recipes FFT algorithm with a distributable one
+
+  - implemented kernel based transforms for FFT and DCT 
+
+  - removed libgg dependencies (using GNU getopt for option parsing)
+
+  - added autoconf/automake stuff
+
+  - added windowed CMS
+
+  - corrected major bug in band-limited filter-bank analysis
+
+  - changed some option switches in slpc to have uniform letters
+    accross all tools
+
+Changes from SPro 3.1 to 3.2
+============================
+
+SPro 3.2 is fully compatible with version 3.1 and only minor
+corrections and add-ons were made. Ascending compatibility is only
+true for the runtimes and for the algorithms but two function
+prototypes were changed in spro.h.
+
+The list of modifications is:
+
+  - long option names were added to all runtimes (now require version
+    2.2 of libgg)
+
+  - tracing has been simplified,
+
+  - energy scale factor option added to related tools,
+
+  - frequency range limiting in FFT based spectral analysis
+
+  - bug in the computation of the $\Delta\Delta$ energy has been
+
+  - corrected ($\Delta\Delta$E was previously computed as $\Delta$E).
+
+Changes from SPro 3.0 to 3.1
+============================
+
+The organization changed from SPro 3.0. The former spro_util.* codes
+are now part of the libgg 2.1 library and spro~3.1 requires that
+library.  This library also provides an error reporting function as
+well as some standard error codes.
+
+The FFT algorithm was changed to make it faster. It was previously
+based on Nielsen's implementation of the algorithm. The new version
+was adapted from the real FFT function described in the Numerical
+Recipes in C (http://cfatab.harvard.edu/nr/bookc.html). In SPro~3.0,
+the FFT was done on 1024 points and it is now done on 512 points.
+Current version of sfbank is about 5~times faster than the previous
+one.
+
+The computation of the $\Delta$ coefficients slightly changed at the
+boundary (the boundary frames are now repeated instead of being
+avoided).
+
+Known bugs have been corrected, principally concerning the cepstral
+mean subtraction and error reporting is now better. Note that for a
+better error reporting, many function prototypes changed so that some
+tools developed with the previous version may be adapted before they
+are compatible with SPro 3.1. The order of the enumeration for
+datakind_t also changed so that when using slist with old data file,
+the data kind printed on screen may not be the correct one.
+
+The SPHERE compatibility is also a new feature of SPro 3.1.
+

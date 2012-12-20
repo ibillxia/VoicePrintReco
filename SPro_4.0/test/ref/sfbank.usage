@@ -1,0 +1,33 @@
+Usage:
+    sfbank [options] ifile ofile
+
+Synopsis:
+    Filter bank analysis of the input signal.
+
+Options:
+  -F, --format=s            input signal file format (pcm16)
+  -f, --sample-rate=n       signal sample rate for pcm16 input (8000.0 Hz)
+  -x, --channel=n           channel number (1)
+  -B, --swap                swap sample byte order (don't)
+  -I, --input-bufsize=n     input buffer size in kbytes (10000)
+  -O, --output-bufsize=n    output buffer size in kbytes (10000)
+
+  -k, --pre-emphasis=n      pre-emphasis coefficient (0.95)
+  -l, --length=n            frame length in ms (20.0 ms)
+  -d, --shift=n             frame shift in ms (10.0 ms)
+  -w, --window=s            weighting window (HAMMING)
+
+  -n, --num-filter=n        number of filters in the filter-bank (24)
+  -a, --alpha=n             frequency warping parameter (0.0)
+  -m, --mel                 use MEL frequency scale (off)
+  -i, --freq-min=n          lower frequency bound (0 Hz)
+  -u, --freq-max=n          higher frequency bound (Fs/2)
+  -b, --fft-length=n        FFT length (512)
+
+  -D, --delta               add first order derivatives (no)
+  -A, --acceleration        add second order derivatives (no)
+
+  -v, --verbose             verbose mode
+  -V, --version             print version number
+  -h, --help                this help message
+

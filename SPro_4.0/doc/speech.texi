@@ -1,0 +1,384 @@
+@c
+@c speech.texi -- SPro User Manual
+@c
+@c Copyright (C) 2003 Guillaume Gravier (ggravier@irisa.fr)
+@c
+@c $Author: ggravier $
+@c $Date: 2003/08/22 16:18:32 $
+@c $Revision: 1.2 $
+@c
+
+@c >>>>> This file is included by sprodoc.texi
+
+@c
+@c --*-- Speech analysis --*--
+@c
+@node Speech analysis, SPro tools, Introduction, Top
+@chapter Speech analysis techniques
+
+This section provides a brief scientific overview of the speech signal
+analysis techniques involved in SPro with a particular focus on variable
+resolution spectral analysis. It also defines the equations and methods
+implemented in SPro.
+
+@menu
+* Short term analysis::         Short term windows and pre-emphasis
+* Variable resolution::         Variable resolution spectral analysis
+* Filter-banks::                Filter-bank speech analysis
+* LPC analysis::                Linear prediction speech analysis
+* Cepstrum::                    Cepstral analysis
+* Deltas and normalization::    Delta, acceleration and feature normalization
+@end menu
+
+@c -- Short term windows
+@node Short term analysis, Variable resolution, Speech analysis, Speech analysis
+@section Pre-emphasis and windowing
+
+@cindex window, weighting
+@cindex H@sc{amming} window
+@cindex H@sc{anning} window
+@cindex B@sc{lackman} window
+@cindex pre-emphasis
+
+Speech is intrinsically a highly non-stationary signal. Therefore, speech
+analysis, whether FFT-based or LPC-based, must be carried out on short
+segments across which the speech signal is assumed to be
+stationary. Typically, the feature extraction is performed on 20 to 30
+ms windows with 10 to 15 ms shift between two consecutive windows.
+@ifnotinfo
+This principle is illustrated in the figure below
+@sp 1
+@center @image{framing, 5in,, framing illustration}
+@end ifnotinfo
+To avoid problems due to the truncation of the signal, a weighting
+window with the appropriate spectral properties must be applied to the
+analyzed chunk of signal. SPro implements three such windows
+@multitable @columnfractions .1 .2 .7
+@item
+@ 
+@tab H@sc{amming} @ @ @
+@tab @math{w_i = 0.54 - 0.46 \cos(i \pi^2 / N)}
+@item
+@ 
+@tab H@sc{anning} @ @ @
+@tab @math{w_i = (1 - \cos(i \pi^2 / N)) / 2}
+@item
+@  
+@tab B@sc{lackman} @ @ @
+@tab @math{w_i = 0.42 - 0.5 \cos(i \pi^2 / N) + 0.08 cos(2 i \pi^2 / N)}
+@end multitable
+@noindent
+where @math{N} is the number of samples in the window and @math{i \in
+[0,N-1]}.
+
+Pre-emphasis is also traditionally use to compensate for the
+-6dB/octave spectral slope of the speech signal. This step consists in
+filtering the signal with a first-order high-pass filter
+@math{H(z) = 1 - k z^{-1}}, with @math{k \in [0,1[}. The pre-emphasis
+filter is applied on the input signal before windowing.
+
+@c -- Variable resolution
+
+@node Variable resolution, Filter-banks, Short term analysis, Speech analysis
+@section Variable resolution spectral analysis
+
+Classical spectral analysis has a constant resolution over the frequency
+axis. The idea of variable resolution spectral
+analysis@footnote{Variable resolution spectral analysis of a signal is
+presented in details in @cite{C. Chouzenoux, Analyse spectrale @`a
+r@'esolution variable: application au signal de parole, Ph.D. thesis,
+ENST Paris, 1982}, where it is applied to speech coding.} is to vary the
+spectral resolution as a function of the frequency. This is achieved by
+applying a bilinear transformation of the frequency axis, the
+transformation being controlled by a single parameter @math{a}. The
+bilinear warping of the frequency axis is defined by
+@tex
+$$
+f^{\prime} = \arctan \left| (1-a^{2}) \sin
+    f \over (1+a^{2}) \cos f - 2 a \right|
+$$
+@end tex
+@ifnottex
+  @center @math{f' = arctan |(1 - a^2) sin f / ((1 + a^2) cos f - 2a) |} ,
+@end ifnottex
+where f and f' are the frequencies on the original and transformed axis
+respectively and @math{a \in ]-1,1[}.
+@ifnotinfo
+The axis transformation is depicted in the following figure
+@sp 1
+@center @image{asvar-fig1, 3in}
+@end ifnotinfo
+@noindent
+Spectral analysis is done with a constant resolution on the warped axis
+@math{f'} and therefore with a variable resolution on the original axis.
+Clearly, positive values of @math{a} leads to a higher low frequency
+resolution while negative values give a better high frequency
+resolution. If @math{a} equals one, the transformation is the identity
+thus resulting in a classical constant resolution spectral analysis.
+
+Using variable resolution spectral analysis with a filter-bank is rather
+trivial since it simply consists in determining the filter's central
+frequency according to the warping. @xref{Filter-banks}. 
+
+Linear predictive models with variable resolution spectral analysis is
+also possible. Very briefly, the idea consists in solving the normal
+equations on the @emph{generalized} auto-correlation rather than on the
+traditional auto-correlation sequence. The generalized auto-correlation
+@math{r(p)} is the correlation between the original signal filtered by a
+corrective filter
+@tex
+$$
+\mu(z) = \left. 1 - a^2 \over (1 - a z^{-1})^2 \right.
+$$
+@end tex
+@ifnottex
+@math{mu(z) = (1 - a^2) / (1 - a z^{-1})^2}
+@end ifnottex
+and the latter filtered @math{p} times by a correction filter of
+response
+@tex
+$$
+H(z) = \left. z^{-1} - a \over 1 -a z^{-1} \right.
+$$
+@end tex
+@ifnottex
+  @center @math{H(z) = ((1 / z) - a) / (1 - a / z)}
+@end ifnottex
+@xref{LPC analysis}, for more details.
+
+@c -- Filter-banks
+
+@node Filter-banks, LPC analysis, Variable resolution, Speech analysis
+@section Filter-bank analysis
+
+@cindex filter-bank, analysis
+@cindex M@sc{el} frequency scale
+
+Filter-bank is a classical spectral analysis technique which consists in
+representing the signal spectrum by the log-energies at the output of a
+filter-bank, where the filters are overlapping band-pass filters spread
+along the frequency axis. This representation gives a rough
+approximation of the signal spectral shape while smoothing out the
+harmonic structure if any. When using variable resolution analysis, the
+central frequencies of the filters are determined so as to be evenly
+spread on the warped axis and all filters share the same bandwidth on
+the warped axis. This is also applied to M@sc{el} frequency warping, a
+very popular warping in speech analysis which mimics the spectral
+resolution of the human ear. The M@sc{el} warping is approximated by
+@math{mel(f) = 2595  \log_{10}(1 + f / 700)}.
+
+@ifnotinfo
+SPro provides an implementation of filter-bank analysis with triangular
+filters on the FFT module as depicted below
+@sp 1
+@center @image{fbank, 5in}
+@noindent
+@end ifnotinfo
+@ifinfo
+SPro provides an implementation of filter-bank analysis with triangular
+filters on the FFT module.
+@end ifinfo
+The energy at the output of channel @math{i} is given by
+@tex
+$$
+e_i = \log \sum_{j=1}^{N} h_i(j) \;\; ||X(j)||
+$$
+@end tex
+@ifnottex
+  @center @math{e_i = \log \sum_{j=1}^{N} h_i(j) ||X(j)||}
+@end ifnottex
+where @math{N} is the FFT length@footnote{Actually half of the FFT
+length.} and @math{h_i} is the filter's frequency response as depicted
+above. The filter's response is a triangle centered at frequency
+@math{f_i} with bandwidth @math{[f_{i-1},f_{i+1}]}, assuming the
+@math{f_i}'s are the central frequencies of the filters determined
+according to the desired spectral warping.
+
+@c -- Linear prediction
+
+@node LPC analysis, Cepstrum, Filter-banks, Speech analysis
+@section Linear predictive analysis
+
+@cindex linear prediction coefficients
+@cindex log area ratio
+@cindex line spectrum pairs
+@cindex reflection coefficients
+
+Linear prediction is a popular speech coding analysis method which relies
+on a source/filter model if the speech production process. The vocal
+tract is modeled by an all-pole filter of order @math{p} whose response
+is given by
+@tex
+$$
+H(z) = \left. 1 \over 1 + \sum_{i=1}^{p} a_i z^{-i} \right. \enspace .
+$$
+@end tex
+@ifnottex
+  @center @math{H(z) = 1 / (1 + \sum_{i=1}^{p} a_i z^{-i})} .
+@end ifnottex
+The coefficients @math{a_i} are the prediction coefficients, obtained by
+minimizing the mean square prediction error. The minimization is
+implemented in SPro using the @emph{auto-correlation} method.
+
+The idea of the resolution algorithm is to iteratively estimate the
+prediction coefficients for each prediction order until the required
+order is reached. Assuming the prediction coefficients for order
+@math{n-1} are known and yields a prediction error @math{e_{n-1}}, the
+estimation of the coefficients for order @math{n} rely on the
+@math{n}'th reflection coefficients defined as
+@tex
+$$
+  k_n = \left. -1 \over e_{n-1} \right.\sum_{i=0}^{n-1} a_{n-1}(i) r(n-i) \enspace ,
+$$
+@end tex
+@ifnottex
+  @center @math{k_n = - (1 / e_{n-1})\sum_{i=0}^{n-1} a_{n-1}(i) r(n-i)} ,
+@end ifnottex
+where @math{r} is the autocorrelation of the signal. Given the reflection
+coefficient @math{k_n}, the prediction coefficients are obtained using
+the recursion
+@tex
+$$
+  a_n(i) = a_{n-1}(i) + k_n a_{n-1}(n-i)
+$$
+@end tex
+@ifnottex
+  @center @math{a_n(i) = a_{n-1}(i) + k_n a_{n-1}(n-i)}
+@end ifnottex
+for @math{i=1,\ldots,n-1} and @math{a_n(n) = k_n}. Finally, the
+prediction error for order @math{n} is given by
+@tex
+$$
+  e_n = e_{n-1} ( 1 - k_n^2 ) \enspace .
+$$
+@end tex
+@ifnottex
+  @center @math{e_n = e_{n-1} ( 1 - k_n^2 )} .
+@end ifnottex
+
+For variable resolution, the @emph{generalized} auto-correlation
+sequence is used instead of the traditional auto-correlation.
+@xref{Variable resolution}. for details on generalized auto-correlation.
+
+The all-pole filter coefficients can be represented in several
+equivalent ways. First, the linear prediction coefficients @math{a_i}
+can be used directly. The reflection (or partial correlation)
+coefficients @math{k_i \in ]-1,1[} used in the resolution algorithm can
+also be used to represent the filter. The log-area ratio, defined as
+@tex
+$$
+  g_i = 10 \log_{10} \left(1 + k_i \over 1 - k_i\right) \enspace ,
+$$
+@end tex
+@ifnottex
+  @center @math{g_i = 10 \log_{10} ((1 + k_i) / (1 - k_i))} ,
+@end ifnottex
+is also a popular way to define the prediction filter. Last, the line
+spectrum frequencies (a.k.a.@: line spectrum pairs) are also frequently
+used in speech coding. Line spectrum frequencies is another
+representation derived from linear predictive analysis which is very
+popular in speech coding.
+
+@c -- Cepstrum
+
+@node Cepstrum, Deltas and normalization, LPC analysis, Speech analysis
+@section Cepstral analysis
+
+@cindex cepstrum
+
+Probably the most popular features for speech recognition, the cepstral
+coefficients can be derived both from the filter-bank and linear
+predictive analyses. From the theoretical point of view, the cepstrum is
+defined as the inverse Fourier transform of the logarithm of the Fourier
+transform module. Therefore, by keeping only the first few cepstral
+coefficients and setting the remaining coefficients to zero, it is
+possible to smooth the harmonic structure of the
+spectrum@footnote{Somehow, zeroing the last cepstral coefficients is
+like applying a low-pass filter to the (log module of) the original
+signal spectrum.}. Cepstral coefficients are therefore very convenient
+coefficients to represent the speech spectral envelope. 
+
+In practice, cepstral coefficients can be obtained from the filter-bank
+energies @math{e_i} via a discrete cosine transform (DCT) given by
+@tex
+$$ 
+c_i = \sqrt{2 \over N} \;\;\; \sum_{j=1}^{N} \;\; e_j \; \cos\left(\pi \; i \; (j-0.5) \over N \right)
+\enspace ,  
+$$
+@end tex
+@ifnottex
+  @center @math{c_i = \sqrt{2/N} sum_{j=1}^{N} e_j \; \cos(\pi i (j-0.5)
+/ N)} ,
+@end ifnottex
+where @math{N} is the number of channels in the filter-bank and @math{i
+\in [1,M]} (@math{M <= N}). Cepstral coefficients can also be obtained
+from the linear prediction coefficients @math{a_i} according to
+@tex
+$$ 
+  c_i = -a_i + \left.1 \over i \right. \sum_{j=1}^{i-1} (i - j) \; a_j \; c_{i-j} \enspace ,  
+$$
+@end tex
+@ifnottex
+  @center @math{c_i = -a_i + (1 / i) \sum_{j=1}^{i-1} (i - j) * a_j  * c_{i-j}} ,
+@end ifnottex
+for @math{i \in [1,M]} with @math{M <= P}, the prediction order.
+
+Cepstral coefficients have rather different dynamics, the higher
+coefficients showing the smallest variances. It may sometimes be
+desirable to have a constant dynamic across coefficients for modeling
+purposes. One way to reduce these differences is liftering which
+consists in applying a weight to each coefficients. The weight for the
+@math{i}'th coefficient is defined in a parametric way according to
+@tex
+$$ 
+  h_i = 1 + \left. L \over 2 \right.  \sin\left(i \; \pi \over L \right) \enspace ,
+$$
+@end tex
+@ifnottex
+  @center @math{h_i = 1 + L \sin(i\pi/L) / 2} ,
+@end ifnottex
+where @math{L} is the lifter parameter, typically equals to @math{2M}.
+
+@c -- Deltas and normalization
+
+@node Deltas and normalization,  , Cepstrum, Speech analysis
+@section Deltas and normalization
+
+@cindex cepstral mean subtraction
+@cindex normalization, mean removal
+@cindex normalization, variance
+@cindex delta
+@cindex derivatives
+
+Feature normalization can be used to reduce the mismatch between signals
+recorded in different conditions. In SPro, normalization consists in
+mean removal and eventually variance normalization. Cepstral mean
+subtraction (CMS) is probably the most popular compensation technique
+for convolutive distortions. In addition, variance normalization
+consists in normalizing the feature variance to one and is a rather
+popular technique in speaker recognition to deal with noises and channel
+mismatch. Normalization can be global or local. In the first case, the
+mean and standard deviation are computed globally while in the second
+case, they are computed on a window centered around the current time.
+
+To account for the dynamic nature of speech, it is possible to append
+the first and second order derivatives of the chosen features to the
+original feature vector. In SPro, the first order derivative of a
+feature $y_i$ is approximated using a second order limited development
+given by
+@tex
+$$ 
+  y_i'(t) = \left. 2 \; y_i(t+2) + y_i(t+1) - y_i(t-1) - 2 \; y_i(t-2)) \over 10 \right.
+  \enspace .  
+$$
+@end tex
+@ifnottex
+  @center @math{y_i'(t) = (y_i(t+1) - y_i(t-1) +2 (y_i(t+2) - y_i(t-2))) / 10} .
+@end ifnottex
+Second order differences, known as accelerations, are obtained by
+derivating the first order differences. It is therefore not possible to
+have the acceleration without the delta features.
+
+@c Local Variables:
+@c ispell-local-dictionary: "american"
+@c End:

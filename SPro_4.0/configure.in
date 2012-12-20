@@ -1,0 +1,110 @@
+#############################################################################
+##                                                                         ##
+##                           configure.in                                  ##
+##                           SPro toolkit                                  ##
+##                                                                         ##
+## Guig                                                    Fri Jul  5 2002 ##
+## ----------------------------------------------------------------------- ##
+##                                                                         ##
+##  Copyright (C) 2002 Guillaume Gravier (ggravier@irisa.fr)               ##
+##                                                                         ##
+##  This program is free software; you can redistribute it and/or modify   ##
+##  it under the terms of the GNU General Public License as published by   ##
+##  the Free Software Foundation; either version 2, or (at your option)    ##
+##  any later version.                                                     ##
+##                                                                         ##
+##  This program is distributed in the hope that it will be useful,        ##
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of         ##
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          ##
+##  GNU General Public License for more details.                           ##
+##                                                                         ##
+##  You should have received a copy of the GNU General Public License      ##
+##  along with this program; if not, write to the Free Software            ##
+##  Foundation, Inc., 59 Temple Place - Suite 330,                         ##
+##  Boston, MA 02111-1307, USA.                                            ##
+##                                                                         ##
+#############################################################################
+##
+## CVS log:
+##
+##   $Author: ggravier $
+##   $Date: 2003/07/24 15:11:37 $
+##   $Revision: 1.7 $
+##
+
+dnl Process this file with autoconf to produce a configure script.
+
+AC_INIT(spro.h)
+AC_REVISION($Revision: 1.7 $)
+AC_PREREQ(2.12)
+AC_CONFIG_AUX_DIR(auxdir)
+AM_INIT_AUTOMAKE(spro, 4.0)
+AM_CONFIG_HEADER(config.h:config.h.in)
+
+dnl Checks for usefuls programs (like a compiler, a precompiler, a linker...)
+AC_PROG_INSTALL
+AC_PROG_RANLIB
+AC_PROG_CC
+AM_PROG_CC_STDC
+AC_PROG_CPP
+
+AC_AIX
+AC_MINIX
+AC_ISC_POSIX
+
+
+dnl check if function prototypes are understood by the compiler
+AM_C_PROTOTYPES
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_C_INLINE
+AC_C_BIGENDIAN
+AC_TYPE_SIZE_T
+
+dnl defined sizeof standard types
+AC_CHECK_SIZEOF(char)
+AC_CHECK_SIZEOF(short)
+AC_CHECK_SIZEOF(long)
+
+dnl Checks for header files
+AC_HEADER_STDC
+AC_HEADER_TIME
+AC_CHECK_HEADERS(sys/time.h limits.h malloc.h stdarg.h stdlib.h math.h string.h errno.h)
+
+dnl Checks for library functions.
+AC_FUNC_ALLOCA
+AC_FUNC_VPRINTF
+
+dnl Error at line uses strerror and strerror_r, so these should be checked
+dnl AC_CHECK_FUNCS(strtod strchr bzero strerror strerror_r)
+
+dnl work like AC_CHECK_FUNCS, but with explicit replacement if they don't occur
+dnl AC_REPLACE_FUNCS(strdup strtoul)
+dnl AC_REPLACE_FUNCS(memchr memcpy memmove memrchr memset)
+
+dnl Compile with strict flags
+CF_GCC_WARNINGS
+dnl Compile with memory debugging
+AM_WITH_DMALLOC
+
+dnl enables SPHERE support
+AC_ARG_WITH(
+	sphere,
+	[  --with-sphere           turn on NIST sphere file format support],
+	[
+	if test "x$with_sphere" != "xno"; then
+          AC_DEFINE(SPHERE, 1, "NIST sphere package support")
+	  sphere_lib="-lsp -lutil"
+	  if test "x$with_sphere" != "xyes"; then
+	    sphere_include="-I$with_sphere/include"
+	    sphere_lib="-L$with_sphere/lib -lsp -lutil"
+          fi
+	fi
+	]		
+)
+AC_SUBST(sphere_include)
+AC_SUBST(sphere_lib)
+
+dnl Files which should be output by the configure script
+AC_OUTPUT(Makefile doc/Makefile auxdir/Makefile test/Makefile test/ref/Makefile test/dat/Makefile)

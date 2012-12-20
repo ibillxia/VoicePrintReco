@@ -1,0 +1,940 @@
+@c user.texi -- SPro User Manual
+@c
+@c Copyright (C) 2003 Guillaume Gravier (ggravier@irisa.fr)
+@c
+@c $Author: ggravier $
+@c $Date: 2003/08/22 16:18:32 $
+@c $Revision: 1.2 $
+@c
+
+@c >>>>> This file is included by sprodoc.texi
+
+@c --*-- ---------- --*--
+@c --*-- SPro tools --*--
+@c --*-- ---------- --*--
+@node SPro tools, SPro library, Speech analysis, Top
+@chapter The SPro tools
+
+@menu
+* File formats::                Waveform and feature file formats
+* Common options::              Tools common options
+* I/O via stdin and stdout::    Standard input, standard output and pipes
+* Extracting features::         Feature extraction with SPro
+* Manipulating features::       The scopy utility for manipulating feature streams
+@end menu
+
+@c
+@c --*-- File formats --*--
+@c
+@node File formats, Common options, SPro tools, SPro tools
+@section File formats
+@cindex file formats
+
+@menu
+* Waveform file format::        Supported input waveform file formats
+* Feature file format::         Output feature file format
+@end menu
+
+This section describes the file formats manipulated by SPro. Most SPro
+tools input signal from a @emph{waveform stream} and output feature
+vectors to a @emph{feature stream}.
+
+@c -- Waveform stream format
+@node Waveform file format, Feature file format, File formats, File formats
+@subsection Waveform streams
+@cindex format, waveform streams
+@cindex file format, waveform streams
+@cindex waveform, file format
+
+Waveform streams are files which contains the signal samples, either in
+raw @acronym{PCM} format or in an encoded format to save disk
+space. Currently, SPro supports raw, mono, 16 bits/sample files as well
+as @sc{wave} and optionally @sc{sphere}@footnote{S@sc{phere} is the file
+format used by most @acronym{NIST} tools and databases. See
+@url{http://www.nist.gov/speech} for the SPHERE package.} files.  The
+@sc{sphere} format is only supported if SPro has been compiled with the
+@sc{sphere} library (@option{--with-sphere} in @command{configure}). Raw
+format (i.e.@: with no header) with a 8 kHz sample rate is the default
+assumed by SPro if not otherwise specified.
+
+Waveform are considered as streams by SPro and are read via an input
+buffer which means they can be of arbitrary (even infinite) length. Even
+file formats for which the number of samples is known in advance from
+the header will not be entirely loaded into memory. In particular, this
+mechanism makes it possible to read waveforms from the standard input
+even though the number of signals is not known offhand. One particularly
+interesting consequence is the possibility to pipe the output of an
+external command into the input of a SPro command. For example, it is
+possible using a pipe to support file formats which are not supported by
+SPro. The following line
+@example
+  madplay --left --output=raw:- foo.mp3 | sfbcep -f 11025 - foo.mfcc
+@end example
+@noindent
+shows how to decode the left channel of an MP3 encoded file
+(@file{foo.mp3}) into a raw, mono, 16 bits/sample file which is then
+piped into the @command{sfbcep} tool, assuming the sample rate of the
+MP3 file is 11,025 Hz.
+
+@c -- Feature stream format
+@node Feature file format,  , Waveform file format, File formats
+@subsection Feature streams
+@cindex format, feature streams
+@cindex file format, feature streams
+@cindex header format
+@cindex variable length header format
+
+A feature streams is a file containing feature vectors. The format used
+to store the feature vectors is specific to SPro and consists of a
+header followed by data. The header itself is divided in two parts, an
+optional variable length header and a fixed length compulsory header.
+
+To avoid byte-order problems, binary parts of the feature streams, such
+as the fixed length header and the feature vectors, are always stored in
+little-endian format (Intel-like processor) and therefore must be
+swapped if read on a big-endian (Motorola-like processor) machine. Byte
+swapping is automatically taken care of when using the library functions
+to read SPro streams. @xref{SPro library}, for details on SPro stream
+I/O functions.
+
+The variable length header is an optional ASCII header containing
+@samp{attribute = value} statements, starting with a @samp{<header>} tag
+and ending with @samp{</header>}. The following is a sample variable
+length header:
+@example
+@group
+<header>
+a_field = an arbitrary value;            # a comment
+
+date = Wed Jul 23 14:59:12 CEST 2003;    # this is the date
+snr = 20 dB;                             # SNR
+</header>
+@end group
+@end example
+@noindent
+Both the @samp{attribute} and @samp{value} strings are arbitrary. Note
+that as of now, none of the SPro tools output variable length
+headers. However, such headers are supported and can be added using the
+@command{cat} or @command{bcat} command. For example, the command
+@example
+bcat header.txt foo.mfcc > bar.mfcc
+@end example
+@noindent
+could be used to add the variable length header contained in file
+@file{header.txt} to the output of an SPro command @file{foo.prm}, the
+resulting file being @file{bar.prm}. The header file @file{header.txt}
+is a regular text file containing text such as given in the example
+above, where the last line of the file must consist of the
+@samp{</header>} tag, possibly with a carriage return.
+
+The compulsory fixed length header is a 10 byte binary header containing
+the feature vector dimension@footnote{Note that, as opposed to previous
+versions if SPro, the dimension in the header correspond to the total
+feature vector dimension.} (@code{unsigned short} = 2 bytes), a flag
+describing the content of the feature vector (@code{long} = 4 bytes) and
+the frame rate in Hz (@code{float} = 4 bytes). The feature stream
+description flag is actually a field of bits with the following meaning
+@multitable @columnfractions .1 .1 .1 .7
+@item
+@ 
+@tab @strong{bit}
+@tab @strong{letter}
+@tab @strong{description}
+
+@item
+@ 
+@tab 1
+@tab @samp{E}
+@tab feature vector contains log-energy. 
+
+@item
+@ 
+@tab 2
+@tab @samp{Z}
+@tab mean has been removed
+
+@item
+@ 
+@tab 3
+@tab @samp{N}
+@tab static log-energy has been suppressed (always with @samp{E} and @samp{D})
+
+@item
+@ 
+@tab 4
+@tab @samp{D}
+@tab feature vector contains delta coefficients
+
+@item
+@ 
+@tab 5
+@tab @samp{A}
+@tab feature vector contains delta-delta coefficients (always with @samp{D})
+
+@item
+@ 
+@tab 5
+@tab @samp{R}
+@tab variance has been normalized (always with @samp{Z})
+
+@end multitable
+@noindent
+The letter in the second column corresponds to the letter used in all
+the SPro tools to modify or visualize the feature description
+flags. 
+
+Feature vectors, or data, are stored after the header in time ascending
+order. A feature vector is a binary vector of @code{float}'s as
+illustrated in the following example
+@example
+@group
++-----------------+---+-----------------+----+-----------------+---+
+|     static      | E |      delta      | dE |    delta delta  |ddE|
++-----------------+---+-----------------+----+-----------------+---+
+@end group
+@end example
+@noindent
+with the static coefficient first, optionally followed by the
+log-energy, the delta and delta-delta features as indicated by the
+feature description flag. 
+
+@c
+@c --*-- Common options --*--
+@c
+@node Common options, I/O via stdin and stdout, File formats, SPro tools
+@section Common options
+@cindex options, common
+
+Here is a list of options common to all (or most of) the tools. The
+@command{scopy} feature manipulation tool options slightly differ from
+the list below since most of the options are concerned with waveform
+processing.
+
+@menu
+* I/O options::                 Common I/O options
+* Framing options::             Common frame blocking options
+* Feature vector options::      Common feature vector extraction options
+* Miscellaneous options::       More common options
+@end menu
+
+@c -- I/O options
+@node I/O options, Framing options, Common options, Common options
+@subsection I/O options
+@cindex options, I/O
+
+The following options are used to control the waveform and feature
+I/Os:
+@table @code
+@item -F, --format=str
+@itemx
+Specify the input waveform file format. The format string @code{str} is
+one of @samp{PCM16}, @samp{wave} or @samp{sphere}, the latter being
+possible only if SPro was compiled with the @sc{sphere}
+library. Argument is case insensitive. Default value is @samp{PCM16}.
+
+@item -f, --sample-rate=f
+@itemx
+Set input waveform sample rate to @code{f} Hz for @samp{PCM16} waveform
+files. This option is ignored for waveform file formats for which the
+sample rate is specified in the header. Default value is 8,000 Hz.
+
+@item -x, --channel=n
+@itemx
+For multiple channel waveform files, set the channel to consider for
+feature extraction. Default value is 1.
+
+@item -B, --swap
+@itemx
+Swap the input waveform samples. This is particularly useful for
+waveform files generated on a machine with a different endian. Default
+is not to swap.
+
+@item -I, --input-bufsize=n
+@itemx
+Set the input buffer size to @code{n} kbytes. The smaller the input
+buffer size, the more disk access and therefore, the slower the program
+is. So you will have to choose between speed and memory! Default is 10
+Mbytes.
+
+@item -O, --output-bufsize=n
+@itemx
+Set the output buffer size to @code{n} kbytes. Again, you need a
+compromise between speed and memory requirements. However, one important
+point is that global processing such as mean subtraction, energy
+normalization and delta computation are done on the buffer basis (i.e.@:
+such processings are done only when the buffer is full or at the end of
+the stream, whichever comes first) which introduces some inconsistencies
+at the buffer boundaries@footnote{This is a known 'bug' that should be
+corrected someday. It is actually rather impossible to correct the bug
+for global normalization which would require to store all of the data
+into memory. However, it is possible --- and probably desirable --- to
+correct things when a sliding window is specified.}. Using a small
+output buffer size can then result in many boundary problems and it is
+recommended not to diminish the output buffer size below a couple of
+thousand frames. Default is 10 Mbytes.
+@end table
+
+@c -- Framing options
+@node Framing options, Feature vector options, I/O options, Common options
+@subsection Waveform framing options
+@cindex options, waveform framing
+
+Waveform framing is driven by the following options:
+@table @code
+@item -k, --pre-emphasis=f
+@itemx
+Set the pre-emphasis coefficient to @code{f}. Default is 0.95.
+
+@item -l --length=f
+@itemx
+Set the analysis frame length to @code{f} ms. Default is 20.0 ms.
+
+@item -d, --shift=f
+@itemx
+Set the interval between two consecutive frames to @code{f} ms. Default is
+10.0 ms.
+
+@item -w, --window=str            
+@itemx
+Specify the waveform weighting window. The window is one of
+@samp{Hamming}, @samp{Hanning}, @samp{Blackman} or @samp{none}. If the
+argument is @samp{none}, no window is applied. Argument is case
+insensitive. Default is @samp{Hamming}.
+@end table
+
+@c -- Normalization and dynamics
+@node Feature vector options, Miscellaneous options, Framing options, Common options
+@subsection Feature vector options
+@cindex option, feature vector content
+
+The following options are used to control the content of the output
+feature vectors, enabling global normalizations and dynamic feature
+computation:
+@table @code
+@item -Z, --cms
+@itemx
+Perform mean normalization.
+
+@item -R, --normalize
+@itemx
+Perform variance normalization. Variance normalization is only possible
+if @option{--cms} is also specified. Otherwise, an error is generated.
+
+@item -L, --segment-length=n
+@itemx
+Set normalization and energy scaling segment length. If this option is
+specified, mean, variance or max calculation is performed using a
+sliding window of @samp{n} frames. Default is to calculate mean,
+variance or max globally when flushing the output buffer. This argument
+is ignored if neither @option{--cms} nor @option{--normalize} are
+specified.
+
+@item -D, --delta
+@itemx
+Add first order derivatives to the feature vector.
+
+@item -A, --acceleration
+@itemx
+Add second order derivatives to the feature vector. This is only
+possible if @option{--delta} is also specified. Otherwise, an error is
+generated.
+
+@item -N, --no-static-energy
+@itemx
+Remove static log-energy from the feature vector. This is only possible
+if @option{--delta} is also specified. Otherwise, an error is generated.
+@end table
+
+@c -- Miscellaneous options
+@node Miscellaneous options,  , Feature vector options, Common options
+@subsection Miscellaneous options
+@cindex options, miscellaneous
+
+Last but not least, here are some very practical options (specially the
+second one):
+@table @code
+@item -v, --verbose
+@itemx 
+Turn on verbose mode
+
+@item -h, --help
+@itemx
+Print a help message for the tool and exit.
+
+@item -V, --version
+@itemx
+Print version information and exit.
+@end table
+
+@c
+@c --*-- I/O via stdin and stdout --*--
+@c
+@node I/O via stdin and stdout, Extracting features, Common options, SPro tools
+@section I/O via stdin and stdout
+@cindex I/O, stdin and stdout
+@cindex input, stdin
+@cindex output, stdout
+@cindex pipes, using pipes with SPro
+
+Every SPro command requires that input and output files are explicitly
+specified. However, in the very Unix philosophy, the special symbol
+@samp{-} (dash) can be used as input file to specify that input is to be
+read from @code{stdin} or as output file to specify that output should
+be directed to @code{stdout}.
+
+The use of standard input and output makes it possible to pipe the SPro
+commands one after the other or even with external programs. The example
+@example
+sfbcep foo.lin - |  scopy -o ascii - -
+@end example
+@noindent
+illustrates the use of pipes to list the feature vectors directly from
+the waveform file @file{foo.lin}. Another particularly useful example of
+pipes with SPro commands is given in @ref{Waveform streams}.
+
+@c 
+@c --*-- Extracting features
+@c
+@node Extracting features, Manipulating features, I/O via stdin and stdout, SPro tools
+@section Extracting features
+
+@menu
+* Filter-bank analysis tools::  Tools for filter-bank derived features
+* LPC analysis tools::          Tools for linear prediction derived features
+@end menu
+
+@c -- Filter-bank analysis tools
+@node Filter-bank analysis tools, LPC analysis tools, Extracting features, Extracting features
+@subsection Filter-bank analysis tools
+@cindex filter-bank, tools
+
+The tools @command{sfbank} and @command{sfbcep} are dedicated to
+filter-bank based speech analysis.
+
+@menu
+* Filter-bank magnitudes::      All about @command{sfbank}
+* Filter-bank cepstrum::        All about @command{sfbcep}
+* Filter-bank options::         @command{sfbank} and @command{sfbcep} options
+@end menu
+
+@c -- Filter-bank magnitudes
+@node Filter-bank magnitudes, Filter-bank cepstrum, Filter-bank analysis tools, Filter-bank analysis tools
+@unnumberedsubsubsec Filter-bank log-magnitude features
+@cindex @command{sfbank}
+
+The first filter-bank analysis tool, @command{sfbank}, takes as input a
+waveform and output filter-bank magnitude features. For each frame, the
+FFT is performed on the windowed signal, possibly after zero padding,
+and the magnitude is computed before being integrated using a triangular
+filter-bank. @xref{Filter-banks}, for mathematical details. To avoid
+numerical problems, a threshold is used to keep channel log-magnitudes
+positive or null. The signal bandwidth may be artificially limited by
+specifying lower and higher frequencies using the @option{--freq-min}
+and @option{--freq-max} options respectively. In this case, the central
+frequencies of the filter-bank channels are regularly taken in the
+specified bandwidth. Even if frequency warping is used, the lower and
+upper frequencies are specified in the linear frequency domain, though,
+of course, the filter's central frequencies will be taken regularly in
+the transformed domain. Both M@sc{el} and bilinear frequency warping
+are possible with @command{sfbank}.
+
+First and second order derivatives can be appended to the filter-bank
+log-magnitude features using @option{--delta} and
+@option{--acceleration} respectively.
+
+@c Filter-bank cepstrum
+@node Filter-bank cepstrum, Filter-bank options, Filter-bank magnitudes, Filter-bank analysis tools
+@unnumberedsubsubsec Filter-bank cepstral features
+@cindex @command{sfbcep}
+
+The second filter-bank analysis tool, @command{sfbcep}, takes as input a
+waveform and output filter-bank derived cepstral features. The
+filter-bank processing is similar to what is done in @command{sfbank}
+(see previous section). The cepstral coefficients are computed by
+DCT'ing the filter-bank log-magnitudes and possibly liftered.
+
+Optionally, the log-energy can be added to the feature vector. In
+@command{sfbcep}, the frame energy is calculated as the sum of the
+squared waveform samples after windowing. As for the magnitudes in the
+filter-bank, the log-energy are thresholded to keep them positive or
+null. The log-energies may be scaled to avoid differences between
+recordings.
+
+Mean and variance normalization of the static cepstral coefficients can
+be specified with the global @option{--cms} and @option{--normalize}
+options but do not apply to log-energies. The normalizations can be
+global (default) or based on a sliding window whose length is specified
+with @option{--segment-length}.
+
+Finally, first and second order derivatives of the cepstral coefficients
+and of the log-energies can be appended to the feature vectors. When
+using delta features, the absolute log-energy can be suppressed using
+the @option{--no-static-energy} option.
+
+@c Options
+@node Filter-bank options,  , Filter-bank cepstrum, Filter-bank analysis tools
+@unnumberedsubsubsec Options
+
+The following options are available for both @command{sfbank} and
+@command{sfbcep}.
+@table @code
+@item -n, --num-filters=n
+@itemx
+Specify the number of channels in the filter bank. Default is 24.
+
+@item -a, --alpha=f             
+@itemx
+Use bilinear frequency warping and set the warping parameter @math{a}
+to @code{f}@ (@code{f} must be between 0 and 1).  This option is
+incompatible with @option{--mel} and will be overwritten by the
+latter. Default is no warping.
+
+@item -m, --mel                 
+@itemx
+Use M@sc{el} frequency warping. This option overwrites the
+@option{--alpha} one as both are incompatible. Default is no warping.
+
+@item -i, --freq-min=f          
+@itemx
+Specify band limiting and set the lower frequency bound to @code{f}
+Hz. Default is no band limiting.
+
+@item -u, --freq-max=f 
+@itemx
+Specify band limiting and set the upper frequency bound to @code{f}
+Hz. Default is no band limiting.
+
+@item -b, --fft-length=n 
+@itemx
+Set FFT length to @code{n} samples. The FFT length must be a power of
+two and greater than or equal to the number of samples in a frame. If
+FFT length is greater, the windowed frame samples are padded with zeroes
+before running the Fourier transform.
+@end table
+
+@noindent
+The following options are also available for @command{sfbcep}.
+@table @code
+@item -p, --num-ceps=n
+Set the number of output cepstral coefficients to @code{n}@. @code{n}
+must be less or equal to the number of channels in the filter
+bank. Default is 12.
+
+@item -r, --lifter=n 
+Set liftering parameter @math{L} to @code{n}. Default is no liftering.
+
+@item -e, --energy
+@itemx
+Add log-energy to the feature vector.
+
+@item -s, --scale-energy=f
+@itemx
+Scale energy according to @math{e_t = 1 + f (e_t - max_t(e_t))}. The way
+the maximum energy value is computed depends on whether
+@option{--segment-length} is specified or not.
+@end table
+
+@noindent
+@command{sfbank} supports the @option{--delta} and
+@option{--acceleration} options. In addition, @command{sfbcep} also
+supports the @option{--cms} and @option{--normalize}
+options. @xref{Common options}, for a description of these options and
+for additional ones.
+
+@c -- LPC analysis tools
+@node LPC analysis tools,  , Filter-bank analysis tools, Extracting features
+@subsection LPC analysis tools
+@cindex linear prediction, tools
+
+SPro provides two different tools, @command{slpc} and @command{slpcep},
+for linear predictive analysis of speech signals.
+
+@menu
+* Linear prediction coefficients::  All about @command{slpc}
+* Linear prediction cepstrum::  All about @command{slpcep}
+* LPC Options::                 @command{slpc} and @command{slpcep} options
+@end menu
+
+@c Linear prediction coefficients
+@node Linear prediction coefficients, Linear prediction cepstrum, LPC analysis tools, LPC analysis tools
+@unnumberedsubsubsec Linear prediction coefficients
+@cindex @command{slpc}
+
+The tool @command{slpc} takes as input a waveform and output linear
+prediction derived features. For each frame, the signal is windowed
+after pre-emphasis and the generalized correlation is computed and
+further used to estimate the reflection and the prediction coefficients
+which can, in turn, be transformed into log area ratios or line spectrum
+frequencies. @xref{Linear prediction}, for mathematical details. The
+default is to output the linear prediction coefficients however
+reflection coefficients can be obtained with the @option{--parcor}
+option, log-area ratios with @option{--lar} option and line spectrum
+pairs with the @option{--lsp} one.
+
+Optionally, the log-energy can be added to the feature vector. In
+@command{slpc}, the log-energy is taken as the linear prediction filter
+gain, which is also the variance of prediction error, and thresholded to
+be positive or null.  The log-energies may be scaled to avoid
+differences between recordings using the @option{--scale-energy}
+option. 
+
+@c Linear prediction cepstrum
+@node Linear prediction cepstrum, LPC Options, Linear prediction coefficients, LPC analysis tools
+@unnumberedsubsubsec Linear prediction cepstrum
+@cindex @command{slpcep}
+
+Program @command{slpcep} takes as input a waveform and outputs cepstral
+coefficients derived from the linear prediction filter coefficients. The
+linear prediction processing steps are as in @command{slpc} (see
+previous section) and cepstral coefficients are computed from the linear
+prediction coefficients using the recursion previously described. The
+required number of cepstral coefficients must be less then or equal to
+the prediction order.
+
+As for @command{slpc}, the log-energy, taken as the gain of the linear
+prediction filter, can be added to the feature vectors.
+
+Mean and variance normalization of the static cepstral coefficients can
+be specified with the global @option{--cms} and @option{--normalize}
+options but do not apply to log-energies. The normalizations can be
+global (default) or based on a sliding window whose length is specified
+with @option{--segment-length}.
+
+Finally, first and second order derivatives of the cepstral coefficients
+and of the log-energies can be appended to the feature vectors. When
+using delta features, the absolute log-energy can be suppressed using
+the @option{--no-static-energy} option.
+
+@c LPC Options
+@node LPC Options,  , Linear prediction cepstrum, LPC analysis tools
+@unnumberedsubsubsec Options
+
+The following options are available for both @command{slpc} and
+@command{slpcep}.
+@table @code
+@item -n, --order=n
+@itemx
+Specify the linear prediction analysis order. Default is 24.
+
+@item -a, --alpha=f             
+@itemx
+Use bilinear frequency warping and set the warping parameter @math{a}
+to @code{f}@ (@code{f} must be between 0 and 1). Default is no warping.
+
+@item -r, --parcor
+Output reflection coefficients rather than linear prediction
+coefficients.
+
+@item -g, --lar
+Output log area ratios rather than linear prediction coefficients.
+
+@item -p, --lsp
+Output line spectrum pairs rather than linear prediction coefficients.
+
+@item -e, --energy
+@itemx
+Add log-energy to the feature vector.
+
+@item -s, --scale-energy=f
+@itemx
+Scale energy according to @math{e_t = 1 + f (e_t - max_t(e_t))}. The way
+the maximum energy value is computed depends on whether
+@option{--segment-length} is specified or not.
+@end table
+
+@noindent
+The following options are also available for @command{slpcep}.
+@table @code
+@item -p, --num-ceps=n
+Set the number of output cepstral coefficients to @code{n}@. @code{n}
+must be less or equal to the number of channels in the filter
+bank. Default is 12.
+
+@item -r, --lifter=n 
+Set liftering parameter @math{L} to @code{n}. Default is no liftering.
+
+@end table
+
+@noindent
+Also, @command{slpcep} supports the @option{--cms} and
+@option{--normalize} normalization options as well as @option{--delta}
+and @option{--acceleration}. @xref{Common options}, for a description of
+these options and for additional ones.
+
+@c
+@c --*-- Manipulating features --*--
+@c
+@node Manipulating features,  , Extracting features, SPro tools
+@section Manipulating feature streams
+@cindex @command{scopy}
+
+SPro provides a tool, @command{scopy} for manipulating feature
+streams. More than a mere copy tool, @command{scopy} also allows to
+normalize features, add dynamic features, scale the features, apply a
+linear transformation to the feature vectors and extract some components
+of the feature vector. All of these operations are detailed below. In
+addition, @command{scopy} can import feature files from previous SPro
+release, export files to alien formats such as HTK, or view the content
+of an SPro feature file in text format.
+
+@menu
+* Operations on feature streams::  Maniuplating feature streams with @command{scopy}
+* Exporting features::          Exporting features to alien formats with @command{scopy}
+* Importing from a previous SPro release::  Compatibility questions
+* Copy options::                @command{scopy} options
+@end menu
+
+@c -- Operations on feature streams
+@node Operations on feature streams, Exporting features, Manipulating features, Manipulating features
+@subsection Operations on feature streams
+
+@cindex linear transformation
+@cindex extracting components
+@cindex delta, adding features
+@cindex acceleration, adding features
+
+As mentioned in the introduction, @command{scopy} may be used for
+@enumerate a
+@item
+mean and variance normalization,
+
+@item 
+dynamic features computation,
+
+@item
+multiplicative scaling,
+
+@item
+linear transformation, and
+
+@item
+components extraction.
+@end enumerate
+
+The two first transformations, i.e.@: normalization and dynamic feature
+computation, are actually done at once when loading the input
+features. If normalization is specified, the static coefficients, not
+including energy, are normalized before delta and acceleration features
+are computed. If dynamic feature are used, the static log-energy can be
+discarded using @option{--no-static-energy}. As in all the feature
+extraction tools, normalization is either global or based on a sliding
+window, depending on whether @option{--segment-length} was specified or
+not.
+
+Multiplicative scaling is a simple operation which consists in
+multiplying every component of every feature vector by a scaling
+factor. This is sometimes used to reduce the variance of features with a
+high dynamic range in order to avoid numerical problems when computing a
+linear transformation for those features or when doing some modeling.
+
+A linear transformation matrix can be specified using
+@option{--transform} to project the input feature vectors according to
+@math{y'(t) = A z(t)}, where @math{y'(t)} is the transformed vector for
+frame @math{t} and @math{z(t)} is a column vector containing the input
+feature frame @math{y(t)} plus possibly some context
+frames@footnote{Frames are duplicated at the (buffer) boundaries.}. For
+example, assuming a context size @math{k}, @math{z(t)} will be the
+concatenation of input feature vectors @math{y(t-k)} to
+@math{y(t+k)}. If @math{m} is the input feature dimension, possibly
+after adding the dynamic features if this was asked, and @math{n} the
+output dimension, the transformation matrix will have
+@code{nrows}=@math{n} rows and @code{ncols}=@math{(2 k + 1) * m}
+columns. The matrix @math{A} is stored in a text file with the following
+syntax
+@example
+nrows ncols nsplice
+A[1][0]      A[1][1]   .........   A[1][ncols]
+                        .........
+A[nrows][0]            .........   A[nrows][ncols]
+@end example
+@noindent
+where @code{nsplice} is the context size.
+
+Component extraction consists in extracting some components of the
+feature vectors. The extraction pattern is specified using the
+@option{--extract=str} option where @code{str} is a comma separated list
+of components to keep. The latter are specified either as a single
+component index or as a index range using a dash (@samp{-}). Component
+indices start at 1. For example, the command
+@example
+scopy --extract=1-12,25-36 foo.prm bar.prm
+@end example
+@noindent
+could be used to extract components 1 to 12 and 25 to 36 from
+@file{foo.prm} into @file{bar.prm}, which, one can imagine, would
+correspond to keeping the 12 static features and the 12 acceleration
+features, thus discarding the delta features.
+
+When performing either linear transformation or component extraction,
+the content of the resulting feature vector can no longer be described
+using a feature description flag. Indeed, specifying if a vector as
+delta features after a linear transformation does make no sense. For
+this reason, the output stream description flag will be arbitrarily set
+to zero if at least one of this transformation is specified.
+
+If several operations are specified, they are applied in the order in
+which they are listed above. Therefore, delta coefficients are computed
+before the linear transformation if both are specified. As for now,
+there is unfortunately no direct and easy way to change the order of
+these operations. In particular, it is not possible to add delta
+coefficients after linear transformation which is an operation that does
+not seem illogical. The easiest, though CPU consuming, way to change the
+processing order is to use @command{scopy} several times, possibly with
+pipes. For example, the line
+@example
+scopy --transform=pca.mat foo.prm - | scopy -ZD - bar.prm
+@end example
+@noindent
+will apply the linear transformation stored in file @file{pca.mat} to
+the feature vectors in @file{foo.prm} (first @command{scopy}) and then
+remove the mean of the static features before adding the delta features
+and store the result in @file{bar.prm} (second @command{scopy}).
+
+@c -- Exporting to alien formats
+@node Exporting features, Importing from a previous SPro release, Operations on feature streams, Manipulating features
+@subsection Exporting features
+
+Exporting feature streams to alien formats is also possible with
+@command{scopy}. Currently, three alien formats are supported, namely
+@acronym{HTK}@footnote{@acronym{HTK} is a popular Hidden Markov Model
+Toolkit from Cambridge University, @url{http://htk.eng.cam.ac.uk}.},
+Sirocco@footnote{Sirocco is a free large vocabulary speech recognition
+search engine, @url{http://www.enst.fr/~sirocco}} and @acronym{ASCII}
+text format.
+
+Export to @acronym{HTK} and Sirocco file formats is only possible on
+seekable streams, i.e.@: regular files in which the C function
+@code{fseek} works. The reason for this constraint is that those formats
+include the number of frames in the header. Since the number of frames
+is not in the SPro header, @command{sopy} uses @code{fseek} to seek to
+the end of the input feature stream in order to determine the number of
+frames. As a consequence, it is not possible to export to one of these
+alien formats when reading from a pipe. On the other hand, no seek in
+the output file is therefore necessary and the output of @command{scopy}
+can be piped into another command. This is particularly usefull with
+@acronym{HTK}, where setting the environment variable @env{HPARMFILTER}
+to @samp{scopy -o HTK $ -}, enables to read directly read SPro files
+with @acronym{HTK}. See section @emph{"Input/Output via Pipes and
+Networks"} in the HTK 3.2 book for details.
+
+Export to ASCII is useful to list in a (almost) human-readable way the
+content of a feature stream. In particular, combining the ASCII output
+with the @option{--info} option which gives information about the
+content of the stream. This option is also useful to visualize the
+different operations performed on the input feature streams and their
+order. For example, the command
+@example
+scopy -i -ZDA -t xxx.mat -x 1-3,7 -z foo.prm -
+@end example
+@noindent
+will produce the following output
+@example
+@group
+sample_rate = 100.000000
+input:     dim=12  (<nil>)
+convert:   dim=36  (ZDA)
+transform: dim=10  (xxx.mat)
+extract:   dim=4   (1-3,7)
+@end group
+@end example
+@noindent
+In the above example, the input file dimension is 12 is then modified to
+36 by adding the dynamic coefficients (@option{-ZDA}) and further
+reduced to 10 using the linear transform in @file{xxx.mat} before being
+decimated to 4 by extracting components 1 to 3 and 7 of the resulting
+feature vectors.
+
+As mentioned in @ref{File formats}, SPro feature files are always in
+little endian byte order. On the contrary, exported files are written in
+the machine's natural byte order. As both @acronym{HTK} and Sirocco
+expects files in big-endian byte order@footnote{In @acronym{HTK}, this
+actually depends whether or not @code{NATURALREADORDER=T} was specified
+in your configuration file.}, the option @option{--swap} can be used to
+swap the byte order before writing the file in alien file formats. This
+option is ignored if the output file format is ASCII (obviously) or
+SPro.
+
+@c -- Importing from a previous SPro release
+@node Importing from a previous SPro release, Copy options, Exporting features, Manipulating features
+@subsection Importing from a previous SPro release
+
+The option @option{--compatibility} is provided for compatibility and
+enables to read feature files from previous versions of SPro. When this
+option is used, the entire feature file is loaded into memory at once as
+this used to be the case in previous versions. Using this options with
+large files may therefore be quite memory consuming (and slow by the
+same occasion). All the processing capabilities (normalization, dynamic
+features, linear transform, etc.) remains possible when importing files
+from previous SPro versions.
+
+@c -- scopy options
+@node Copy options,  , Importing from a previous SPro release, Manipulating features
+@subsection Copy options
+
+The following options are available in @command{scopy}:
+@table @code
+@item -c, --compatibility       
+@itemx
+Turn on compatibility and set the input file format to former SPro
+format. Default is SPro @value{VERSION} format.
+
+@item -I, --bufsize=n
+@itemx
+Set the I/O buffer size in kbytes. Default is 10 Mbytes. If
+@option{--compatibility} is specified, the specified buffer size applies
+only to the output buffer, the entire input data being loaded into
+memory.
+
+@item -i, --info
+@itemx
+Print stream information.
+
+@item -z, --suppress
+@itemx
+Suppress data output. If this option is turned on, no output is
+created. This option is provided mainly for use with @option{--info} in
+order to print the stream description flag or for diagnosis purposes.
+
+@item -B, --swap
+@itemx
+Swap byte order before writing new file. Byte swapping is only possible
+if the output format is either @acronym{HTK} or Sirocco (see
+@option{--output-format} below). Default is to use the machine's natural
+byte-order.
+
+@item -o, --output-format=str
+@itemx
+Set the output format, where @code{str} is one of @code{ascii},
+@code{htk} or @code{sirocco}. Default is the native SPro format.
+
+@item -m, --scale=f
+@itemx
+Scale features, multiplying them by the scaling factor @code{f}. 
+
+@item -t, --transform=str
+@itemx
+Apply the linear transformation whose matrix is specified in file
+@code{str}. 
+
+@item -x, --extract=str
+@itemx
+Extract the specified components of the feature vector. The argument
+@code{str} is a comma separated list of components to extract, where the
+components are specified either as a single index or a range of indices
+specified using a dash (@samp{-}). The index of the first component is
+1.
+
+@item -s, --start=n
+@itemx
+Start copying frames at frame index @code{n}. Frame numbers start with
+zero. Default is 0.
+
+@item -e, --end=n
+@itemx
+End copying at frame index @code{n} (included). Frame numbers start with
+zero. Default is to copy to the end of stream.
+@end table
+
+@c Local Variables:
+@c ispell-local-dictionary: "american"
+@c End:

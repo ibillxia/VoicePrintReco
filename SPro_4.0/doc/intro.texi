@@ -1,0 +1,185 @@
+@c
+@c intro.texi -- SPro Manual Introduction
+@c
+@c Copyright (C) 2003 Guillaume Gravier (ggravier@irisa.fr)
+@c
+@c $Author: ggravier $
+@c $Date: 2003/08/22 16:18:32 $
+@c $Revision: 1.2 $
+@c
+
+@c >>>>> This file is included by sprodoc.texi
+
+@c --*-- ------------ --*--
+@c --*-- Introduction --*--
+@c --*-- ------------ --*--
+@node Introduction, Speech analysis, Top, Top
+@chapter Introduction
+
+@menu
+* Overview::                    What is SPro good for?
+* Content::                     How to read this document?
+* Installing::                  SPro installation
+* Bugs::                        Reporting bugs
+* Contributors::                People who contributed
+@end menu
+
+@c --*-- Overview --*--
+@node Overview, Content, Introduction, Introduction
+@section What is SPro?
+
+SPro is a speech signal processing toolkit which provides runtime
+commands implementing standard feature extraction algorithms for speech
+and speaker recognition applications and a C library to implement new
+algorithms and to use SPro files within your own programs.
+
+SPro was originally designed for variable resolution spectral analysis
+but also provides for feature extraction techniques classically used in
+speech applications. There are commands for the following
+representations:
+@itemize @bullet
+@item 
+filter-bank energies
+@item
+cepstral coefficients (filter-bank or linear prediction)
+@item
+linear prediction derived representation (prediction and reflection
+coefficients, log area ratios and line spectrum pairs)
+@end itemize
+
+@noindent
+Though the toolkit has been designed as a front-end for applications
+such as speech or speaker recognition, we believe the library provides
+enough possibilities to implement various feature extraction algorithms
+easily (e.g. zero crossing rate). However, no command for such features
+is provided.
+
+The library, written in ANSI C, provides functions for the following:
+@itemize @bullet
+@item
+waveform signal input
+@item
+low-level signal processing (FFT, LPC analysis, etc.)
+@item
+low-level feature processing (lifter, CMS, variance
+normalization, deltas, etc.)
+@item
+feature I/O
+@end itemize
+The library does not provide for high-level feature extraction functions
+which directly converts a waveform into features, mainly because such
+functions would require a tremendous number of arguments in order to be
+versatile. However, it is rather trivial to write such a function for
+your particular needs using the SPro library.
+
+@c --*-- Content --*--
+@node Content, Installing, Overview, Introduction
+@section How to read this manual?
+
+The manual is divided into three main parts: 
+@enumerate
+@item
+user manual
+@item
+programmer manual
+@item
+reference manual
+@end enumerate
+
+@ref{SPro tools} is the user manual. It provides a description of the
+speech analysis algorithms involved (@pxref{Speech analysis}) and
+explains in details the use and the implementation of the SPro commands
+@command{sfbank}, @command{sfbcep}, @command{slpc}, @command{slpcep} and
+@command{scopy}. @ref{File formats} describes the supported waveform
+file formats and the SPro feature file format. The next sections are
+dedicated to the detailed description of the SPro tools.
+
+@ref{SPro library} is the programmer manual which describes the library
+main data structures and the associated functions.
+
+@ref{Reference guide} provides a quick reference manual for the SPro
+tools syntax.
+
+If you have been using a former version of SPro, read
+@ref{Compatibility} carefully for crucial information on the
+(in)compatibility of SPro @value{VERSION} with the previous versions.
+
+Finally, to learn more about the evolution of SPro, the history of the
+various SPro releases is detailed in @ref{Changes}.
+
+@c --*-- Installing --*--
+@node Installing, Bugs, Content, Introduction
+@section Installing SPro
+
+@cindex installation
+
+Installation follows the standard GNU installation procedure. The two
+following lines in your favorite shell
+@example
+  ./configure
+  make
+@end example
+@noindent
+will build the library and the runtimes. SPro supports some extra
+features based on some external packages. These features can be turned
+on/off (depending on whether you have them already installed on your
+machine) using the @option{--with-xxx} options of the configure
+script. Supported enable options are:
+@example
+  --with-sphere[=path]     SPHERE 2.6 file format support
+@end example
+@noindent
+If the @acronym{SPHERE} library is installed in a standard place on your
+system (e.g.@: @samp{/usr/local/include} and @samp{/usr/local/lib}),
+there is no need to specify @var{path}. Otherwise, @var{path} should
+point to the directory where the @acronym{SPHERE} library has been
+installed. @command{configure} will search for the library includes in
+@var{path}@code{/include} and for the archives in @var{path}@code{/lib}.
+Compiling SPro with the @option{-O3} option of the @command{gcc}
+compiler (@code{CFLAGS=-O3}) is a good idea for sake of rapidity.
+
+Before installing, you may want to check your build by typing
+@example
+  make check 
+@end example
+
+Finally, installing the library, the runtimes and the info documentation
+can be done running
+@example
+  make install
+@end example
+The installation path is specified by the configuration script (try
+@command{./configure --help} for details) and defaults to
+@samp{/usr/local}.
+
+See file @file{INSTALL} in the distribution top directory for more
+details.
+
+To the author knowledge, SPro has been successfully build and used on
+Linux, SPARC/SunOS, and HP-UX. It should also work on AIX though this
+has not been tested so far.
+
+@c --*-- Bugs --*--
+@node Bugs, Contributors, Installing, Introduction
+@section Reporting bugs
+
+@cindex bugs, reporting
+
+Bugs should be reported to @email{ggravier@@irisa.fr}. Feel free to
+submit a diagnostic or even a patch along with your bug report if you
+kindly bothered to do the trouble-shooting. This is always appreciated.
+
+@c --*-- Bugs --*--
+@node Contributors,  , Bugs, Introduction
+@section Contributors
+
+@cindex contributors
+
+Along the years, SPro has benefited from the help of several
+contributors. Here is a list, in alphabetical order, of the main
+contributors: Rapha@"el Blouet, Pierre Duhamel, Johnny Mariethoz, Sylvain
+Meigner, Alexey Ozerov and Jacques Prado.
+
+@c Local Variables:
+@c ispell-local-dictionary: "american"
+@c End:

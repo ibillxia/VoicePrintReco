@@ -1,0 +1,78 @@
+#
+# Speech PROcessing tools - README
+#
+# $Author: ggravier $
+# $Date: 2003/07/24 15:14:07 $
+# $Revision: 1.3 $
+#
+
+INTRODUCTION
+
+The Speech Signal Processing (SPro) toolkit provides the standard
+speech signal analysis routines. The basic functions needed to build
+signal processing algorithms are defined in a library and runtime
+tools are provided for the standard analysis procedure (LPC,
+filter-bank and cepstral analysis).
+
+LICENSE
+
+SPro is distributed "as is" under the GNU Public License. See COPYING
+for details on the license.
+
+CONTENT
+
+ Library (libspro.a):
+
+  - system.h: system dependent stuff
+  - spro.h: all the definitions for libspro.a
+
+  - sig.c: waveform I/O functions
+  - header.c: feature stream header functions
+  - spf.c: feature I/O functions
+  - misc.c: miscellaneous stuff that didn't fit anywhere else
+  - lpc.c: LPC based speech analysis functions
+  - fft.c: FFT based speech analysis functions
+  - convert.c: delta, delta-delta, CMS and other convertions
+
+ Runtimes:
+
+  - scopy: copy/list of an SPro data file into various formats (HTK,
+    ascii, Sirocco, ...)
+  - sfbank: filter bank analysis
+  - sfbcep: filter bank cepstral coefficients
+  - slpc: LPC analysis
+  - slpcep: LPC-based cepstral coefficients
+
+ Documentation:
+
+  - sprodoc.tex
+
+INSTALLATION
+
+  See INSTALL for details.
+
+SUPPORTED PLATFORMS
+
+  As far as I know, SPro has been successfully build and used on
+  Linux, SPARC/SunOS, and HP-UX. It should also work on AIX though
+  this has not been tested so far. This code has *never* been ported
+  to any windows-based OS but if someone ever do that, please let me
+  know (there should be some problems).
+
+BUG REPORT
+
+  To report a bug or any comment or (even better) any contribution,
+  please send a mail to ggravier@irisa.fr.
+
+HISTORY
+
+  See CHANGES for details.
+
+AUTHOR
+
+  Guillaume Gravier - ggravier@irisa.fr
+
+CONTRIBUTORS
+
+  In alphabetical order: Raphael Blouet, Pierre Duhamel, Johnny
+  Mariethoz, Sylvain Meigner, Alexey Ozerov, Jacques Prado.

@@ -1,0 +1,34 @@
+
+Usage:
+    scopy [options] ifn ofn
+
+Synopsis:
+    copy input file to output file making necessary convertions.
+
+Options:
+  -c, --compatibility       input is in SPro 3.x file format (no)
+  -I, --bufsize=n           I/O buffer size in kbytes (10000)
+  -i, --info                print stream information (off)
+  -z, --suppress            suppress printing data (off)
+  -B, --swap                swap byte order before writing new file (no)
+  -o, --output-format=s     set output format (spro)
+                            valid formats are: ascii, htk, sirocco
+
+  -Z, --cms                 cepstral mean normalization
+  -R, --normalize           variance normalization
+  -L, --segment-length=n    segment length in frames for normalization (whole data)
+  -D, --delta               add first order derivatives
+  -A, --acceleration        add second order derivatives
+  -N, --no-static-energy    remove static energy
+
+  -m, --scale=f             scale features (no)
+  -t, --transform=fn        apply transformation matrix in fn (none)
+  -x, --extract=s           bin extraction pattern (none)
+
+  -s, --start=n             starting at sample number (1)
+  -e, --end=n               ending at sample number (last)
+
+  -v, --verbose             verbose mode
+  -V, --version             print version number
+  -h, --help                this help message
+

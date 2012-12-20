@@ -1,0 +1,1120 @@
+@c
+@c library.texi -- SPro User Manual
+@c
+@c Copyright (C) 2003 Guillaume Gravier (ggravier@irisa.fr)
+@c
+@c $Author: ggravier $
+@c $Date: 2003/08/22 16:18:32 $
+@c $Revision: 1.2 $
+@c
+
+@c >>>>> This file is included by sprodoc.texi <<<<<
+
+@c --*-- ------------ --*--
+@c --*-- SPro library --*--
+@c --*-- ------------ --*--
+@node SPro library, Reference guide, SPro tools, Top
+@chapter The SPro library
+
+This chapter describes the main functions of the SPro library and should
+be sufficient for most implementations using the library. For more
+details, the reader is invited to read the source code which is, and
+will probably ever be, the most detailed and up-to-date description of
+what a function does. In particular, the library header @file{spro.h}
+gives a lot of details about functions arguments. The SPro
+tools@footnote{Maybe to the exception of @command{scopy} which is a
+total mess.} are good example on the use of the library functions.
+
+Basic type definitions are voluntarily @emph{not} given in the
+manual. Wherever necessary, @dfn{accessors} are given to access the most
+crucial members of structured types and, unless not possible otherwise,
+direct access should be avoided as much as possible in order to ensure a
+better compatibility with future versions of the library. For sake of
+rapidity, these accessors are mostly macros rather than functions. These
+accessors are described in the relevant sections.
+
+@menu
+* Waveform streams::            Functions related to waveforms
+* Feature description flags::   Describing feature vector contents
+* Feature streams::             Reading and writing features
+* Storing features without streams::  I/O with feature buffers
+* Feature conversion::          Adding delta features, CMS, etc...
+* FFT-based functions::         FFT analysis functions
+* LPC-based functions::         LPC analysis functions
+* Miscellaneous functions::     Whatever could not go anywhere else
+@end menu
+
+@c
+@c --*-- Waveform input --*--
+@c
+@node Waveform streams, Feature description flags, SPro library, SPro library
+@section Waveform streams
+
+This section describes functions related to waveforms, or equivalently
+signals. From now on, the term signal will be used as a synonym to
+waveform unless otherwise specified. Functions related to signals are
+usually prefixed with @code{sig_} and located in @file{sig.c} and
+@file{misc.c}. 
+
+@menu
+* Waveform memory allocation::  Memory allocation for waveforms
+* Opening waveform streams::    Opening waveform streams for reading
+* Reading frames::              Reading frames from a waveform stream
+* Computing frame energy::      Computing frame energy
+@end menu
+
+@c -- Memory allocation
+@node Waveform memory allocation, Opening waveform streams, Waveform streams, Waveform streams
+@subsection Memory allocation
+
+Waveforms, or signals, are stored in a variable whose type is
+@code{spsig_t}. This type is not intended for storing waveform
+@dfn{streams}, i.e.@: the entire waveform for a document, but rather
+the frame samples. Therefore, no I/O functions are provided for this
+data type. Every signal processing function which operates on a frame
+takes as input a variable of the type @code{spsig_t}. Memory allocation
+for a signal is performed using @code{sig_alloc} and released using
+@code{sig_free}.
+
+@deftypefn {Function} {spsig_t *} sig_alloc (unsigned long *@var{n})
+Allocate memory for a signal containing @var{n} samples. Return a
+pointer to the allocated structure or @code{NULL} in case of error.
+@end deftypefn
+
+@deftypefn {Function} {void} sig_free (spsig_t *@var{p})
+Free memory allocated for a signal using @code{sig_alloc}.
+@end deftypefn
+
+@c -- Opening waveform streams
+@node Opening waveform streams, Reading frames, Waveform memory allocation, Waveform streams
+@subsection Opening streams
+
+Signals are usually read from a stream, i.e.@: a collection of samples,
+from which the frames are made. As the SPro library has been designed to
+process signals into feature vectors, signal streams are solely input
+streams and no output function is provided. Therefore, a signal stream
+is always opened in read mode. The following two functions are used to
+open a stream for reading and to close the stream when all is
+done. Reading frames from a stream is explained in the next section.
+
+@deftypefn {Function} {sigstream_t *} sig_stream_open (const char *@var{fn}, int @var{fmt}, float @var{Fs}, size_t @var{nbytes}, int @var{swap})
+Open stream in file @var{fn} in read mode, where the file format is
+@var{fmt}. If @var{fn} is @code{NULL}, input will be made from
+@code{stdin}. Valid file formats are @code{SPRO_SIG_PCM16_FORMAT},
+@code{SPRO_SIG_WAVE_FORMAT} and @code{SPRO_SIG_SPHERE_FORMAT} if the
+library has been compiled to support the @acronym{SPHERE} file
+format. If @var{fmt} is @code{SPRO_SIG_PCM16_FORMAT}, the sample rate
+@var{Fs} (in Hz) must be specified. Otherwise, the sample rate is read
+from the header and @var{Fs} is ignored. The input buffer size is
+specified by @var{nbytes}, which means @var{nbytes} bytes will be
+allocated for input. If @var{swap} is non null, byte swapping is
+performed on the samples after reading them. Return a pointer to the
+opened signal stream or @code{NULL} in case of error.
+@end deftypefn
+
+@deftypefn {Function} void sig_stream_close (sigstream_t *@var{f})
+Close a signal stream opened with @code{sig_stream_open}, releasing
+allocated memory.
+@end deftypefn
+
+@c -- Reading frames
+@node Reading frames, Computing frame energy, Opening waveform streams, Waveform streams
+@subsection Reading frames
+
+Though possible, accessing directly samples in the stream is not the
+purpose of signal streams in SPro. Indeed, speech processing is based on
+the processing of successive overlapping frames. The library provides
+function to access directly to frames, such as
+@code{get_next_sig_frame} which returns frame samples which can be
+weighted using @code{sig_weight}. Weighting vectors for standard
+signal processing windows are created using @code{set_sig_win}.
+
+@deftypefn {Function} int get_next_sig_frame (sigstream_t *@var{f}, int @var{ch}, int @var{l}, int @var{d}, float @var{k}, sample_t *@var{buf})
+Read next frame from channel @var{ch} in stream @var{f}. Frames are
+@var{l} samples long with a shift of @var{d} samples between successive
+frames. Frame samples are returned in the buffer @var{buf} which must
+have been previously allocated to contain at least @var{d} samples. The
+content of @var{buf} must be kept untouched between two successive calls
+since some of the samples reused due to the overlap. Argument @var{k}
+sets the pre-emphasis factor. Return 1 in case of success and 0
+otherwise.
+@end deftypefn
+
+@deftypefn {Function} {float *} set_sig_win (unsigned long @var{N}, int @var{type})
+Allocate and initialize a weighting vector of length @var{N} for the
+specified window type, where @var{type} is one of
+@code{SPRO_HAMMING_WINDOW}, @code{SPRO_HANNING_WINDOW} and
+@code{SPRO_BLACKMAN_WINDOW}. The window type @code{SPRO_NULL_WINDOW} is
+defined for the purpose of argument processing but is not a valid
+argument for this function. Return a pointer to the allocated vector or
+@code{NULL} in case of error.
+@end deftypefn
+
+@deftypefn {Function} {spsig_t *} sig_weight (spsig_t *@var{s}, sample_t *@var{buf}, float *@var{w})
+Weight the samples in @var{buf} according to the weights in @var{w}. The
+result is returned in the previously allocated signal @var{s} whose size
+must correspond to the buffer's length. Return a pointer @var{s}.
+@end deftypefn
+
+The following is a typical piece of code used to open a signal stream
+and loop on all the input frames of @var{N} samples every @var{D}
+samples@footnote{For increased readability, error checking has been
+removed from the allocations.}.
+@example
+spfstream_t *f = sig_stream_open("foo.wav", 
+                                 SPRO_SIG_WAVE_FORMAT, 0, 10000, 0);
+spsig_t *frame = sig_alloc(N);
+float *w = set_sig_win(N, SPRO_HAMMING_WINDOW);
+sample_t *buf = (sample_t *)malloc(N * sizeof(sample_t));
+
+while (get_next_sig_frame(f, 1, N, D, 0.95, buf)) @{
+  sig_weight(frame, buf, w); /* weight signal */
+
+  /* ... */
+
+@}
+
+sig_stream_close(f);
+sig_free(frame);
+free(w);
+free(buf);
+@end example
+
+@c -- Computing frame energy
+@node Computing frame energy,  , Reading frames, Waveform streams
+@subsection Computing frame energy
+
+Assuming the frame signal is centered, @code{sig_normalize} compute the
+frame energy and may perform energy normalization to unity.
+
+@deftypefn Function double sig_normalize (spsig_t *@var{s}, int @var{norm})
+Return the square root of the sum of the squared samples in @var{s}. If
+@var{norm} is not null, normalize the signal variance to unity.
+@end deftypefn
+
+@c
+@c --*-- Feature description flags --*--
+@c
+@node Feature description flags, Feature streams, Waveform streams, SPro library
+@section Feature description flags
+
+Feature description flags are used to describe the content of a feature
+vectors indicating information about mean and variance normalization,
+delta features, etc. @xref{Feature streams}, for details. In the
+library, such flags are represented as field of bits, coded as
+@code{long} integers. To avoid incomprehensible code, symbolic constants
+are defined for each piece of information possibly encoded in the
+feature description flag. Bit mask constants are of the form
+@code{WITHX}, where @code{X} is one of the letter @code{E}, @code{Z},
+@code{R}, @code{D}, @code{A} or @code{N}. The constant
+@code{SPRO_EMPTY_FLAG}, equals to 0, can also be used to denote an empty
+flag.
+
+The two functions @code{set_flag_bits} and @code{get_flag_bits} can
+be used to raise or check the presence of elements (bits) in the
+flags. Alternatively, logical operators can be used directly on the flag
+value. For example, the instruction 
+@example
+flag = flag | WITHZ;
+@end example
+@noindent
+will raise the bit corresponding to mean subtraction while @code{flag &
+WITHZ} will be true if the bit corresponding to @code{Z} is raised and
+false otherwise. However, we recommend using the two macros for
+compatibility purposes. Another way o set flags is via the function
+@code{sp_str_to_flag} which converts a string of characters to a
+flag. The dual operation is implemented in @code{sp_flag_to_str}.
+
+@deftypefn {Macro} long set_flag_bits (long @var{flag}, long @var{mask})
+Set to one the bits specified by @var{mask} in the the feature
+description flag @var{flag}. Return the resulting stream description
+flag. For example, the following line
+@example
+  flag = set_flag_bits(flag, WITHZ | WITHR)
+@end example
+@noindent
+will raise the bits @code{WITHZ} and @code{WITHR} in @var{flag},
+corresponding to mean and variance normalization respectively. Bits
+already raised in @var{flag} will be left untouched.
+@end deftypefn
+
+@deftypefn {Macro} long get_flag_bits (long @var{flag}, long @var{mask})
+Return a flag containing the bits which are raised both in @var{flag}
+and in @var{mask}. The macro can be used as a boolean
+expression. However, this can be tricky, particularly if @var{mask} is a
+logical expression by itself. In this case, @code{get_flag_bits} will be
+true if at least two corresponding bits are raised in @var{flag} and
+@var{mask}. For example, if @var{mask} has the value @code{(WITHZ |
+WITHR)}, @code{get_flag_bits} will return true if @var{flag} has either
+the @code{WITHZ} or @code{WITHR} bit raised, or, obviously, both. To
+check that both bits are raised, use the following test
+@example
+  if (get_flag_bits(flag, WITHZ | WITHR) == (WITHZ | WITHR)) @{
+    /* ... */
+  @}
+@end example
+@end deftypefn
+
+@deftypefn {Function} long sp_str_to_flag (const char *@var{str})
+Convert @var{str} into a feature description flag, where @var{str} is a
+string of description letters among @code{E}, @code{Z}, @code{R},
+@code{D}, @code{A} or @code{N}. Return a flag where the bits
+corresponding to the letters in @var{str} are raised.
+@end deftypefn
+
+@deftypefn {Function} {char *} sp_flag_to_str (long @var{flag}, char @var{str}[7])
+Convert @var{flag} into a string containing the corresponding feature
+description letters. This function is mainly for tracing. Return a
+pointer to @var{str}.
+@end deftypefn
+
+@c
+@c --*-- Feature Input/Output --*--
+@c
+@node Feature streams, Storing features without streams, Feature description flags, SPro library
+@section Feature streams
+
+This section describes the functions related to input and output of
+feature vectors. The functions are divided into three categories, namely
+opening a feature stream, reading and writing features from or to a
+stream and seeking to a particular position in the stream. Feature
+stream functions are usually prefixed by @code{spf_stream_} and are
+located in @file{spf.c}, @file{misc.c} and @file{header.c}.
+
+@menu
+* Opening feature streams::     Opening feature streams for I/O
+* Reading and writing feature vectors::  Reading features from and writing features to streams
+* Seeking into a stream::       Access a particular frame in a stream
+@end menu
+
+@c -- Opening a feature stream
+@node Opening feature streams, Reading and writing feature vectors, Feature streams, Feature streams
+@subsection Opening feature streams
+
+This section describes in detail feature streams open and close
+mechanism. The section also explains how to access stream attributes,
+such as fields in the variable length header or the frame rate for
+streams in read mode.
+
+@menu
+* Conversion flags::            Dynamically converting features at I/O time
+* Opening for I/O ::            Open a feature stream
+* Accessing stream attributes::  What's the stream dimension, frame rate, etc...
+@end menu
+
+@c Feature stream I/O functions
+@node Conversion flags, Opening for I/O , Opening feature streams, Opening feature streams
+@unnumberedsubsubsec Conversion flags
+
+In SPro, conversions such as adding dynamic features, normalization or
+energy scaling are associated with streams since these are typically
+global operations which cannot be carried out at the frame level. Such
+conversions are indicated by a @dfn{conversion flag} which specifies how
+the input data should be converted before output. In read mode, input
+refers to the file content and output is what is returned from the read
+function while, in write mode, input refers to the input of the write
+function and output to the file content. The conversion flag is a flag
+which indicates the processing that must be done between the input and
+the output. The conversion flag is actually a feature description flag
+containing the bits that should be raised in the output feature
+description flag in addition to those already present in the input
+description flag. For example, if the conversion flag takes the value
+@code{(WITHZ|WITHA)} and the input feature description flag, e.g.@: as
+specified in the header of an input file, is @code{(WITHZ|WITHD)}, the
+resulting feature description for the input stream will be
+@code{(WITHZ|WITHD|WITHA)}.
+
+Though not coded as a flag, conversion in feature streams may include
+energy scaling. As this is not coded in the stream header, one must be
+careful not to specify scaling twice. Energy scaling conversion is
+turned on using @code{set_stream_energy_scale}. In a very similar way,
+the function @code{set_stream_seg_length} can be used to specify
+segmental normalization or scaling. Both functions should be called
+between the call to open and the first call to read or write, depending
+on the stream mode, in order to be effective. 
+
+@deftypefn {Macro} {float} set_stream_energy_scale (spfstream_t *@var{f}, float @var{s})
+Turn on energy scaling for stream @var{f} with a scale factor @var{s}. A
+null value of @var{s} disable energy scaling. This is the default value
+when the stream is opened. The function must be called after opening the
+stream and before any I/O operation on the stream. Return @var{s}.
+@end deftypefn
+
+@deftypefn {Macro} {long} set_stream_seg_length (spfstream_t *@var{f}, long @var{length})
+Turn on segmental normalization and scaling for stream @var{s} with a
+segment length of @var{length} frames. A null value of @var{length}
+disable energy scaling. This is the default value when the stream is
+opened. The function must be called after opening the stream and before
+any I/O operation on the stream. Return @var{length}.
+@end deftypefn
+
+@c Feature stream I/O functions
+@node Opening for I/O , Accessing stream attributes, Conversion flags, Opening feature streams
+@unnumberedsubsubsec Opening for I/O
+
+As opposed to signal streams, feature streams can be either in read or
+write mode. Since the arguments are quite different in both cases, two
+different functions are provided, namely @code{spf_input_stream_open}
+and @code{spf_input_stream_open}. The function
+@code{spf_stream_close} is common to input and output streams.
+
+Feature streams have very important attributes, such as the dimension,
+the feature description flag, the frame rate or the variable header, for
+which accessors are provided. Macros to access the most important
+attributes are documented here under.
+
+@deftypefn {Function} {spfstream_t *} spf_input_stream_open (const char *@var{name}, long @var{flag}, size_t @var{nbytes})
+Open a feature stream associated to file @var{name} for reading with an
+associated buffer of @var{nbytes} bytes. Features read from @var{name}
+are converted according @var{flag}. See above for details on convertion
+flags. Return a pointer to the feature stream.
+@end deftypefn
+
+@deftypefn {Function} {spfstream_t *} spf_output_stream_open (const char *@var{name}, unsigned short @var{dim}, long @var{iflag}, long @var{cflag}, float @var{Fs}, const spfield_t *{hd}, size_t @var{nbytes})
+Open a feature stream associated to file @var{name} for writing with a
+buffer of @var{nbytes} bytes. The input features, i.e.@: features added
+to the stream via @code{spf_stream_write}, dimension is @var{dim} with a
+corresponding feature description flag @var{iflag} and a frame rate of
+@var{Fs} Hz.. Conversion between the input features and the actual
+features written to file is specified by @var{cflag}. See above for
+details on conversion flags. Fields in the variable length header can be
+added via a possibly @code{NULL} array of fields @var{hd}, where
+@var{hd} is a NULL terminated array of @code{@{char *name; char
+*value;@}} elements. See example below. Return a pointer to the feature
+stream.
+@end deftypefn
+
+@deftypefn {Function} {void} spf_output_stream_open (spfstream_t *@var{f})
+Close feature stream @var{f} opened with one of the
+@code{spf_*_stream_open} function, releasing allocated memory.
+@end deftypefn
+
+@c Accessing stream attributes
+@node Accessing stream attributes,  , Opening for I/O , Opening feature streams
+@unnumberedsubsubsec Accessing stream attributes
+
+Stream attributes, such as dimension, fields in the variable length
+header, frame rate can be accessed using the following accessors. 
+
+@deftypefn {Macro} {char *} spf_stream_name (spfstream_t *@var{f})
+Return a pointer to the filename associated with stream @var{f}. If the
+stream has no associated filename, i.e.@: I/O via @code{stdin} and
+@code{stdout}, return NULL.
+@end deftypefn
+
+@deftypefn {Macro} float spf_stream_rate (spfstream_t *@var{f})
+Return the frame rate in Hz for stream @var{f}.
+@end deftypefn
+
+@deftypefn {Macro} {unsigned short} spf_stream_dim (spfstream_t *@var{f})
+Return the feature vector dimension for stream @var{f}. The dimension
+corresponds to the dimension of the feature vectors possibly after
+conversion if the stream has a conversion flag set. For input streams,
+the dimension is therefore the dimension of the feature vectors returned
+by @code{get_next_spf_stream} while, for output stream, the dimension is
+the dimension as in the output header.
+@end deftypefn
+
+@deftypefn {Macro} long spf_stream_flag (spfstream_t *@var{f})
+Return the feature description flag for stream @var{f}. The returned
+flag is taken after conversion, if any. For input streams, the flag
+describes the feature vectors returned by @code{get_next_spf_stream}
+while, for output stream, the flag is the output header's flag.
+@end deftypefn
+
+@deftypefn {Macro} {spfheader_t *} spf_stream_header (spfstream_t *@var{f})
+Return a pointer to the (possibly empty) variable length header for
+stream @var{f}.
+@end deftypefn
+
+@deftypefn {Function} {char *} spf_header_get (spfheader_t *@var{header}, const char *@var{name})
+Return a pointer to the value of the attribute @var{name} in
+@var{header}. Return @code{NULL} if there are no attribute @var{name}.
+@end deftypefn
+
+@deftypefn {Function} {char *} spf_header_get (spfheader_t *@var{header}, const char *@var{name})
+Return a pointer to the value of the attribute @var{name} in
+@var{header}. Return @code{NULL} if there are no attribute @var{name}.
+@end deftypefn
+
+@deftypefn {Function} int spf_header_add (spfheader_t *@var{header}, const spfield_t *@var{tab})
+Add fields in @var{tab} to @var{header}, where @var{tab} is a
+@code{NULL} terminated array of @code{@{char *name; char *value;@}}
+elements. For example, the following code
+@example
+spfheader_t *header = spf_header_init(NULL);
+spfield_t tab[] = @{
+  @{"snr", "20 dB"@},
+  @{"date", "July 29, 2003"@},
+  @{NULL , NULL@}
+@};
+spf_header_add (header, tab);
+@end example
+would create an empty header (undocumented function
+@code{spf_header_init}) and add the two fields @samp{snr} and
+@samp{date} to the header along with the corresponding values. No
+control is performed over duplicate field names. If several fields with
+the same name are added, the first one will always be returned by
+@code{spf_header_get} and the remaining one ignored. Return the number
+of fields added to the header.
+@end deftypefn
+
+@c -- Reading and writing feature vectors
+@node Reading and writing feature vectors, Seeking into a stream, Opening feature streams, Feature streams
+@subsection Reading and writing feature vectors
+
+The functions documented in this section are provided to read from or
+write to feature streams. Reading can be done in one of two ways. You
+can either read vector by vector using @code{get_next_spf_vec} or read
+in at once all the data in the feature buffer using
+@code{spf_stream_read}. Writing can only be done vector by vector using
+@code{spf_stream_write}, unless accessing directly the stream
+buffer. @xref{Storing features without streams}, for details on this
+highly not recommended operation. In write mode, the feature are
+actually written to the output file when the buffer is full or when the
+stream is closed. However, function @code{spf_stream_flush} can be used
+to force the output to file by flushing the buffer.
+
+Note that the two functions @code{spf_stream_read} and
+@code{spf_stream_write} are actually not dual functions. The first one
+fills in the buffer with as much data as possible while the second one
+writes some feature vectors in the stream buffer.
+
+@deftypefn {Function} {unsigned long} spf_stream_read (spfstream_t *@var{f})
+Fill in stream @var{f} buffer, reading until the buffer is full or the
+end of stream. Return the number of frames read.
+@end deftypefn
+
+@deftypefn {Function} {spf_t *} get_next_spf_vec (spfstream_t *@var{f})
+Return a pointer to the next feature vector in stream @var{f} or
+@code{NULL} at the end of stream. @xref{Seeking into a stream}, for
+details on how to get a particular vector in the stream.
+@end deftypefn
+
+@deftypefn {Function} {unsigned long} spf_stream_write (spfstream_t *@var{f}, spf_t *@var{buf}, unsigned long @var{n})
+Write @var{n} feature vectors concatenated in @var{buf} to stream
+@var{f}. The feature vector dimension in @var{buf} is the dimension
+specified when the stream was opened. Return the number of frames
+written.
+@end deftypefn
+
+@deftypefn {Function} {unsigned long} spf_stream_flush (spfstream_t *@var{f})
+Flush the buffer of stream @var{f}, forcing the feature vectors to be
+actually written to the output file. Flushing has no effect on input
+streams. Return the number of frames written.
+@end deftypefn
+
+@c -- Seeking into a stream
+@node Seeking into a stream,  , Reading and writing feature vectors, Feature streams
+@subsection Seeking into a stream
+
+The I/O functions described above are mainly intended for linear input
+and output, i.e.@: for reading or writing feature vectors in a
+sequential way. Though this is the most common case in speech
+processing, accessing a particular feature vector directly is also very
+useful. Functions to seek to a specified feature vector in a stream are
+provided. Feature vectors are indexed starting from 0. In read mode,
+seeking to a particular frame @var{n} using @code{spf_stream_seek} means
+that a pointer to frame @var{n} is returned by the next call to
+@code{get_next_spf_vec}. In write mode, the next call to
+@code{spf_stream_write} will start writing at frame @var{n}, thus
+overwriting frame @var{n} and possibly the following if those frames add
+already been set.
+
+@deftypefn {Function} int spf_stream_seek (spfstream_t *@var{f}, long @var{offset}, int @var{whence})
+Seek @var{offset} frames according to @var{whence} in stream
+@var{f}. The @var{whence} argument is similar to the last argument of
+the C function @code{fseek} and specifies the reference point for
+@var{offset}. If @var{whence} is equal to @code{SEEK_SET} (0),
+@var{offset} is relative to the first frame. If @var{whence} is equal to
+@code{SEEK_CUR} (1), @var{offset} is relative to the current frame in
+the stream. Positioning relative to the end of the stream is not
+possible since the stream length is not known. The offset can be
+positive to seek forward in time or negative to seek backward. Seeking
+is only possible if the file associated with @var{f} is a seekable
+device, which is not the case of @code{stdout} or @code{stdin}. Return 0
+if seek was correct or an error code (@code{SPRO_STREAM_SEEK_ERR})
+otherwise.
+@end deftypefn
+
+@deftypefn {Macro} {unsigned long} spf_stream_tell (spfstream_t *@var{f})
+Return the current position, i.e.@: frame index, in @var{f}.
+@end deftypefn
+
+@deftypefn {Macro} int spf_stream_rewind (spfstream_t *@var{f})
+Seek to the beginning of the stream. This is equivalent to
+@code{spf_stream_seek(f, 0, SEEK_SET)}. Return 0 upon success.
+@end deftypefn
+
+@c
+@c --*-- Feature buffer --*--
+@c
+@node Storing features without streams, Feature conversion, Feature streams, SPro library
+@section Storing features without streams
+
+In some programs, one may find useful to compute and keep in memory
+feature vectors inside a program without accessing the disk. This is for
+example the case if you want to embed feature extraction into your own
+program. Feature streams are of course not adapted to such operations
+which should rely on the use of @dfn{feature buffers} to store the
+feature vectors. Feature buffers are buffers containing a collection of
+feature vectors of the same dimension. Nearly no accessors are available
+for the buffer structure @code{spfbuf_t} whose attributes can be
+referenced directly. The structure definition is as follows:
+@example
+typedef struct @{
+  unsigned short adim;          /* allocated vector dimension     */
+  unsigned short dim;           /* actual vector dimension        */
+  unsigned long n;              /* number of vectors              */
+  unsigned long m;              /* maximum number of vectors      */
+  spf_t *s;                     /* pointer to features            */
+@} spfbuf_t;
+@end example
+@noindent
+Note that the allocated dimension may not be the actual dimension of the
+features stored in the buffer. In particular, this is useful for feature
+conversions. @xref{Feature conversion}. The attribute @code{m} is the
+maximum number of vectors of dimension @code{adim} that can be stored in
+the buffer. Feature vectors are stored concatenated in the feature
+@dfn{array} @code{s}. Scanning the buffer vectors, using the
+@code{adim}, is illustrated in an example below.
+
+@menu
+* Buffer allocation::           Allocating memory for a buffer
+* Accessing buffer elements::   Accessing vectors in a buffer
+* Buffer I/O::                  Reading and writing buffers to disk
+* Buffers and streams::         Direct access to stream buffers (not recommended)
+@end menu
+
+@c -- Feature buffer allocation and I/O
+@node Buffer allocation, Accessing buffer elements, Storing features without streams, Storing features without streams
+@subsection Buffer allocation
+
+Functions are provided to allocate a buffer of a given size in bytes,
+resize for a given number of feature vectors and free a buffer.
+
+@deftypefn {Function} {spfbuf_t *} spf_buf_alloc (unsigned short @var{dim}, size_t @var{size})
+Allocate memory for a buffer of @var{size} bytes. The maximum dimension
+of the elements in the buffer is @var{dim}, the maximum number of
+vectors in the buffer being determined according to @var{dim} and
+@var{size}. If @var{size} is null, an empty buffer is allocated with the
+buffer array (@code{buf->s}) set to @code{NULL}. Return a pointer to the
+allocated buffer.
+@end deftypefn
+
+@deftypefn {Function} {spf_t *} spf_buf_resize (spfbuf_t *@var{buf}, unsigned long @var{n})
+Resize buffer @var{buf} to contain exactly @var{n} vectors. The buffer
+array is extended (resp. reduced) if @var{n} is more (resp. less) than
+the current buffer size. In both cases, the current content of the
+buffer is left unchanged. If the current buffer is empty (size is 0 and
+array is @code{NULL}), the buffer array is allocated. This function can
+therefore be used to allocate a buffer for a given number of vectors
+rather than for a given size in bytes as in @code{spf_buf_alloc}. The
+following code is an example for allocating a buffer of 1000 feature
+vectors of dimension 33 using @code{spf_buf_resize}.
+@example
+spfbuf_t *buf = spf_buf_alloc(33, 0); /* alloc. empty buffer  */
+spf_buf_resize(&buf, 1000);           /* resize for 1000 vectors */
+@end example
+Return the address of the first element of the buffer array. Note that
+the attribute @code{buf->s} may be changed in @code{spf_buf_resize}.
+@end deftypefn
+
+@deftypefn {Function} void spf_buf_free (spfbuf_t *@var{buf})
+Free memory allocated to @var{buf}.
+@end deftypefn
+
+@c -- Adding and accessing elements
+@node Accessing buffer elements, Buffer I/O, Buffer allocation, Storing features without streams
+@subsection Accessing buffer elements
+
+The best way to reach a particular vector in a buffer is to grab a
+pointer to the vector using @code{get_spf_buf_vec}. In addition, the
+function @code{spf_buf_append} can be used to append feature vectors to
+a buffer, possibly extending the buffer size if necessary.
+
+@deftypefn {Function} {spf_t *} get_spf_buf_vec (spfbuf_t *@var{buf}, unsigned long @var{index})
+Return a pointer to vector @var{index} in @var{buf}. As opposed to
+positions in feature streams, the frame index @var{index} here is
+relative to the buffer, starting at 0. Return NULL if @var{index} is out
+of bound.
+@end deftypefn
+
+@deftypefn Function {spf_t *} spf_buf_append (spfbuf_t *@var{buf}, spf_t *@var{v}, unsigned short @var{dim}, unsigned long @var{nmore})
+Append feature vector @var{v} of dimension @var{dim} to buffer. If the
+buffer is full and @var{nmore} is not null, the buffer maximum size is
+extended by @var{nmore} vectors. Otherwise, if @var{nmore} is null, the
+buffer is left unchanged and @code{NULL} is returned. If the buffer is
+empty, the input vector dimension @var{dim} will be checked upon the
+buffer dimension. Else, @var{dim} will be used to initialize the buffer
+dimension. In any case, @var{dim} must be less than or equal to the
+maximum dimension (@code{buf->adim}) for which the buffer has been
+allocated. Return a pointer to the appended vector in the buffer or
+@code{NULL} in case of error.
+@end deftypefn
+
+Access to the buffer elements via @code{get_spf_buf_vec} implies a
+multiplication. Scanning all the vectors in the buffer may result faster
+using a pointer to the buffer array which is recursively
+incremented. The following example illustrates this method and print to
+@code{stdout} the feature vectors in text format.
+@example
+unsigned long i;
+unsigned short j;
+spf_t *p;
+
+p = buf->s;
+
+for (i = 0; i < spf_buf_length(buf); i++) @{
+
+  /* print vector at index i */
+  fprintf(stdout, "index %lu", i); 
+  for (j = 0; j < spf_buf_dim(buf); j++)
+    fprintf(stdout, " %8.4f", *(p+j));
+  fprintf(stdout, "\n");
+
+  /* move to next vector */
+  p += buf->adim;
+@}
+@end example
+@noindent
+Note that the pointer increment is the allocated dimension @code{adim},
+not the actual dimension @code{dim}. This example also illustrates the
+use of the two accessors macros @code{spf_buf_length} and
+@code{spf_buf_dim} which return the actual number of elements in the
+buffer and the actual feature vector dimension respectively.
+
+@c -- Feature buffer allocation and I/O
+@node Buffer I/O, Buffers and streams, Accessing buffer elements, Storing features without streams
+@subsection Buffer I/O
+
+If you need the following functions to read or write the content of a
+buffer to disk, you should be wondering why you are not using feature
+streams for I/Os! Feature buffers are provided to store features in the
+memory not for I/Os, for which using the feature streams, dedicated to
+this purpose, should always be preferred. Still want to use buffer for
+I/Os? 
+
+Ok, but don't say you have not been warned! In case you insist on buffer
+I/Os, the two functions @code{spf_buf_read} and @code{spf_buf_write} are
+provided respectively to read the buffer content from disk or to write
+the buffer content to disk.
+
+@deftypefn Function {unsigned long} spf_buf_read (spfbuf_t *@var{buf}, FILE *@var{f})
+Read data from file @var{f} into the buffer, until the buffer maximum
+sized is reached or until the end of file, whichever occurs first. The
+vector dimension is taken from the buffer actual dimension given by
+@code{buf->dim}. Return the number of vectors read into the buffer.
+@end deftypefn
+
+@deftypefn Function {unsigned long} spf_buf_write (spfbuf_t *@var{buf}, FILE *@var{f})
+Write the content of @var{buf} to file @var{f}. Return the number of
+vectors actually written to file.
+@end deftypefn
+
+@c -- Buffers and streams
+@node Buffers and streams,  , Buffer I/O, Storing features without streams
+@subsection Buffers and streams
+
+In feature streams, I/O functions clearly make use of a feature
+buffer. Accessing directly the element of the stream buffer using the
+buffer functions described above is therefore possible. A pointer to the
+stream buffer can be obtained using @code{spf_stream_buf}.
+
+@deftypefn {Macro} {spfbuf_t *} spf_stream_buf (spfstream_t *@var{f})
+Return a pointer to the buffer of stream @var{f}.
+@end deftypefn
+
+Unless you are quite familiar with SPro programming, @strong{direct
+access to stream buffers is strongly discouraged} since direct buffer
+I/Os may result in corrupted stream position information. The main
+consequence of corrupted stream position information is that
+@code{spf_stream_seek} and @code{spf_stream_tell} will not work
+properly. Rather than direct access to the stream buffer, the use of
+@code{spf_stream_seek} and @code{get_next_spf_frame} to access a
+particular vector should always be preferred.
+
+@c
+@c --*-- Feature conversion --*--
+@c
+@node Feature conversion, FFT-based functions, Storing features without streams, SPro library
+@section Feature conversion
+
+@dfn{Feature conversion} is the process of modifying the feature
+description flag, for example, by normalizing the feature mean and
+variance or by adding dynamic features. In other word, converting
+features consist on modifying the input features to match a specified
+target feature description. @xref{Feature description flags}.
+
+Changing the feature type, e.g.@: converting feature bank features to
+cepstral coefficients, is not considered as a feature conversion and is
+outside the scope of the function described in this
+section. @xref{LPC-based functions}, for details about changing the the
+feature type between various LPC representation. @xref{FFT-based
+functions}, for details about changing the filter-bank representation..
+
+Feature conversions are global operations in the sense that the
+conversion applies to a collection of feature vectors rather than to
+isolated feature vectors. Therefore, the conversion function,
+@code{spf_buf_convert}, operates on a feature buffer, modifying at once
+all the buffer vectors and returning a buffer (possibly the same --- see
+below) containing the new features.  The conversion itself is as follows
+@enumerate a
+@item
+copy static features into the output buffer, possibly excluding energy
+if required.
+
+@item
+normalize mean and variance of the static features in the output buffer
+(energy, if present, is not normalized) if required
+
+@item
+compute delta features for the output buffer if required
+
+@item
+compute acceleration features for the output buffer if required
+@item
+@end enumerate
+Since conversion principally aims at normalizing the features and adding
+dynamic features, the latter are always recomputed from the static
+features, even if the input feature vectors already contain dynamic
+features. This means that, for example, when converting features with a
+description flag value of @code{WITHE|WITHD} to
+@code{WITHE|WITHD|WITHN}, delta features will be recomputed, even though
+this is not strictly necessary@footnote{This will probably change in
+future versions where we should try to reuse as much as possible of the
+input features. Meanwhile, you will have to do with things the way they
+are...}! 
+
+Conversion can operate under three different modes, namely duplicate,
+replace and update. In duplicate mode, @code{spf_buf_convert} allocates
+the output buffer and leaves the input buffer unchanged. This mode can
+be used to duplicate a buffer, hence the name. In replace mode,
+@code{spf_buf_convert} allocates the output buffer and releases memory
+allocated for the input buffer, thus replacing somehow the input buffer
+by the output one. Note that due to reallocation, the buffer address may
+have changed after the call to @code{spf_buf_convert}. In replace mode,
+calls to the conversion functions should therefore always look like
+@example
+buf = spf_buf_convert(buf, SPRO_EMPTY_FLAG, WITHD, 0, 
+                      SPRO_CONV_REPLACE);
+@end example
+@noindent
+for the caller function to take into account the new address for
+@code{buf}. Finally, in update mode, the output buffer is the same as
+the input one and conversion is done @dfn{in place}. For this, buffer
+maximum dimension must be at least equal to the maximum of the input and
+output dimensions. Otherwise update conversion is impossible and an
+error is returned. In any of the three mode, @code{spf_buf_convert}
+returns a pointer to the output buffer.
+
+@deftypefn Function {spf_t *} spf_buf_convert (spfbuf_t *@var{buf}, long @var{iflag}, long @var{oflag}, unsigned long @var{wl}, int @var{mode})
+Convert feature vectors in @var{buf} from @var{iflag} description to
+@var{oflag}. The normalization window length @var{wl} specifies the
+length for segmental normalization. If null, global normalization is
+performed. Otherwise, use a sliding window of @var{wl} frames centered
+around the current frame. The mode is either @code{SPRO_CONV_DUPLICATE},
+@code{SPRO_CONV_REPLACE}, @code{SPRO_CONV_UPDATE}. Return a pointer to
+the buffer containing the converted data.
+@end deftypefn
+
+In addition to @code{spf_buf_convert}, the function
+@code{spf_buf_normalize} can be used to normalize the mean and variance
+of the features in a buffer.  Similarly, the function
+@code{spf_add_delta} can be used to compute the derivatives of some
+features in a buffer. Both functions are @dfn{generic} functions which
+should be used solely for the purpose of non-standard operations. For
+example, normalizing the dynamic features or the energy variance is not
+possible with @code{spf_buf_convert} but is possible with
+@code{spf_buf_normalize}. Though not exactly a conversion function,
+@code{scale_energy} is a generic function used to scale the energy
+coefficients in a buffer.
+
+@deftypefn Function int spf_buf_normalize (spfbuf_t *@var{buf}, unsigned short @var{s}, unsigned short @var{e}, unsigned long @var{wl}, int @var{vnorm})
+Normalize features @var{s} to @var{e} included in @var{buf}, where
+@var{s} and @var{e} are bins in the feature vectors and starts at 0. If
+@var{vnorm} is non null, variance normalization is performed in addition
+to mean subtraction. The normalization window length @var{wl} specifies
+the length for segmental normalization. If null, global normalization is
+performed. Otherwise, use a sliding window of @var{wl} frames centered
+around the current frame. Return 0 upon success or an error code
+otherwise.
+@end deftypefn
+
+@deftypefn Function int spf_add_delta (spfbuf_t *@var{buf}, unsigned short @var{s}, unsigned short @var{e}, unsigned short @var{d})
+Compute derivatives of features @var{s} to @var{e} included in
+@var{buf}, writing the derivatives starting at index @var{d} in the
+feature vector. Indices @var{s}, @var{e} and @var{d} are bins in the
+feature vectors and starts at 0. The buffer must have been allocated
+with sufficient memory to store the derivatives. Otherwise, an error is
+returned. Return 0 upon success.
+@end deftypefn
+
+@deftypefn Function int scale_energy (spfbuf_t *@var{buf}, unsigned short @var{j}, float @var{s}, unsigned long @var{wl})
+Scale feature at bin @var{j} in @var{buf} by the factor @var{s}. This
+function is intended for log-energy scaling and scales with respect to
+the maximum value. If @var{wl} is non null, segmental scaling using a
+sliding window of @var{wl} frames is done. Return 0 upon success.
+@end deftypefn
+
+@c
+@c --*-- FFT-based functions --*--
+@c
+@node FFT-based functions, LPC-based functions, Feature conversion, SPro library
+@section FFT-based functions
+
+This section documents all the functions related to Fourier analysis of speech signals.
+
+@menu
+* Fourier transform::           Fast Fourier transform of a signal
+* Filter-bank::                 Filter-bank integration
+* Cosine transform::            Discrete Cosine Transform
+@end menu
+
+@c -- Fourier transform
+@node Fourier transform, Filter-bank, FFT-based functions, FFT-based functions
+@subsection Fourier transform
+
+SPro implements a fast Fourier transform (FFT) algorithm as described in
+@cite{P. Duhamel and M. Vetterli, Improved Fourier and Hartley Transform
+Algorithms: Application to CycliC Convolution of Real Data, IEEE
+Trans. on ASSP, 35(6), June 1987}. For sake of rapidity, the
+implementation is based on a pre-computed FFT kernel which is
+initialized by @code{fft_init}. Initializing the FFT kernel for a given
+FFT size is necessary before the first invocation of @code{fft}. In
+particular, this implicates that the kernel should be reinitialized
+whenever the FFT size changes. Memory allocated to the kernel is
+released using @code{fft-reset}.
+
+@deftypefn Function int fft_init (unsigned long @var{n})
+Initialize the FFT kernel for length @var{n}. If @var{n} is null, reset
+the kernel. Otherwise (re)allocate a kernel for the specified length: if
+the kernel had previously been allocated with a different size and not
+reset, it is reallocated. Return 0 upon success.
+@end deftypefn
+
+@deftypefn Function int fft (spsig_t *@var{s}, float *@var{mod}, float *@var{phi})
+Fourier transform of signal @var{s} using the current kernel. If the
+length of @var{s} is less than the kernel size, @var{s} is padded with
+zeros. On the contrary, if the length of @var{s} is more than the kernel
+size, @var{s} is truncated. Note that no warning occurs in this
+case. Return the modulus in @var{mod} and the phase in @var{phi}. Both
+@var{mod} and @var{phi} must have been allocated to contain at least
+@math{N/2} elements, where @math{N} is the kernel size. Either one can
+be @code{NULL}, in which case no value is returned. Return 0 upon
+success.
+@end deftypefn
+
+@deftypefn Macro int fft_reset ()
+Reset memory allocated to the FFT kernel. This is a macro to
+@code{fft_init(0)} which always returns 0.
+@end deftypefn
+
+@c -- Filter-bank
+@node Filter-bank, Cosine transform, Fourier transform, FFT-based functions
+@subsection Filter-bank
+
+Filter-bank analysis is a two step process. The first step consists in
+defining the filter-bank geometry, either with @code{set_mel_idx} or
+@code{set_alpha_idx}. Both functions set the indices in the FFT
+magnitude vector of the filters' cutoff frequencies according to the
+specified frequency warping. The second step is the Fourier transform
+and the filter-bank integration embedded in function
+@code{log_filter_bank}. Using @code{log_filter_bank} requires that the
+FFT kernel has been initialized previously.
+
+@deftypefn Function {unsigned short} set_alpha_idx (unsigned short *@var{n}, float @var{fmin}, float @var{fmax}, float @var{Fs})
+Set cutoff frequencies indices for @var{n} filters in the bandwidth
+@var{fmin} --- @var{fmax}, according to @acronym{MEL} frequency
+warping. Lower and upper frequency bounds, @var{fmin} and @var{fmax}
+are normalized frequencies between 0 and 0.5. If @var{fmax} is lower
+than or equal to @var{fmin}, the upper bound will be considered to be
+the Nyquist frequency (1/2). The signal sample rate @var{Fs} is given in
+Hz. Return a vector of @var{n}+2 indices or @code{NULL} in case of
+error.
+@end deftypefn
+
+@deftypefn Function {unsigned short} set_alpha_idx (unsigned short *@var{n}, float @var{a}, float @var{fmin}, float @var{fmax})
+Set cutoff frequencies indices for @var{n} filters in the bandwidth
+@var{fmin} --- @var{fmax}, according to the bilinear frequency warping
+specified by @var{a}. If @var{a} is null, no frequency warping is
+used. Lower and upper frequency bounds, @var{fmin} and @var{fmax}, are
+normalized frequencies between 0 and 0.5. If @var{fmax} is lower than or
+equal to @var{fmin}, the upper bound will be considered to be the
+Nyquist frequency (1/2). Return a vector of @var{n}+2 indices or
+@code{NULL} in case of error.
+@end deftypefn
+
+@deftypefn Function int log_filter_bank (spsig_t *@var{s}, unsigned short @var{n}, unsigned short *@var{idx}, spf_t *@var{e})
+Apply @var{n} channel triangular filter-bank to signal @var{s}. The
+indices in the FFT magnitude vector of the channels cutoff frequencies
+are given in @var{idx}, which should have been initialized with one of
+the @code{set_xxx_idx} functions above. Channel log-magnitudes are
+returned in vector @var{e}, previously allocated to contain at least
+@var{n} elements. Return 0 upon success.
+@end deftypefn
+
+@c -- Cosine transform
+@node Cosine transform,  , Filter-bank, FFT-based functions
+@subsection Cosine transform
+
+As for the Fourier transform, discrete cosine transform (DCT) is a
+kernel based transformation. A DCT kernel for a given size is
+initialized using @code{dct_init} while the transformation itself is
+carried out by @code{dct}. The macro @code{dct_reset} resets the kernel.
+
+@deftypefn Function int dct_init (unsigned short @var{n}, unsigned short @var{m})
+Initialize the DCT kernel for a transformation from dimension @var{n} to
+@var{m}. If either @var{n} or @var{m} is null, reset the
+kernel. Otherwise (re)initialize a kernel for the specified
+transformation.length. Return 0 upon success.
+@end deftypefn
+
+@deftypefn Function int dct (spf_t *@var{x}, spf_t *@var{y})
+Apply transformation to @var{x}, storing the result in @var{y}. Assuming
+the kernel was initialized with lengths @var{n} and @var{m}, @var{x}
+should contain at least @var{n} elements and @var{y} must have been
+previously allocated to contain at least @var{m} elements. Return 0 upon
+success.
+@end deftypefn
+
+@deftypefn Macro int dct_reset ()
+Reset memory allocated to the FFT kernel. This is a macro to
+@code{dct_init(0, 0)} which always returns 0.
+@end deftypefn
+
+@c
+@c --*-- LPC-based functions --*--
+@c
+@node LPC-based functions, Miscellaneous functions, FFT-based functions, SPro library
+@section LPC-based functions
+
+This section documents functions related to LPC analysis of speech
+signals. The first part documents how to solve the LPC equations while
+the second one deals with transforming the LPC or PARCOR representation
+into a different one.
+
+@menu
+* Linear prediction::           Computing linear prediction coefficients
+* LPC conversion::              Conversions between LPC, LAR, PARCOR and LSF
+@end menu
+
+@c -- Linear prediction
+@node Linear prediction, LPC conversion, LPC-based functions, LPC-based functions
+@subsection Linear prediction
+
+Linear prediction is a two step process in which the first step is to
+compute the generalized correlation sequence (@code{sig_correl}) before
+solving the normal equations with @var{lpc} to obtain the prediction and
+reflection coefficients.
+
+@deftypefn Function int sig_correl (spsig_t *@var{s}, float @var{a}, float *@var{r}, unsigned short @var{p})
+Compute generalized correlation for @var{s} according to the warping
+specified by @var{a}. If @var{a} is null, the autocorrelation is
+used. Return a correlation sequence of length @var{p}+1 via the
+previously allocated vector @var{r}. Return 0 upon success.
+@end deftypefn
+
+@deftypefn Function void lpc (float *@var{r}, unsigned short @var{p}, spf_t *@var{a}, spf_t *@var{k}, float *@var{e})
+Compute @var{p} prediction and reflection coefficients given the
+correlation sequence @var{r}(0) to @var{r}(@var{p}). Return the
+prediction coefficients in @var{a}, the reflection coefficients in
+@var{k} and the LPC filter gain in @var{e}. Both @var{a} and @var{k}
+must have been previously allocated to contain at least @var{p} elements
+while @var{e} is a pointer to a @code{float} scalar.
+@end deftypefn
+
+@c -- LPC conversion
+@node LPC conversion,  , Linear prediction, LPC-based functions
+@subsection LPC conversion
+
+Linear prediction can be converted into line spectrum frequencies
+(@code{lpc_to_lsf}) and LP-derived cepstral coefficients
+(@var{lpc_to_cep}). Reflection coefficients are converted into log-area
+ratio using @code{refc_to_lar}.
+
+@deftypefn Function int lpc_to_lsf (spf_t *@var{a}, unsigned short @var{p}, spf_t *@var{lsf})
+Convert @var{p} linear prediction coefficients @var{a} into line
+spectrum frequencies. @var{lsf} must have been previously allocated to
+contain at least @var{p} elements. Return 0 upon success.
+@end deftypefn
+
+@deftypefn Function void lpc_to_cep (spf_t *@var{a}, unsigned short @var{p}, unsigned short @var{n}, spf_t *@var{c})
+Convert @var{p} linear prediction coefficients @var{a} into @var{n}
+cepstral coefficients @var{c}. @var{c} must have been previously
+allocated to contain at least @var{n} elements.
+@end deftypefn
+
+@deftypefn Function void refc_to_lar (spf_t *@var{k}, unsigned short @var{p}, spf_t *@var{g})
+Convert @var{p} reflection coefficients @var{k} into @var{p}
+log area ratios @var{g}. @var{g} must have been previously
+allocated to contain at least @var{p} elements.
+@end deftypefn
+
+@c
+@c --*-- Miscellaneous functions --*--
+@c
+@node Miscellaneous functions,  , LPC-based functions, SPro library
+@section Miscellaneous functions
+
+This section documents a bunch of very useful functions. The two
+functions @code{spf_indexes} and @code{spf_tot_dim} are dedicated to
+manipulating the content of a feature vector. A feature vector contains
+various elements characterized by the description
+flag. @code{spf_indexes} lets you find out where the indices of the
+various elements in a feature vector given the description flag while
+@code{spf_tot_dim} computes the feature vector total dimension from the
+dimension of the static coefficients and the description flag. 
+
+The function @code{set_lifter} is a utility functions that allocates
+memory for a lifter vector and initializes the vector according to the
+lifter parameter. 
+
+@deftypefn Function void spf_indexes (unsigned short @var{idx}[9], unsigned short @var{dim}, long @var{flag})
+Set in @var{idx} the indices of each element characterizing a feature
+vector of dimension @var{dim} with a description @var{flag}. @var{idx}
+is a nine element vector containing indices in the feature vector and
+organized as follow
+@smallexample
+<    static     ><E><      delta    ><dE>< delta delta  ><ddE>
+|   |  ...  |   |   |   |  ...  |   |   |   |  ...  |   |   |
+  ^           ^   ^   ^           ^   ^   ^           ^   ^
+  |           |   |   |           |   |   |           |   |
+idx[0]      idx[1]| idx[3]      idx[4]| idx[6]      idx[7]|
+                  |                   |                   |
+                idx[2]              idx[5]              idx[8]
+@end smallexample
+@noindent
+For example, the index of the energy feature in the feature vector is
+@var{idx}[2] while the index of the first delta feature in the feature
+vector is given by @var{idx}[3]. With the exception of @var{idx}[0]
+which should always be equal to 0, an index value of 0 means that an
+element is not present in the feature vector. For example, a call to
+@example
+spf_indexes(idx, 25, WITHE | WITHD | WITHN)
+@end example
+would return the following index vector
+@example
+idx = @{ 0, 11, 0, 12, 23, 24, 0, 0, 0 @}
+@end example
+@noindent
+Assuming @var{p} is a pointer to a feature vector, the 12 static
+features range from @var{p}[0] to @var{p}[11], no static log-energy is
+present (@code{WITHN}), delta features are from @var{p}[12] to
+@var{p}[23] and delta log-energy can be accessed at @var{p}[24].
+@end deftypefn
+
+@deftypefn Function {unsigned short} spf_tot_dim (unsigned short @var{sdim}, long @var{flag})
+Return the feature vector total dimension given the dimension of the
+static coefficients @var{sdim} (excluding energy) and the feature
+description @var{flag}.
+@end deftypefn
+
+@deftypefn Function {float  *} set_lifter (int @var{l}, unsigned short @var{n})
+Return a pointer to a vector containing @var{n} coefficients for a
+lifter of parameter @var{l}.
+@end deftypefn
+
+@c Local Variables:
+@c ispell-local-dictionary: "american"
+@c End:

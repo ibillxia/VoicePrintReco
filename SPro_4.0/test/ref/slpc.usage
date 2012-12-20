@@ -1,0 +1,35 @@
+
+Usage:
+    slpc [options] ifile ofile
+
+Synopsis:
+    Variable resolution AR modelling of the input signal.
+
+Options:
+  -F, --format=s            input signal file format (pcm16)
+  -f, --sample-rate=n       signal sample rate for pcm16 input (8000.0 Hz)
+  -x, --channel=n           channel number (1)
+  -B, --swap                swap sample byte order (don't)
+  -I, --input-bufsize=n     input buffer size in kbytes (10000)
+  -O, --output-bufsize=n    output buffer size in kbytes (10000)
+
+  -k, --pre-emphasis=f      pre-emphasis coefficient (0.95)
+  -l, --length=f            frame length in ms (20.0 ms)
+  -d, --shift=f             frame shift in ms (10.0 ms)
+  -w, --window=s            weighting window (HAMMING)
+
+  -n, --order=n             LPC analysis order (12)
+  -a, --alpha=f             frequency warping parameter (0.0)
+  -r, --parcor              output reflexion coefficients (LPC)
+  -g, --lar                 output log area ratios (LPC)
+  -p, --lsp                 output line spectrum frequencies (LPC)
+
+  -e, --energy              add log-energy (off)
+  -s, --scale-energy=f      scale and normalize log-energy (off)
+
+  -L, --segment-length=n    segment length in frames for normalization (whole data)
+
+  -v, --verbose             verbose mode
+  -V, --version             print version number and exit
+  -h, --help                this help message
+

@@ -1,0 +1,653 @@
+@c
+@c reference.texi -- SPro Reference Manual
+@c
+@c Copyright (C) 2003 Guillaume Gravier (ggravier@irisa.fr)
+@c
+@c $Author: ggravier $
+@c $Date: 2003/08/22 16:18:32 $
+@c $Revision: 1.2 $
+@c
+
+@c --*-- ---------------- --*--
+@c --*-- Reference guide  --*--
+@c --*-- ---------------- --*--
+@node Reference guide, Changes, SPro library, Top
+@chapter Quick reference guide
+
+This chapter is meant as a reference guide for all the SPro tools,
+summarizing the syntax, synopsis and options. This is actually a printed
+version of the online help message obtained with @option{--help}.
+
+@page
+
+@menu
+* sfbank::                      @command{sfbank} reference
+* sfbcep::                      @command{sfbcep} reference
+* slpc::                        @command{slpc} reference
+* slpcep::                      @command{slpcep} reference
+* scopy::                       @command{scopy} reference
+@end menu
+
+@c -- sfbank
+@node sfbank, sfbcep, Reference guide, Reference guide
+@section @command{sfbank}
+
+@menu
+* sfbank usage::                Syntax
+* sfbank synopsis::             Brief description
+* sfbank options::              Options
+@end menu
+
+@node sfbank usage, sfbank synopsis, sfbank, sfbank
+@unnumberedsubsec Usage
+@code{sfbank [options] ifile ofile}
+
+@node sfbank synopsis, sfbank options, sfbank usage, sfbank
+@unnumberedsubsec Synopsis
+Filter bank analysis of the input signal.
+
+@node sfbank options,  , sfbank synopsis, sfbank
+@unnumberedsubsec Options
+@table @code
+@item -F, --format=str
+@itemx
+Specify the input waveform file format. Available formats are
+@samp{PCM16}, @samp{wave} or @samp{sphere}. Default: @samp{PCM16}.
+
+@item -f, --sample-rate=f
+@itemx
+Set input waveform sample rate to @code{f} Hz for @samp{PCM16} waveform
+files. Default: 8 kHz.
+
+@item -x, --channel=n
+@itemx
+Set the channel to consider for feature extraction. Default: 1.
+
+@item -B, --swap
+@itemx
+Swap the input waveform samples.
+
+@item -I, --input-bufsize=n
+@itemx
+Set the input buffer size to @code{n} kbytes. Default: 10 Mb.
+
+@item -O, --output-bufsize=n
+@itemx
+Set the output buffer size to @code{n} kbytes. Default: 10 Mb.
+
+@item -k, --pre-emphasis=f
+@itemx
+Set the pre-emphasis coefficient to @code{f}. Default: 0.95.
+
+@item -l --length=f
+@itemx
+Set the analysis frame length to @code{f} ms. Default: 20.0 ms.
+
+@item -d, --shift=f
+@itemx
+Set the interval between two consecutive frames to @code{f} ms. Default:
+10.0 ms.
+
+@item -w, --window=str            
+@itemx
+Specify the waveform weighting window. Available windows are
+@samp{Hamming}, @samp{Hanning}, @samp{Blackman} or @samp{none}. Default:
+@samp{Hamming}.
+
+@item -n, --num-filters=n
+@itemx
+Set the number of channels in the filter bank. Default: 24.
+
+@item -a, --alpha=f             
+@itemx
+Set the bilinear frequency warping factor to @code{f}. Default: 0.
+
+@item -m, --mel                 
+@itemx
+Use M@sc{el} frequency warping. Overwrites @option{--alpha}.
+
+@item -i, --freq-min=f          
+@itemx
+Set the lower frequency bound to @code{f} Hz. Default: 0 Hz.
+
+@item -u, --freq-max=f 
+@itemx
+Set the upper frequency bound to @code{f} Hz. Default: Niquist.
+
+@item -b, --fft-length=n 
+@itemx
+Set FFT length to @code{n} samples. Default: 512.
+
+@item -D, --delta
+@itemx
+Add first order derivatives to the feature vector.
+
+@item -A, --acceleration
+@itemx
+Add second order derivatives to the feature vector. Requires
+@option{--delta}.
+
+@item -v, --verbose
+@itemx 
+Turn on verbose mode
+
+@item -h, --help
+@itemx
+Print a help message for the tool and exit.
+
+@item -V, --version
+@itemx
+Print version information and exit.
+@end table
+
+@page
+@c -- sfbcep
+@node sfbcep, slpc, sfbank, Reference guide
+@section @command{sfbcep}
+
+@menu
+* sfbcep usage::                Syntax
+* sfbcep synopsis::             Brief description
+* sfbcep options::              Options
+@end menu
+
+@node sfbcep usage, sfbcep synopsis, sfbcep, sfbcep
+@unnumberedsubsec Usage
+
+@code{sfbcep [options] ifile ofile}
+
+@node sfbcep synopsis, sfbcep options, sfbcep usage, sfbcep
+@unnumberedsubsec Synopsis
+
+Filter-bank based cepstral analysis of the input signal.
+
+@node sfbcep options,  , sfbcep synopsis, sfbcep
+@unnumberedsubsec Options
+
+@table @code
+@item -F, --format=str
+@itemx
+Specify the input waveform file format. Available formats are
+@samp{PCM16}, @samp{wave} or @samp{sphere}. Default: @samp{PCM16}.
+
+@item -f, --sample-rate=f
+@itemx
+Set input waveform sample rate to @code{f} Hz for @samp{PCM16} waveform
+files. Default: 8 kHz.
+
+@item -x, --channel=n
+@itemx
+Set the channel to consider for feature extraction. Default: 1.
+
+@item -B, --swap
+@itemx
+Swap the input waveform samples.
+
+@item -I, --input-bufsize=n
+@itemx
+Set the input buffer size to @code{n} kbytes. Default: 10 Mb.
+
+@item -O, --output-bufsize=n
+@itemx
+Set the output buffer size to @code{n} kbytes. Default: 10 Mb.
+
+@item -k, --pre-emphasis=f
+@itemx
+Set the pre-emphasis coefficient to @code{f}. Default: 0.95.
+
+@item -l --length=f
+@itemx
+Set the analysis frame length to @code{f} ms. Default: 20.0 ms.
+
+@item -d, --shift=f
+@itemx
+Set the interval between two consecutive frames to @code{f} ms. Default:
+10.0 ms.
+
+@item -w, --window=str            
+@itemx
+Specify the waveform weighting window. Available windows are
+@samp{Hamming}, @samp{Hanning}, @samp{Blackman} or @samp{none}. Default:
+@samp{Hamming}.
+
+@item -n, --num-filters=n
+@itemx
+Set the number of channels in the filter bank. Default: 24.
+
+@item -a, --alpha=f             
+@itemx
+Set the bilinear frequency warping factor to @code{f}. Default: 0.
+
+@item -m, --mel                 
+@itemx
+Use M@sc{el} frequency warping. Overwrites @option{--alpha}.
+
+@item -i, --freq-min=f          
+@itemx
+Set the lower frequency bound to @code{f} Hz. Default: 0 Hz.
+
+@item -u, --freq-max=f 
+@itemx
+Set the upper frequency bound to @code{f} Hz. Default: Niquist.
+
+@item -b, --fft-length=n 
+@itemx
+Set FFT length to @code{n} samples. Default: 512.
+
+@item -p, --num-ceps=n
+Set the number of output cepstral coefficients to @code{n}. @code{n}
+must be less or equal to the number of channels in the filter
+bank. Default: 12.
+
+@item -r, --lifter=n 
+Set liftering parameter to @code{n}. Default: 0.
+
+@item -e, --energy
+@itemx
+Add log-energy to the feature vector.
+
+@item -s, --scale-energy=f
+@itemx
+Set scale energy factor. The way the maximum energy value is computed
+depends on whether @option{--segment-length} is specified or not.
+
+@item -Z, --cms
+@itemx
+Cepstral mean subtraction. Default: no.
+
+@item -R, --normalize
+@itemx
+Variance normalization (requires @option{--cms}).  Default: no.
+
+@item -L, --segment-length=n
+@itemx
+Set normalization and energy scaling segment length. 
+
+@item -D, --delta
+@itemx
+Add first order derivatives to the feature vector.
+
+@item -A, --acceleration
+@itemx
+Add second order derivatives to the feature vector. Requires
+@option{--delta}.
+
+@item -N, --no-static-energy
+@itemx
+Remove static log-energy from feature vector (requires
+@option{--delta}).
+
+@item -v, --verbose
+@itemx 
+Turn on verbose mode
+
+@item -h, --help
+@itemx
+Print a help message for the tool and exit.
+
+@item -V, --version
+@itemx
+Print version information and exit.
+@end table
+
+
+@page
+@c -- slpc
+@node slpc, slpcep, sfbcep, Reference guide
+@section @command{slpc}
+
+@menu
+* slpc usage::                  Syntax
+* slpc synopsis::               Brief description
+* slpc options::                Options
+@end menu
+
+@node slpc usage, slpc synopsis, slpc, slpc
+@unnumberedsubsec Usage
+@code{slpc [options] ifile ofile}
+
+@node slpc synopsis, slpc options, slpc usage, slpc
+@unnumberedsubsec Synopsis
+
+Variable resolution AR modeling of the input signal.
+
+@node slpc options,  , slpc synopsis, slpc
+@unnumberedsubsec Options
+@table @code
+@item -F, --format=str
+@itemx
+Specify the input waveform file format. Available formats are
+@samp{PCM16}, @samp{wave} or @samp{sphere}. Default: @samp{PCM16}.
+
+@item -f, --sample-rate=f
+@itemx
+Set input waveform sample rate to @code{f} Hz for @samp{PCM16} waveform
+files. Default: 8 kHz.
+
+@item -x, --channel=n
+@itemx
+Set the channel to consider for feature extraction. Default: 1.
+
+@item -B, --swap
+@itemx
+Swap the input waveform samples.
+
+@item -I, --input-bufsize=n
+@itemx
+Set the input buffer size to @code{n} kbytes. Default: 10 Mb.
+
+@item -O, --output-bufsize=n
+@itemx
+Set the output buffer size to @code{n} kbytes. Default: 10 Mb.
+
+@item -k, --pre-emphasis=f
+@itemx
+Set the pre-emphasis coefficient to @code{f}. Default: 0.95.
+
+@item -l --length=f
+@itemx
+Set the analysis frame length to @code{f} ms. Default: 20.0 ms.
+
+@item -d, --shift=f
+@itemx
+Set the interval between two consecutive frames to @code{f} ms. Default:
+10.0 ms.
+
+@item -w, --window=str            
+@itemx
+Specify the waveform weighting window. Available windows are
+@samp{Hamming}, @samp{Hanning}, @samp{Blackman} or @samp{none}. Default:
+@samp{Hamming}.
+
+@item -n, --order=n
+@itemx
+Set the prediction order. Default: 12.
+
+@item -a, --alpha=f             
+@itemx
+Set the bilinear frequency warping factor to @code{f}. Default: 0.
+
+@item -r, --parcor
+Output reflection coefficients rather than linear prediction
+coefficients. Default: @acronym{LPC}.
+
+@item -g, --lar
+Output log area ratios rather than linear prediction
+coefficients. Default: @acronym{LPC}.
+
+@item -p, --lsp
+Output line spectrum pairs rather than linear prediction
+coefficients. Default: @acronym{LPC}.
+
+@item -e, --energy
+@itemx
+Add log-energy to the feature vector, where the energy is the LPC filter
+gain.
+
+@item -s, --scale-energy=f
+@itemx
+Set scale energy factor. The way the maximum energy value is computed
+depends on whether @option{--segment-length} is specified or not.
+
+@item -v, --verbose
+@itemx 
+Turn on verbose mode
+
+@item -h, --help
+@itemx
+Print a help message for the tool and exit.
+
+@item -V, --version
+@itemx
+Print version information and exit.
+@end table
+
+
+@page
+@c -- slpcep
+@node slpcep, scopy, slpc, Reference guide
+@section @command{slpcep}
+
+@menu
+* slpcep usage::                Syntax
+* slpcep synopsis::             Brief description
+* slpcep options::              Options
+@end menu
+
+@node slpcep usage, slpcep synopsis, slpcep, slpcep
+@unnumberedsubsec Usage
+
+@code{slpcep [options] ifile ofile}
+
+@node slpcep synopsis, slpcep options, slpcep usage, slpcep
+@unnumberedsubsec Synopsis
+
+Linear prediction based cepstral analysis of the input signal.
+
+@node slpcep options,  , slpcep synopsis, slpcep
+@unnumberedsubsec Options
+
+@table @code
+@item -F, --format=str
+@itemx
+Specify the input waveform file format. Available formats are
+@samp{PCM16}, @samp{wave} or @samp{sphere}. Default: @samp{PCM16}.
+
+@item -f, --sample-rate=f
+@itemx
+Set input waveform sample rate to @code{f} Hz for @samp{PCM16} waveform
+files. Default: 8 kHz.
+
+@item -x, --channel=n
+@itemx
+Set the channel to consider for feature extraction. Default: 1.
+
+@item -B, --swap
+@itemx
+Swap the input waveform samples.
+
+@item -I, --input-bufsize=n
+@itemx
+Set the input buffer size to @code{n} kbytes. Default: 10 Mb.
+
+@item -O, --output-bufsize=n
+@itemx
+Set the output buffer size to @code{n} kbytes. Default: 10 Mb.
+
+@item -k, --pre-emphasis=f
+@itemx
+Set the pre-emphasis coefficient to @code{f}. Default: 0.95.
+
+@item -l --length=f
+@itemx
+Set the analysis frame length to @code{f} ms. Default: 20.0 ms.
+
+@item -d, --shift=f
+@itemx
+Set the interval between two consecutive frames to @code{f} ms. Default:
+10.0 ms.
+
+@item -w, --window=str            
+@itemx
+Specify the waveform weighting window. Available windows are
+@samp{Hamming}, @samp{Hanning}, @samp{Blackman} or @samp{none}. Default:
+@samp{Hamming}.
+
+@item -n, --order=n
+@itemx
+Set the prediction order. Default: 12.
+
+@item -a, --alpha=f             
+@itemx
+Set the bilinear frequency warping factor to @code{f}. Default: 0.
+
+@item -p, --num-ceps=n
+Set the number of output cepstral coefficients to @code{n}. @code{n}
+must be less or equal to the number of channels in the filter
+bank. Default: 12.
+
+@item -r, --lifter=n 
+Set liftering parameter to @code{n}. Default: 0.
+
+@item -e, --energy
+@itemx
+Add log-energy to the feature vector.
+
+@item -s, --scale-energy=f
+@itemx
+Set scale energy factor. The way the maximum energy value is computed
+depends on whether @option{--segment-length} is specified or not.
+
+@item -Z, --cms
+@itemx
+Cepstral mean subtraction. Default: no.
+
+@item -R, --normalize
+@itemx
+Variance normalization (requires @option{--cms}).  Default: no.
+
+@item -L, --segment-length=n
+@itemx
+Set normalization and energy scaling segment length. 
+
+@item -D, --delta
+@itemx
+Add first order derivatives to the feature vector.
+
+@item -A, --acceleration
+@itemx
+Add second order derivatives to the feature vector. Requires
+@option{--delta}.
+
+@item -N, --no-static-energy
+@itemx
+Remove static log-energy from feature vector (requires
+@option{--delta}).
+
+@item -v, --verbose
+@itemx 
+Turn on verbose mode
+
+@item -h, --help
+@itemx
+Print a help message for the tool and exit.
+
+@item -V, --version
+@itemx
+Print version information and exit.
+@end table
+
+@page
+@c -- scopy
+@node scopy,  , slpcep, Reference guide
+@section @command{scopy}
+
+@menu
+* scopy usage::                 Syntax
+* scopy synopsis::              Brief description
+* scopy options::               Options
+@end menu
+
+@node scopy usage, scopy synopsis, scopy, scopy
+@unnumberedsubsec Usage
+
+@code{scopy [options] ifile ofile}
+
+@node scopy synopsis, scopy options, scopy usage, scopy
+@unnumberedsubsec Synopsis
+
+Copy input file to output file making necessary conversions. Possible
+conversions are normalization, dynamic features, scaling, linear
+transformation and component extraction.
+
+@node scopy options,  , scopy synopsis, scopy
+@unnumberedsubsec Options
+
+@table @code
+@item -c, --compatibility       
+@itemx
+Turn on compatibility and set the input file format to former SPro
+format. Default is SPro @value{VERSION} format.
+
+@item -I, --bufsize=n
+@itemx
+Set the I/O buffer size in kbytes. Default is 10 Mbytes. If
+@option{--compatibility} is specified, the specified buffer size applies
+only to the output buffer, the entire input data being loaded into
+memory.
+
+@item -i, --info
+@itemx
+Print stream information.
+
+@item -z, --suppress
+@itemx
+Suppress data output. If this option is turned on, no output is
+created. This option is provided mainly for use with @option{--info} in
+order to print the stream description flag or for diagnosis purposes.
+
+@item -B, --swap
+@itemx
+Swap byte order before writing new file. Byte swapping is only possible
+if the output format is either @acronym{HTK} or Sirocco (see
+@option{--output-format} below). Default is to use the machine's natural
+byte-order.
+
+@item -o, --output-format=str
+@itemx
+Set the output format, where @code{str} is one of @code{ascii},
+@code{htk} or @code{sirocco}. Default is the native SPro format.
+
+@item -R, --normalize
+@itemx
+Variance normalization (requires @option{--cms}).  Default: no.
+
+@item -L, --segment-length=n
+@itemx
+Set normalization and energy scaling segment length. 
+
+@item -D, --delta
+@itemx
+Add first order derivatives to the feature vector.
+
+@item -A, --acceleration
+@itemx
+Add second order derivatives to the feature vector. Requires
+@option{--delta}.
+
+@item -N, --no-static-energy
+@itemx
+Remove static log-energy from feature vector (requires
+@option{--delta}).
+
+@item -m, --scale=f
+@itemx
+Scale features, multiplying them by the scaling factor @code{f}. 
+
+@item -t, --transform=str
+@itemx
+Apply the linear transformation whose matrix is specified in file
+@code{str}. 
+
+@item -x, --extract=str
+@itemx
+Extract the specified components of the feature vector. The argument
+@code{str} is a comma separated list of components to extract, where the
+components are specified either as a single index or a range of indices
+specified using a dash (@samp{-}). The index of the first component is
+1.
+
+@item -s, --start=n
+@itemx
+Start copying frames at frame index @code{n}. Frame numbers start with
+zero. Default is 0.
+
+@item -e, --end=n
+@itemx
+End copying at frame index @code{n} (included). Frame numbers start with
+zero. Default is to copy to the end of stream.
+@end table
+
+@c Local Variables:
+@c ispell-local-dictionary: "american"
+@c End:

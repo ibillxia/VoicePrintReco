@@ -1,0 +1,247 @@
+\input texinfo @c -*-texinfo-*-
+@setfilename spro.info
+@settitle SPro
+
+@finalout
+@setchapternewpage odd
+@setcontentsaftertitlepage
+
+@include version.texi
+
+@syncodeindex fn cp
+@syncodeindex pg cp
+
+@ifinfo
+SPro: Speech Signal Processing Toolkit.
+
+This file documents the SPro toolkit, release @value{VERSION}, for
+speech signal analysis.
+
+Copyright 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, Guillaume
+Gravier.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+Texts.  A copy of the license is included in the section entitled ``GNU
+Free Documentation License''.
+@end ifinfo
+
+@titlepage
+@title SPro
+@subtitle Speech Signal Processing Toolkit, release @value{VERSION}.
+@subtitle Last updated @value{UPDATED}.
+@author Guillaume Gravier
+
+@page
+@vskip 0pt plus 1filll
+Copyright @copyright{} 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003,
+Guillaume Gravier.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+Texts.  A copy of the license is included in the section entitled ``GNU
+Free Documentation License''.
+@end titlepage
+
+@c -- Top node
+@ifnottex
+@node Top, Introduction, (dir), (dir)
+@top Spro
+@end ifnottex
+
+@ifinfo
+This file documents the SPro toolkit for speech signal processing, for
+SPro release @value{VERSION}.
+@end ifinfo
+
+@c Top level menu
+
+@menu
+* Introduction::                What is SPro?
+* Speech analysis::             Basics of speech analysis techniques
+* SPro tools::                  The SPro user manual
+* SPro library::                The SPro programmer manual
+* Reference guide::             Quick reference guide
+* Changes::                     Changes in SPro
+* Copying::                     GNU Free Documentation License
+* Index::                       Index
+
+
+@detailmenu
+ --- The Detailed Node Listing ---
+
+Introduction
+
+* Overview::                    What is SPro good for?
+* Content::                     How to read this document?
+* Installing::                  SPro installation
+* Bugs::                        Reporting bugs
+* Contributors::                People who contributed
+
+Speech analysis techniques
+
+* Short term analysis::         Short term windows and pre-emphasis
+* Variable resolution::         Variable resolution spectral analysis
+* Filter-banks::                Filter-bank speech analysis
+* LPC analysis::                Linear prediction speech analysis
+* Cepstrum::                    Cepstral analysis
+* Deltas and normalization::    Delta, acceleration and feature normalization
+
+The SPro tools
+
+* File formats::                Waveform and feature file formats
+* Common options::              Tools common options
+* I/O via stdin and stdout::    Standard input, standard output and pipes
+* Extracting features::         Feature extraction with SPro
+* Manipulating features::       The scopy utility for manipulating feature streams
+
+File formats
+
+* Waveform file format::        Supported input waveform file formats
+* Feature file format::         Output feature file format
+
+Common options
+
+* I/O options::                 Common I/O options
+* Framing options::             Common frame blocking options
+* Feature vector options::      Common feature vector extraction options
+* Miscellaneous options::       More common options
+
+Extracting features
+
+* Filter-bank analysis tools::  Tools for filter-bank derived features
+* LPC analysis tools::          Tools for linear prediction derived features
+
+Filter-bank analysis tools
+
+* Filter-bank magnitudes::      All about @command{sfbank}
+* Filter-bank cepstrum::        All about @command{sfbcep}
+* Filter-bank options::         @command{sfbank} and @command{sfbcep} options
+
+LPC analysis tools
+
+* Linear prediction coefficients::  All about @command{slpc}
+* Linear prediction cepstrum::  All about @command{slpcep}
+* LPC Options::                 @command{slpc} and @command{slpcep} options
+
+Manipulating feature streams
+
+* Operations on feature streams::  Maniuplating feature streams with @command{scopy}
+* Exporting features::          Exporting features to alien formats with @command{scopy}
+* Importing from a previous SPro release::  Compatibility questions
+* Copy options::                @command{scopy} options
+
+The SPro library
+
+* Waveform streams::            Functions related to waveforms
+* Feature description flags::   Describing feature vector contents
+* Feature streams::             Reading and writing features
+* Storing features without streams::  I/O with feature buffers
+* Feature conversion::          Adding delta features, CMS, etc...
+* FFT-based functions::         FFT analysis functions
+* LPC-based functions::         LPC analysis functions
+* Miscellaneous functions::     Whatever could not go anywhere else
+
+Waveform streams
+
+* Waveform memory allocation::  Memory allocation for waveforms
+* Opening waveform streams::    Opening waveform streams for reading
+* Reading frames::              Reading frames from a waveform stream
+* Computing frame energy::      Computing frame energy
+
+Feature streams
+
+* Opening feature streams::     Opening feature streams for I/O
+* Reading and writing feature vectors::  Reading features from and writing features to streams
+* Seeking into a stream::       Access a particular frame in a stream
+
+Opening feature streams
+
+* Conversion flags::            Dynamically converting features at I/O time
+* Opening for I/O ::            Open a feature stream
+* Accessing stream attributes::  What's the stream dimension, frame rate, etc...
+
+Storing features without streams
+
+* Buffer allocation::           Allocating memory for a buffer
+* Accessing buffer elements::   Accessing vectors in a buffer
+* Buffer I/O::                  Reading and writing buffers to disk
+* Buffers and streams::         Direct access to stream buffers (not recommended)
+
+FFT-based functions
+
+* Fourier transform::           Fast Fourier transform of a signal
+* Filter-bank::                 Filter-bank integration
+* Cosine transform::            Discrete Cosine Transform
+
+LPC-based functions
+
+* Linear prediction::           Computing linear prediction coefficients
+* LPC conversion::              Conversions between LPC, LAR, PARCOR and LSF
+
+Quick reference guide
+
+* sfbank::                      @command{sfbank} reference
+* sfbcep::                      @command{sfbcep} reference
+* slpc::                        @command{slpc} reference
+* slpcep::                      @command{slpcep} reference
+* scopy::                       @command{scopy} reference
+
+@command{sfbank}
+
+* sfbank usage::                Syntax
+* sfbank synopsis::             Brief description
+* sfbank options::              Options
+
+@command{sfbcep}
+
+* sfbcep usage::                Syntax
+* sfbcep synopsis::             Brief description
+* sfbcep options::              Options
+
+@command{slpc}
+
+* slpc usage::                  Syntax
+* slpc synopsis::               Brief description
+* slpc options::                Options
+
+@command{slpcep}
+
+* slpcep usage::                Syntax
+* slpcep synopsis::             Brief description
+* slpcep options::              Options
+
+@command{scopy}
+
+* scopy usage::                 Syntax
+* scopy synopsis::              Brief description
+* scopy options::               Options
+
+Changes
+
+* History::                     The history of SPro
+* Changes from previous version::  What's new from the previous version?
+* Compatibility::               Is th current version compatible with the previous one?
+
+@end detailmenu
+@end menu
+
+@include intro.texi
+@include speech.texi
+@include user.texi
+@include library.texi
+@include reference.texi
+@include changes.texi
+@include license.texi
+@include index.texi
+
+@contents
+@bye
+
+@c Local Variables:
+@c ispell-local-dictionary: "american"
+@c End:

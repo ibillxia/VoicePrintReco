@@ -1,0 +1,21 @@
+LIBRARY svdlibc.dll
+EXPORTS
+svdNewDMat
+svdNewSMat
+svdNewSVDRec
+svdConvertDtoS
+svdConvertStoD
+svdFreeDMat
+svdFreeSMat
+svdFreeSVDRec
+svdTransposeD
+svdTransposeS
+svdWriteDenseArray
+svdWriteDenseMatrix
+svdWriteSparseMatrix
+svdLAS2
+svdLAS2A
+svdLoadDenseArray
+svdLoadDenseMatrix
+svdLoadSparseMatrix
+SVDVerbosity

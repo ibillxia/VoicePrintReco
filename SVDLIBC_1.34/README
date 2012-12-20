@@ -1,0 +1,15 @@
+Based on Doug Rohde's SVD C Library version 1.34 http://tedlab.mit.edu/~dr/SVDLIBC/
+
+Look there for possible improvements.
+
+Modified by Jan Wicijowski, jan.wicijowski@agh.edu.pl, http://home.agh.edu.pl/~wici
+
+The product now compiles under VS2008 and produces a dll. 
+vs_dll directory provides the VS project.
+
+The dll exports functions as shown in svdlibc.def.
+
+A Python ctypes interface example is to follow.
+
+KNOWN BUGS:
+ - mingw under cygwin creates a dll, which hangs on function calls

@@ -1,0 +1,98 @@
+#
+# Speech PROcessing tools - INSTALL
+#
+# $Author: ggravier $
+# $Date: 2003/08/22 12:42:55 $
+# $Revision: 1.4 $
+#
+
+============
+INSTALLATION
+============
+
+Installation follows the standard GNU installation procedure. The
+following instructions were adapted for the generic INSTALL file
+distributed with GNU autoconf.
+
+1. `cd' to the the package root directory and type `./configure' to
+configure the package for your system.  If you're using `csh' on an
+old version of System V, you might need to type `sh ./configure'
+instead to prevent `csh' from trying to execute `configure' itself.
+
+See below for SPro specific options to configure.
+
+Running `configure' takes awhile.  While running, it prints some
+messages telling which features it is checking for. 
+
+2. Type `make' to compile the package.
+
+3. Optionally, type `make check' to run any self-tests that come with
+the package.
+
+4. Type `make install' to install the programs, the library archive
+and header and documentation.
+
+5. You can remove the program binaries and object files from the
+source code directory by typing `make clean'.  To also remove the
+files that `configure' created (so you can compile the package for a
+different kind of computer), type `make distclean'.
+
+Compilers and Options
+=====================
+
+   Some systems require unusual options for compilation or linking that
+the `configure' script does not know about.  Run `./configure --help'
+for details on some of the pertinent environment variables.
+
+   You can give `configure' initial values for variables by setting
+them in the environment.  You can do that on the command line like this:
+
+     ./configure CFLAGS="-Wall -O3"
+
+Compiling SPro with the `-O3' is recommended.
+
+Installation Names
+==================
+
+   By default, `make install' will install the package's files in
+`/usr/local/bin', `/usr/local/man', etc.  You can specify an
+installation prefix other than `/usr/local' by giving `configure' the
+option `--prefix=PATH'.
+
+   You can specify separate installation prefixes for
+architecture-specific files and architecture-independent files.  If
+you give `configure' the option `--exec-prefix=PATH', the package will
+use PATH as the prefix for installing programs and libraries.
+Documentation and other data files will still use the regular prefix.
+
+   In addition, if you use an unusual directory layout you can give
+options like `--bindir=PATH' to specify different values for particular
+kinds of files.  Run `configure --help' for a list of the directories
+you can set and what kinds of files go in them.
+
+Optional Features
+=================
+
+   Some packages pay attention to `--enable-FEATURE' options to
+`configure', where FEATURE indicates an optional part of the package.
+They may also pay attention to `--with-PACKAGE' options, where PACKAGE
+is something like `gnu-as' or `x' (for the X Window System).  The
+`README' should mention any `--enable-' and `--with-' options that the
+package recognizes.
+
+   Support for the SPHERE 2.6 library and file format can be turned on
+using --with-sphere=PATH. If the SPHERE library is installed in a
+standard place on your system (e.g. /usr/local/include and
+/usr/local/lib), there is no need to specify `PATH'. In any other
+case, `PATH' should point to the directory where the SPHERE library
+has been installed. The compiler will search for the library includes
+in `PATH'/include and for the archives in `PATH'/lib.
+
+Supported Platforms
+===================
+
+As far as I know, SPro has been successfully build and used on Linux,
+SPARC/SunOS, and HP-UX. It should also work on AIX though this has not
+been tested so far. This code has *never* been ported to any
+Windows-based OS but if someone ever do that, please let me know (I
+expect some problems).
