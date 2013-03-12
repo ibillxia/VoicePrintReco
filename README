@@ -3,16 +3,19 @@
 #
 #     Author: Bill Xia
 #     Email: ibillxia@gmail.com
-#     Blog: http://ibillxia.tk
+#     Blog: http://ibillxia.github.com
 ##########################################################
 
 This package is based on 
 the SPro project(http://www.irisa.fr/metiss/guig/spro/spro-4.0.1/), 
 the SVDLIBC project(http://tedlab.mit.edu/~dr/SVDLIBC/, it is now not available, but this may help: http://home.agh.edu.pl/~wici/?p=6), 
-the ALIZE project(include ALIZE package and LIA_RAL package. For more see http://mistral.univ-avignon.fr/index_en.html).
+the ALIZE project(include ALIZE package and LIA_RAL package. 
+For more information of ALIZE, please see http://mistral.univ-avignon.fr/index_en.html).
 
-There are four directories: 
+There are five directories: 
      ./SPro_4.0
 	 ./SVDLIB_1.34
 	 ./ALIZE_2.0
 	 ./LIA_RAL_2.0
+	 ./Demo
+The Demo directory is a simple tutorial of how to use this integrated system.
