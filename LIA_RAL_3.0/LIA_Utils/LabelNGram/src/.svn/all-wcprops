@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/LabelNGram/src
+END
+LabelNGram.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/LabelNGram/src/LabelNGram.cpp
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/LabelNGram/src/Makefile.am
+END
+LabelNGramMain.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/LabelNGram/src/LabelNGramMain.cpp
+END

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/SpkAdapt/test
+END
+male-1conv4w.ndx
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/SpkAdapt/test/male-1conv4w.ndx
+END
+target_1conv4w.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/SpkAdapt/test/target_1conv4w.cfg
+END
+model06
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/SpkAdapt/test/model06
+END
+Train_Test.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/SpkAdapt/test/Train_Test.cfg
+END

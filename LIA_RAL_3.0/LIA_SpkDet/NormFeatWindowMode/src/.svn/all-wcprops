@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/NormFeatWindowMode/src
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/NormFeatWindowMode/src/Makefile.am
+END
+NormFeatWindowMode.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/NormFeatWindowMode/src/NormFeatWindowMode.cpp
+END
+NormFeatWindowModeMain.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/NormFeatWindowMode/src/NormFeatWindowModeMain.cpp
+END

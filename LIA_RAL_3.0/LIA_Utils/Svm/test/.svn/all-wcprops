@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/Svm/test
+END
+Svm.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/Svm/test/Svm.cfg
+END
+GmmSv.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/Svm/test/GmmSv.cfg
+END
+GmmSvTest.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/Svm/test/GmmSvTest.cfg
+END
+test.sh
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/Svm/test/test.sh
+END
+train.lst
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/Svm/test/train.lst
+END

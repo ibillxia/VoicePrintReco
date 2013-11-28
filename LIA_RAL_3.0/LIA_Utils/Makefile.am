@@ -1,0 +1,14 @@
+SUBDIRS=\
+	ExtractParams\
+	FusionScore\
+	Hist\
+	LabelFusion\
+	NAPSV\
+	PolyExp\
+	ReadFeatFile\
+	ReadModel\
+	ScoreWarp\
+	Scoring\
+	Svm\
+	TimeCluster\
+	ModelToSv

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/StlSupport
+END
+StdVector.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/StlSupport/StdVector.h
+END
+StdDeque.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/StlSupport/StdDeque.h
+END
+details.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/StlSupport/details.h
+END
+StdList.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/StlSupport/StdList.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/StlSupport/CMakeLists.txt
+END

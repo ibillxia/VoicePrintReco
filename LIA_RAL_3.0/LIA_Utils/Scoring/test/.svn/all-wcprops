@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/Scoring/test
+END
+score.final.nist
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/Scoring/test/score.final.nist
+END
+test_warp.sh
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/Scoring/test/test_warp.sh
+END
+LM3.nist
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/Scoring/test/LM3.nist
+END
+score.nist
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/Scoring/test/score.nist
+END
+test1.sh
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/Scoring/test/test1.sh
+END
+table_gaussN.histo
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/Scoring/test/table_gaussN.histo
+END

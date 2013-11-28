@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/SequenceExtractor/test
+END
+config.txt
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/SequenceExtractor/test/config.txt
+END
+test1.sh
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/SequenceExtractor/test/test1.sh
+END
+ngram1.dta
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/SequenceExtractor/test/ngram1.dta
+END
+ngram2.dta
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/SequenceExtractor/test/ngram2.dta
+END
+ngram3.dta
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/SequenceExtractor/test/ngram3.dta
+END

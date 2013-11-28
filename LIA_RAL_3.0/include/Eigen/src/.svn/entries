@@ -1,0 +1,128 @@
+10
+
+dir
+270
+http://alize.univ-avignon.fr/svn/LIA_RAL/branches/2.5_BioSpeak/include/Eigen/src
+http://alize.univ-avignon.fr/svn/LIA_RAL
+
+
+
+2012-12-12T06:16:41.155721Z
+204
+alarcher
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1290fa5e-fd49-494a-a208-9d5a245c2233
+
+LU
+dir
+
+Householder
+dir
+
+Cholesky
+dir
+
+plugins
+dir
+
+QR
+dir
+
+CholmodSupport
+dir
+
+UmfPackSupport
+dir
+
+Jacobi
+dir
+
+Core
+dir
+
+Geometry
+dir
+
+misc
+dir
+
+SVD
+dir
+
+SuperLUSupport
+dir
+
+OrderingMethods
+dir
+
+PardisoSupport
+dir
+
+StlSupport
+dir
+
+SparseCholesky
+dir
+
+PaStiXSupport
+dir
+
+IterativeLinearSolvers
+dir
+
+Eigen2Support
+dir
+
+SparseCore
+dir
+
+Eigenvalues
+dir
+
+CMakeLists.txt
+file
+
+
+
+
+2013-09-02T08:24:40.000000Z
+2ebef3f13165f24e7bc3f09b782f73b2
+2012-12-12T06:16:41.155721Z
+204
+alarcher
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+308
+

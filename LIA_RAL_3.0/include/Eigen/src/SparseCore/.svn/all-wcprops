@@ -1,0 +1,167 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore
+END
+CompressedStorage.h
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/CompressedStorage.h
+END
+AmbiVector.h
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/AmbiVector.h
+END
+SparseUtil.h
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/SparseUtil.h
+END
+SparseTranspose.h
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/SparseTranspose.h
+END
+SparseCwiseBinaryOp.h
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/SparseCwiseBinaryOp.h
+END
+SparseDiagonalProduct.h
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/SparseDiagonalProduct.h
+END
+SparseProduct.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/SparseProduct.h
+END
+SparseAssign.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/SparseAssign.h
+END
+TriangularSolver.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/TriangularSolver.h
+END
+SparseDot.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/SparseDot.h
+END
+ConservativeSparseSparseProduct.h
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/ConservativeSparseSparseProduct.h
+END
+SparseFuzzy.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/SparseFuzzy.h
+END
+SparseRedux.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/SparseRedux.h
+END
+SparseCwiseUnaryOp.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/SparseCwiseUnaryOp.h
+END
+SparseBlock.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/SparseBlock.h
+END
+MappedSparseMatrix.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/MappedSparseMatrix.h
+END
+SparseSparseProductWithPruning.h
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/SparseSparseProductWithPruning.h
+END
+SparseSelfAdjointView.h
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/SparseSelfAdjointView.h
+END
+SparseDenseProduct.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/SparseDenseProduct.h
+END
+SparseMatrixBase.h
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/SparseMatrixBase.h
+END
+SparseVector.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/SparseVector.h
+END
+SparseTriangularView.h
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/SparseTriangularView.h
+END
+SparseMatrix.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/SparseMatrix.h
+END
+CoreIterators.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/CoreIterators.h
+END
+SparsePermutation.h
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/SparsePermutation.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/CMakeLists.txt
+END
+SparseView.h
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/SparseCore/SparseView.h
+END

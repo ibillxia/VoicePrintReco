@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/LIA_RAL/!svn/ver/226/branches/2.5_BioSpeak/LIA_SpkSeg/AcousticSegmentation/src
+END
+AcousticSegmentation.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_SpkSeg/AcousticSegmentation/src/AcousticSegmentation.cpp
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/LIA_RAL/!svn/ver/226/branches/2.5_BioSpeak/LIA_SpkSeg/AcousticSegmentation/src/Makefile.am
+END
+AcousticSegmentationMain.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_SpkSeg/AcousticSegmentation/src/AcousticSegmentationMain.cpp
+END

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/Hist/src
+END
+Hist.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/Hist/src/Hist.cpp
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/Hist/src/Makefile.am
+END
+HistMain.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/Hist/src/HistMain.cpp
+END

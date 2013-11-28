@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/EigenVoice/src
+END
+EigenVoiceMain.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/EigenVoice/src/EigenVoiceMain.cpp
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/EigenVoice/src/Makefile.am
+END
+EigenVoice.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/EigenVoice/src/EigenVoice.cpp
+END

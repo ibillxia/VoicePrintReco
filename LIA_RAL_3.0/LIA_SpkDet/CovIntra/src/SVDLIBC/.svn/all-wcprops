@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/LIA_RAL/!svn/ver/255/branches/2.5_BioSpeak/LIA_SpkDet/CovIntra/src/SVDLIBC
+END
+svdutil.h
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/LIA_RAL/!svn/ver/205/branches/2.5_BioSpeak/LIA_SpkDet/CovIntra/src/SVDLIBC/svdutil.h
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/LIA_RAL/!svn/ver/255/branches/2.5_BioSpeak/LIA_SpkDet/CovIntra/src/SVDLIBC/Makefile.in
+END
+las2.c
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/LIA_RAL/!svn/ver/205/branches/2.5_BioSpeak/LIA_SpkDet/CovIntra/src/SVDLIBC/las2.c
+END
+libsvd.a
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/LIA_RAL/!svn/ver/255/branches/2.5_BioSpeak/LIA_SpkDet/CovIntra/src/SVDLIBC/libsvd.a
+END
+svdlib.c
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/LIA_RAL/!svn/ver/205/branches/2.5_BioSpeak/LIA_SpkDet/CovIntra/src/SVDLIBC/svdlib.c
+END
+main.c
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/LIA_RAL/!svn/ver/205/branches/2.5_BioSpeak/LIA_SpkDet/CovIntra/src/SVDLIBC/main.c
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/LIA_RAL/!svn/ver/205/branches/2.5_BioSpeak/LIA_SpkDet/CovIntra/src/SVDLIBC/Makefile.am
+END
+svdlib.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/LIA_RAL/!svn/ver/205/branches/2.5_BioSpeak/LIA_SpkDet/CovIntra/src/SVDLIBC/svdlib.h
+END
+svdutil.c
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/LIA_RAL/!svn/ver/205/branches/2.5_BioSpeak/LIA_SpkDet/CovIntra/src/SVDLIBC/svdutil.c
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/LIA_RAL/!svn/ver/255/branches/2.5_BioSpeak/LIA_SpkDet/CovIntra/src/SVDLIBC/Makefile
+END

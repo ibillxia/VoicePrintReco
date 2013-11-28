@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/TrainTarget/test
+END
+TrainTarget.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/TrainTarget/test/TrainTarget.cfg
+END
+FA.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/TrainTarget/test/FA.cfg
+END
+wld
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/TrainTarget/test/wld
+END
+test1.validate.gmm
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/TrainTarget/test/test1.validate.gmm
+END
+test1.lbl
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/TrainTarget/test/test1.lbl
+END
+ndx
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/TrainTarget/test/ndx
+END
+test1.sh
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/TrainTarget/test/test1.sh
+END
+NAP.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/TrainTarget/test/NAP.cfg
+END
+test1.prm
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/TrainTarget/test/test1.prm
+END

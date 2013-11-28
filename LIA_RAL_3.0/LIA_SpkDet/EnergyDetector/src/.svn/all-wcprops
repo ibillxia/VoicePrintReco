@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/EnergyDetector/src
+END
+EnergyDetector.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/EnergyDetector/src/EnergyDetector.cpp
+END
+EnergyDetectorMain.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/EnergyDetector/src/EnergyDetectorMain.cpp
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/EnergyDetector/src/Makefile.am
+END

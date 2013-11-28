@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/QR
+END
+ColPivHouseholderQR.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/QR/ColPivHouseholderQR.h
+END
+ColPivHouseholderQR_MKL.h
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/QR/ColPivHouseholderQR_MKL.h
+END
+HouseholderQR.h
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/QR/HouseholderQR.h
+END
+FullPivHouseholderQR.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/QR/FullPivHouseholderQR.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/QR/CMakeLists.txt
+END
+HouseholderQR_MKL.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/QR/HouseholderQR_MKL.h
+END

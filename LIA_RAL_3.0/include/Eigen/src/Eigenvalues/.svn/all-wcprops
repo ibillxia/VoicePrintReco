@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/Eigenvalues
+END
+ComplexEigenSolver.h
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/Eigenvalues/ComplexEigenSolver.h
+END
+RealSchur_MKL.h
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/Eigenvalues/RealSchur_MKL.h
+END
+Tridiagonalization.h
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/Eigenvalues/Tridiagonalization.h
+END
+ComplexSchur.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/Eigenvalues/ComplexSchur.h
+END
+ComplexSchur_MKL.h
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/Eigenvalues/ComplexSchur_MKL.h
+END
+GeneralizedSelfAdjointEigenSolver.h
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h
+END
+EigenSolver.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/Eigenvalues/EigenSolver.h
+END
+HessenbergDecomposition.h
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/Eigenvalues/HessenbergDecomposition.h
+END
+SelfAdjointEigenSolver.h
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/Eigenvalues/CMakeLists.txt
+END
+MatrixBaseEigenvalues.h
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h
+END
+RealSchur.h
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/Eigenvalues/RealSchur.h
+END
+SelfAdjointEigenSolver_MKL.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_MKL.h
+END

@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/LIA_RAL/!svn/ver/226/branches/2.5_BioSpeak/LIA_SpkDet/ComputeTest/src
+END
+ComputeTestMain.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/LIA_RAL/!svn/ver/226/branches/2.5_BioSpeak/LIA_SpkDet/ComputeTest/src/ComputeTestMain.cpp
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/ComputeTest/src/Makefile.am
+END
+ComputeTest.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/LIA_RAL/!svn/ver/226/branches/2.5_BioSpeak/LIA_SpkDet/ComputeTest/src/ComputeTest.cpp
+END

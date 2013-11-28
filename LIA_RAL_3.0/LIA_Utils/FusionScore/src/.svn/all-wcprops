@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/FusionScore/src
+END
+FusionScore.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/FusionScore/src/FusionScore.cpp
+END
+FusionScoreMain.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/FusionScore/src/FusionScoreMain.cpp
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/FusionScore/src/Makefile.am
+END

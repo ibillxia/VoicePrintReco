@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/EnergyDetector/test
+END
+EnergyDetector.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/EnergyDetector/test/EnergyDetector.cfg
+END
+test1.validate.enr.lbl
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/EnergyDetector/test/test1.validate.enr.lbl
+END
+test1.lbl
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/EnergyDetector/test/test1.lbl
+END
+test1.sh
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/EnergyDetector/test/test1.sh
+END
+test1.prm
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/EnergyDetector/test/test1.prm
+END

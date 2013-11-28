@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/LU
+END
+Determinant.h
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/LU/Determinant.h
+END
+Inverse.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/LU/Inverse.h
+END
+PartialPivLU.h
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/LU/PartialPivLU.h
+END
+PartialPivLU_MKL.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/LU/PartialPivLU_MKL.h
+END
+FullPivLU.h
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/LU/FullPivLU.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/LU/CMakeLists.txt
+END

@@ -1,0 +1,1206 @@
+IvNorm-IvNormMain.o: IvNormMain.cpp /usr/include/c++/4.4/iostream \
+ /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h \
+ /usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h \
+ /usr/include/features.h /usr/include/bits/predefs.h \
+ /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h \
+ /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
+ /usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h \
+ /usr/include/c++/4.4/ostream /usr/include/c++/4.4/ios \
+ /usr/include/c++/4.4/iosfwd /usr/include/c++/4.4/bits/stringfwd.h \
+ /usr/include/c++/4.4/bits/postypes.h /usr/include/c++/4.4/cwchar \
+ /usr/include/c++/4.4/cstddef \
+ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/stddef.h \
+ /usr/include/wchar.h /usr/include/stdio.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/stdarg.h \
+ /usr/include/bits/wchar.h /usr/include/xlocale.h \
+ /usr/include/c++/4.4/exception /usr/include/c++/4.4/bits/char_traits.h \
+ /usr/include/c++/4.4/bits/stl_algobase.h \
+ /usr/include/c++/4.4/bits/functexcept.h \
+ /usr/include/c++/4.4/exception_defines.h \
+ /usr/include/c++/4.4/bits/cpp_type_traits.h \
+ /usr/include/c++/4.4/ext/type_traits.h \
+ /usr/include/c++/4.4/ext/numeric_traits.h \
+ /usr/include/c++/4.4/bits/stl_pair.h /usr/include/c++/4.4/bits/move.h \
+ /usr/include/c++/4.4/bits/concept_check.h \
+ /usr/include/c++/4.4/bits/stl_iterator_base_types.h \
+ /usr/include/c++/4.4/bits/stl_iterator_base_funcs.h \
+ /usr/include/c++/4.4/bits/stl_iterator.h \
+ /usr/include/c++/4.4/debug/debug.h /usr/include/c++/4.4/bits/localefwd.h \
+ /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++locale.h \
+ /usr/include/c++/4.4/clocale /usr/include/locale.h \
+ /usr/include/bits/locale.h /usr/include/c++/4.4/cctype \
+ /usr/include/ctype.h /usr/include/bits/types.h \
+ /usr/include/bits/typesizes.h /usr/include/endian.h \
+ /usr/include/bits/endian.h /usr/include/bits/byteswap.h \
+ /usr/include/c++/4.4/bits/ios_base.h \
+ /usr/include/c++/4.4/ext/atomicity.h \
+ /usr/include/c++/4.4/x86_64-linux-gnu/bits/gthr.h \
+ /usr/include/c++/4.4/x86_64-linux-gnu/bits/gthr-default.h \
+ /usr/include/pthread.h /usr/include/sched.h /usr/include/time.h \
+ /usr/include/bits/sched.h /usr/include/bits/time.h /usr/include/signal.h \
+ /usr/include/bits/sigset.h /usr/include/bits/pthreadtypes.h \
+ /usr/include/bits/setjmp.h /usr/include/unistd.h \
+ /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
+ /usr/include/bits/confname.h /usr/include/getopt.h \
+ /usr/include/c++/4.4/x86_64-linux-gnu/bits/atomic_word.h \
+ /usr/include/c++/4.4/bits/locale_classes.h /usr/include/c++/4.4/string \
+ /usr/include/c++/4.4/bits/allocator.h \
+ /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/4.4/ext/new_allocator.h /usr/include/c++/4.4/new \
+ /usr/include/c++/4.4/bits/ostream_insert.h \
+ /usr/include/c++/4.4/cxxabi-forced.h \
+ /usr/include/c++/4.4/bits/stl_function.h \
+ /usr/include/c++/4.4/backward/binders.h \
+ /usr/include/c++/4.4/bits/basic_string.h \
+ /usr/include/c++/4.4/initializer_list \
+ /usr/include/c++/4.4/bits/basic_string.tcc \
+ /usr/include/c++/4.4/bits/locale_classes.tcc \
+ /usr/include/c++/4.4/streambuf /usr/include/c++/4.4/bits/streambuf.tcc \
+ /usr/include/c++/4.4/bits/basic_ios.h \
+ /usr/include/c++/4.4/bits/locale_facets.h /usr/include/c++/4.4/cwctype \
+ /usr/include/wctype.h \
+ /usr/include/c++/4.4/x86_64-linux-gnu/bits/ctype_base.h \
+ /usr/include/c++/4.4/bits/streambuf_iterator.h \
+ /usr/include/c++/4.4/x86_64-linux-gnu/bits/ctype_inline.h \
+ /usr/include/c++/4.4/bits/locale_facets.tcc \
+ /usr/include/c++/4.4/bits/basic_ios.tcc \
+ /usr/include/c++/4.4/bits/ostream.tcc /usr/include/c++/4.4/istream \
+ /usr/include/c++/4.4/bits/istream.tcc \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/alize.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/AutoDestructor.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/Object.h \
+ /usr/include/c++/4.4/cassert /usr/include/assert.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/Exception.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/alizeString.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/RealVector.h \
+ /usr/include/math.h /usr/include/bits/huge_val.h \
+ /usr/include/bits/huge_valf.h /usr/include/bits/huge_vall.h \
+ /usr/include/bits/inf.h /usr/include/bits/nan.h \
+ /usr/include/bits/mathdef.h /usr/include/bits/mathcalls.h \
+ /usr/include/bits/mathinline.h /usr/include/memory.h \
+ /usr/include/string.h /usr/include/c++/4.4/cstdlib /usr/include/stdlib.h \
+ /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
+ /usr/include/sys/types.h /usr/include/sys/select.h \
+ /usr/include/bits/select.h /usr/include/sys/sysmacros.h \
+ /usr/include/alloca.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/RefVector.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/DoubleSquareMatrix.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/Feature.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/Matrix.h \
+ /usr/include/c++/4.4/cstdio /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/bits/stdio_lim.h \
+ /usr/include/bits/sys_errlist.h /usr/include/bits/stdio.h \
+ /usr/include/c++/4.4/fstream /usr/include/c++/4.4/bits/codecvt.h \
+ /usr/include/c++/4.4/x86_64-linux-gnu/bits/basic_file.h \
+ /usr/include/c++/4.4/x86_64-linux-gnu/bits/c++io.h \
+ /usr/include/c++/4.4/bits/fstream.tcc /usr/include/stdint.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/Config.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureFlags.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/XList.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/XLine.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/BoolMatrix.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/ULongVector.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/Label.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/Histo.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/LabelSet.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/CmdLine.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/Seg.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/SegAbstract.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/SegServer.h \
+ /usr/include/c++/4.4/map /usr/include/c++/4.4/bits/stl_tree.h \
+ /usr/include/c++/4.4/bits/stl_map.h \
+ /usr/include/c++/4.4/bits/stl_multimap.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/SegCluster.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/SegServerFileWriter.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FileWriter.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/SegServerFileReaderRaw.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/SegServerFileReaderAbstract.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FileReader.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/DistribGD.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/Distrib.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/DistribGF.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureGD.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/Mixture.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/DistribRefVector.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureGF.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/LabelServer.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureServer.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureDict.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureServer.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureInputStream.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureStat.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/StatServer.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/LKVector.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/ViterbiAccum.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureGDStat.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureGFStat.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FrameAcc.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FrameAccGD.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FrameAccGF.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureMultipleFileReader.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureFileReaderAbstract.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureFileList.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureFileReader.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureFileReaderRaw.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureFileReaderSingle.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureFileReaderSPro3.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureFileReaderSPro4.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureFileReaderHTK.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureInputStreamModifier.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureFileReaderAmiral.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureFileReaderAbstract.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureFileReaderRaw.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureFileReaderXml.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/XmlParser.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureFileReader.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureFileWriter.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureServerFileWriter.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureServerFileReader.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureServerFileReaderAbstract.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureServerFileReaderXml.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureServerFileReaderRaw.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureFileWriter.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/ConfigFileReaderRaw.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/ConfigFileReaderAbstract.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/ConfigFileReaderXml.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/ConfigFileWriter.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/XListFileReader.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/LabelFileReader.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/AudioFrame.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/AudioFileReader.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/AudioInputStream.h \
+ /local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/ConfigChecker.h \
+ ../../../LIA_SpkTools/include/liatools.h ../../../include/Eigen/Dense \
+ ../../../include/Eigen/Core \
+ ../../../include/Eigen/src/Core/util/DisableStupidWarnings.h \
+ ../../../include/Eigen/src/Core/util/Macros.h \
+ /usr/include/c++/4.4/complex /usr/include/c++/4.4/cmath \
+ /usr/include/c++/4.4/bits/cmath.tcc /usr/include/c++/4.4/sstream \
+ /usr/include/c++/4.4/bits/sstream.tcc \
+ ../../../include/Eigen/src/Core/util/MKL_support.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/emmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/xmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/mmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/mm_malloc.h \
+ /usr/include/c++/4.4/cerrno /usr/include/errno.h \
+ /usr/include/bits/errno.h /usr/include/linux/errno.h \
+ /usr/include/asm/errno.h /usr/include/asm-generic/errno.h \
+ /usr/include/asm-generic/errno-base.h /usr/include/c++/4.4/functional \
+ /usr/include/c++/4.4/cstring /usr/include/c++/4.4/limits \
+ /usr/include/c++/4.4/climits \
+ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/include-fixed/limits.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.4.5/include-fixed/syslimits.h \
+ /usr/include/limits.h /usr/include/bits/posix1_lim.h \
+ /usr/include/bits/local_lim.h /usr/include/linux/limits.h \
+ /usr/include/bits/posix2_lim.h /usr/include/bits/xopen_lim.h \
+ /usr/include/c++/4.4/algorithm /usr/include/c++/4.4/bits/stl_algo.h \
+ /usr/include/c++/4.4/bits/algorithmfwd.h \
+ /usr/include/c++/4.4/bits/stl_heap.h \
+ /usr/include/c++/4.4/bits/stl_tempbuf.h \
+ /usr/include/c++/4.4/bits/stl_construct.h \
+ /usr/include/c++/4.4/bits/stl_uninitialized.h \
+ ../../../include/Eigen/src/Core/util/Constants.h \
+ ../../../include/Eigen/src/Core/util/ForwardDeclarations.h \
+ ../../../include/Eigen/src/Core/util/Meta.h \
+ ../../../include/Eigen/src/Core/util/XprHelper.h \
+ ../../../include/Eigen/src/Core/util/StaticAssert.h \
+ ../../../include/Eigen/src/Core/util/Memory.h \
+ ../../../include/Eigen/src/Core/NumTraits.h \
+ ../../../include/Eigen/src/Core/MathFunctions.h \
+ ../../../include/Eigen/src/Core/GenericPacketMath.h \
+ ../../../include/Eigen/src/Core/arch/SSE/PacketMath.h \
+ ../../../include/Eigen/src/Core/arch/SSE/MathFunctions.h \
+ ../../../include/Eigen/src/Core/arch/SSE/Complex.h \
+ ../../../include/Eigen/src/Core/arch/Default/Settings.h \
+ ../../../include/Eigen/src/Core/Functors.h \
+ ../../../include/Eigen/src/Core/DenseCoeffsBase.h \
+ ../../../include/Eigen/src/Core/DenseBase.h \
+ ../../../include/Eigen/src/Core/../plugins/BlockMethods.h \
+ ../../../include/Eigen/src/Core/MatrixBase.h \
+ ../../../include/Eigen/src/Core/../plugins/CommonCwiseUnaryOps.h \
+ ../../../include/Eigen/src/Core/../plugins/CommonCwiseBinaryOps.h \
+ ../../../include/Eigen/src/Core/../plugins/MatrixCwiseUnaryOps.h \
+ ../../../include/Eigen/src/Core/../plugins/MatrixCwiseBinaryOps.h \
+ ../../../include/Eigen/src/Core/EigenBase.h \
+ ../../../include/Eigen/src/Core/Assign.h \
+ ../../../include/Eigen/src/Core/util/BlasUtil.h \
+ ../../../include/Eigen/src/Core/DenseStorage.h \
+ ../../../include/Eigen/src/Core/NestByValue.h \
+ ../../../include/Eigen/src/Core/ForceAlignedAccess.h \
+ ../../../include/Eigen/src/Core/ReturnByValue.h \
+ ../../../include/Eigen/src/Core/NoAlias.h \
+ ../../../include/Eigen/src/Core/PlainObjectBase.h \
+ ../../../include/Eigen/src/Core/Matrix.h \
+ ../../../include/Eigen/src/Core/Array.h \
+ ../../../include/Eigen/src/Core/CwiseBinaryOp.h \
+ ../../../include/Eigen/src/Core/CwiseUnaryOp.h \
+ ../../../include/Eigen/src/Core/CwiseNullaryOp.h \
+ ../../../include/Eigen/src/Core/CwiseUnaryView.h \
+ ../../../include/Eigen/src/Core/SelfCwiseBinaryOp.h \
+ ../../../include/Eigen/src/Core/Dot.h \
+ ../../../include/Eigen/src/Core/StableNorm.h \
+ ../../../include/Eigen/src/Core/MapBase.h \
+ ../../../include/Eigen/src/Core/Stride.h \
+ ../../../include/Eigen/src/Core/Map.h \
+ ../../../include/Eigen/src/Core/Block.h \
+ ../../../include/Eigen/src/Core/VectorBlock.h \
+ ../../../include/Eigen/src/Core/Transpose.h \
+ ../../../include/Eigen/src/Core/DiagonalMatrix.h \
+ ../../../include/Eigen/src/Core/Diagonal.h \
+ ../../../include/Eigen/src/Core/DiagonalProduct.h \
+ ../../../include/Eigen/src/Core/PermutationMatrix.h \
+ ../../../include/Eigen/src/Core/Transpositions.h \
+ ../../../include/Eigen/src/Core/Redux.h \
+ ../../../include/Eigen/src/Core/Visitor.h \
+ ../../../include/Eigen/src/Core/Fuzzy.h \
+ ../../../include/Eigen/src/Core/IO.h \
+ ../../../include/Eigen/src/Core/Swap.h \
+ ../../../include/Eigen/src/Core/CommaInitializer.h \
+ ../../../include/Eigen/src/Core/Flagged.h \
+ ../../../include/Eigen/src/Core/ProductBase.h \
+ ../../../include/Eigen/src/Core/GeneralProduct.h \
+ ../../../include/Eigen/src/Core/TriangularMatrix.h \
+ ../../../include/Eigen/src/Core/SelfAdjointView.h \
+ ../../../include/Eigen/src/Core/products/GeneralBlockPanelKernel.h \
+ ../../../include/Eigen/src/Core/products/Parallelizer.h \
+ ../../../include/Eigen/src/Core/products/CoeffBasedProduct.h \
+ ../../../include/Eigen/src/Core/products/GeneralMatrixVector.h \
+ ../../../include/Eigen/src/Core/products/GeneralMatrixMatrix.h \
+ ../../../include/Eigen/src/Core/SolveTriangular.h \
+ ../../../include/Eigen/src/Core/products/GeneralMatrixMatrixTriangular.h \
+ ../../../include/Eigen/src/Core/products/SelfadjointMatrixVector.h \
+ ../../../include/Eigen/src/Core/products/SelfadjointMatrixMatrix.h \
+ ../../../include/Eigen/src/Core/products/SelfadjointProduct.h \
+ ../../../include/Eigen/src/Core/products/SelfadjointRank2Update.h \
+ ../../../include/Eigen/src/Core/products/TriangularMatrixVector.h \
+ ../../../include/Eigen/src/Core/products/TriangularMatrixMatrix.h \
+ ../../../include/Eigen/src/Core/products/TriangularSolverMatrix.h \
+ ../../../include/Eigen/src/Core/products/TriangularSolverVector.h \
+ ../../../include/Eigen/src/Core/BandMatrix.h \
+ ../../../include/Eigen/src/Core/BooleanRedux.h \
+ ../../../include/Eigen/src/Core/Select.h \
+ ../../../include/Eigen/src/Core/VectorwiseOp.h \
+ ../../../include/Eigen/src/Core/Random.h \
+ ../../../include/Eigen/src/Core/Replicate.h \
+ ../../../include/Eigen/src/Core/Reverse.h \
+ ../../../include/Eigen/src/Core/ArrayBase.h \
+ ../../../include/Eigen/src/Core/../plugins/ArrayCwiseUnaryOps.h \
+ ../../../include/Eigen/src/Core/../plugins/ArrayCwiseBinaryOps.h \
+ ../../../include/Eigen/src/Core/ArrayWrapper.h \
+ ../../../include/Eigen/src/Core/GlobalFunctions.h \
+ ../../../include/Eigen/src/Core/util/ReenableStupidWarnings.h \
+ ../../../include/Eigen/LU ../../../include/Eigen/src/misc/Solve.h \
+ ../../../include/Eigen/src/misc/Kernel.h \
+ ../../../include/Eigen/src/misc/Image.h \
+ ../../../include/Eigen/src/LU/FullPivLU.h \
+ ../../../include/Eigen/src/LU/PartialPivLU.h \
+ ../../../include/Eigen/src/LU/Determinant.h \
+ ../../../include/Eigen/src/LU/Inverse.h \
+ ../../../include/Eigen/src/LU/arch/Inverse_SSE.h \
+ ../../../include/Eigen/Cholesky \
+ ../../../include/Eigen/src/Cholesky/LLT.h \
+ ../../../include/Eigen/src/Cholesky/LDLT.h ../../../include/Eigen/QR \
+ ../../../include/Eigen/Jacobi ../../../include/Eigen/src/Jacobi/Jacobi.h \
+ ../../../include/Eigen/Householder \
+ ../../../include/Eigen/src/Householder/Householder.h \
+ ../../../include/Eigen/src/Householder/HouseholderSequence.h \
+ ../../../include/Eigen/src/Householder/BlockHouseholder.h \
+ ../../../include/Eigen/src/QR/HouseholderQR.h \
+ ../../../include/Eigen/src/QR/FullPivHouseholderQR.h \
+ ../../../include/Eigen/src/QR/ColPivHouseholderQR.h \
+ ../../../include/Eigen/SVD ../../../include/Eigen/src/SVD/JacobiSVD.h \
+ ../../../include/Eigen/src/SVD/UpperBidiagonalization.h \
+ ../../../include/Eigen/Geometry \
+ ../../../include/Eigen/src/Geometry/OrthoMethods.h \
+ ../../../include/Eigen/src/Geometry/EulerAngles.h \
+ ../../../include/Eigen/src/Geometry/Homogeneous.h \
+ ../../../include/Eigen/src/Geometry/RotationBase.h \
+ ../../../include/Eigen/src/Geometry/Rotation2D.h \
+ ../../../include/Eigen/src/Geometry/Quaternion.h \
+ ../../../include/Eigen/src/Geometry/AngleAxis.h \
+ ../../../include/Eigen/src/Geometry/Transform.h \
+ ../../../include/Eigen/src/Geometry/Translation.h \
+ ../../../include/Eigen/src/Geometry/Scaling.h \
+ ../../../include/Eigen/src/Geometry/Hyperplane.h \
+ ../../../include/Eigen/src/Geometry/ParametrizedLine.h \
+ ../../../include/Eigen/src/Geometry/AlignedBox.h \
+ ../../../include/Eigen/src/Geometry/Umeyama.h \
+ ../../../include/Eigen/src/Geometry/arch/Geometry_SSE.h \
+ ../../../include/Eigen/Eigenvalues \
+ ../../../include/Eigen/src/Eigenvalues/Tridiagonalization.h \
+ ../../../include/Eigen/src/Eigenvalues/RealSchur.h \
+ ../../../include/Eigen/src/Eigenvalues/./HessenbergDecomposition.h \
+ ../../../include/Eigen/src/Eigenvalues/EigenSolver.h \
+ ../../../include/Eigen/src/Eigenvalues/./RealSchur.h \
+ ../../../include/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h \
+ ../../../include/Eigen/src/Eigenvalues/./Tridiagonalization.h \
+ ../../../include/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h \
+ ../../../include/Eigen/src/Eigenvalues/HessenbergDecomposition.h \
+ ../../../include/Eigen/src/Eigenvalues/ComplexSchur.h \
+ ../../../include/Eigen/src/Eigenvalues/ComplexEigenSolver.h \
+ ../../../include/Eigen/src/Eigenvalues/./ComplexSchur.h \
+ ../../../include/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
+ ../../../include/Eigen/Cholesky \
+ ../../../include/Eigen/src/Eigenvalues/EigenSolver.h \
+ ../../../include/Eigen/Eigenvalues \
+ ../../../LIA_SpkTools/include/GeneralTools.h \
+ ../../../LIA_SpkTools/include/liatools.h \
+ ../../../LIA_SpkTools/include/AccumulateStat.h \
+ ../../../LIA_SpkTools/include/AccumulateJFAStat.h \
+ ../../../LIA_SpkTools/include/AccumulateTVStat.h \
+ ../../../LIA_SpkTools/include/TrainTools.h \
+ ../../../LIA_SpkTools/include/SegTools.h \
+ ../../../LIA_SpkTools/include/Hmm.h \
+ ../../../LIA_SpkTools/include/ScoreWarp.h \
+ ../../../LIA_SpkTools/include/IOFormat.h \
+ ../../../LIA_SpkTools/include/SuperVectors.h \
+ ../../../LIA_SpkTools/include/FactorAnalysis.h \
+ ../../../LIA_SpkTools/include/TopGauss.h \
+ ../../../LIA_SpkTools/include/PldaTools.h ../../../include/Eigen/Core \
+ ../include/IvNorm.h
+
+/usr/include/c++/4.4/iostream:
+
+/usr/include/c++/4.4/x86_64-linux-gnu/bits/c++config.h:
+
+/usr/include/c++/4.4/x86_64-linux-gnu/bits/os_defines.h:
+
+/usr/include/features.h:
+
+/usr/include/bits/predefs.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/bits/wordsize.h:
+
+/usr/include/gnu/stubs.h:
+
+/usr/include/gnu/stubs-64.h:
+
+/usr/include/c++/4.4/x86_64-linux-gnu/bits/cpu_defines.h:
+
+/usr/include/c++/4.4/ostream:
+
+/usr/include/c++/4.4/ios:
+
+/usr/include/c++/4.4/iosfwd:
+
+/usr/include/c++/4.4/bits/stringfwd.h:
+
+/usr/include/c++/4.4/bits/postypes.h:
+
+/usr/include/c++/4.4/cwchar:
+
+/usr/include/c++/4.4/cstddef:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/stddef.h:
+
+/usr/include/wchar.h:
+
+/usr/include/stdio.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/stdarg.h:
+
+/usr/include/bits/wchar.h:
+
+/usr/include/xlocale.h:
+
+/usr/include/c++/4.4/exception:
+
+/usr/include/c++/4.4/bits/char_traits.h:
+
+/usr/include/c++/4.4/bits/stl_algobase.h:
+
+/usr/include/c++/4.4/bits/functexcept.h:
+
+/usr/include/c++/4.4/exception_defines.h:
+
+/usr/include/c++/4.4/bits/cpp_type_traits.h:
+
+/usr/include/c++/4.4/ext/type_traits.h:
+
+/usr/include/c++/4.4/ext/numeric_traits.h:
+
+/usr/include/c++/4.4/bits/stl_pair.h:
+
+/usr/include/c++/4.4/bits/move.h:
+
+/usr/include/c++/4.4/bits/concept_check.h:
+
+/usr/include/c++/4.4/bits/stl_iterator_base_types.h:
+
+/usr/include/c++/4.4/bits/stl_iterator_base_funcs.h:
+
+/usr/include/c++/4.4/bits/stl_iterator.h:
+
+/usr/include/c++/4.4/debug/debug.h:
+
+/usr/include/c++/4.4/bits/localefwd.h:
+
+/usr/include/c++/4.4/x86_64-linux-gnu/bits/c++locale.h:
+
+/usr/include/c++/4.4/clocale:
+
+/usr/include/locale.h:
+
+/usr/include/bits/locale.h:
+
+/usr/include/c++/4.4/cctype:
+
+/usr/include/ctype.h:
+
+/usr/include/bits/types.h:
+
+/usr/include/bits/typesizes.h:
+
+/usr/include/endian.h:
+
+/usr/include/bits/endian.h:
+
+/usr/include/bits/byteswap.h:
+
+/usr/include/c++/4.4/bits/ios_base.h:
+
+/usr/include/c++/4.4/ext/atomicity.h:
+
+/usr/include/c++/4.4/x86_64-linux-gnu/bits/gthr.h:
+
+/usr/include/c++/4.4/x86_64-linux-gnu/bits/gthr-default.h:
+
+/usr/include/pthread.h:
+
+/usr/include/sched.h:
+
+/usr/include/time.h:
+
+/usr/include/bits/sched.h:
+
+/usr/include/bits/time.h:
+
+/usr/include/signal.h:
+
+/usr/include/bits/sigset.h:
+
+/usr/include/bits/pthreadtypes.h:
+
+/usr/include/bits/setjmp.h:
+
+/usr/include/unistd.h:
+
+/usr/include/bits/posix_opt.h:
+
+/usr/include/bits/environments.h:
+
+/usr/include/bits/confname.h:
+
+/usr/include/getopt.h:
+
+/usr/include/c++/4.4/x86_64-linux-gnu/bits/atomic_word.h:
+
+/usr/include/c++/4.4/bits/locale_classes.h:
+
+/usr/include/c++/4.4/string:
+
+/usr/include/c++/4.4/bits/allocator.h:
+
+/usr/include/c++/4.4/x86_64-linux-gnu/bits/c++allocator.h:
+
+/usr/include/c++/4.4/ext/new_allocator.h:
+
+/usr/include/c++/4.4/new:
+
+/usr/include/c++/4.4/bits/ostream_insert.h:
+
+/usr/include/c++/4.4/cxxabi-forced.h:
+
+/usr/include/c++/4.4/bits/stl_function.h:
+
+/usr/include/c++/4.4/backward/binders.h:
+
+/usr/include/c++/4.4/bits/basic_string.h:
+
+/usr/include/c++/4.4/initializer_list:
+
+/usr/include/c++/4.4/bits/basic_string.tcc:
+
+/usr/include/c++/4.4/bits/locale_classes.tcc:
+
+/usr/include/c++/4.4/streambuf:
+
+/usr/include/c++/4.4/bits/streambuf.tcc:
+
+/usr/include/c++/4.4/bits/basic_ios.h:
+
+/usr/include/c++/4.4/bits/locale_facets.h:
+
+/usr/include/c++/4.4/cwctype:
+
+/usr/include/wctype.h:
+
+/usr/include/c++/4.4/x86_64-linux-gnu/bits/ctype_base.h:
+
+/usr/include/c++/4.4/bits/streambuf_iterator.h:
+
+/usr/include/c++/4.4/x86_64-linux-gnu/bits/ctype_inline.h:
+
+/usr/include/c++/4.4/bits/locale_facets.tcc:
+
+/usr/include/c++/4.4/bits/basic_ios.tcc:
+
+/usr/include/c++/4.4/bits/ostream.tcc:
+
+/usr/include/c++/4.4/istream:
+
+/usr/include/c++/4.4/bits/istream.tcc:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/alize.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/AutoDestructor.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/Object.h:
+
+/usr/include/c++/4.4/cassert:
+
+/usr/include/assert.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/Exception.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/alizeString.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/RealVector.h:
+
+/usr/include/math.h:
+
+/usr/include/bits/huge_val.h:
+
+/usr/include/bits/huge_valf.h:
+
+/usr/include/bits/huge_vall.h:
+
+/usr/include/bits/inf.h:
+
+/usr/include/bits/nan.h:
+
+/usr/include/bits/mathdef.h:
+
+/usr/include/bits/mathcalls.h:
+
+/usr/include/bits/mathinline.h:
+
+/usr/include/memory.h:
+
+/usr/include/string.h:
+
+/usr/include/c++/4.4/cstdlib:
+
+/usr/include/stdlib.h:
+
+/usr/include/bits/waitflags.h:
+
+/usr/include/bits/waitstatus.h:
+
+/usr/include/sys/types.h:
+
+/usr/include/sys/select.h:
+
+/usr/include/bits/select.h:
+
+/usr/include/sys/sysmacros.h:
+
+/usr/include/alloca.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/RefVector.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/DoubleSquareMatrix.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/Feature.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/Matrix.h:
+
+/usr/include/c++/4.4/cstdio:
+
+/usr/include/libio.h:
+
+/usr/include/_G_config.h:
+
+/usr/include/bits/stdio_lim.h:
+
+/usr/include/bits/sys_errlist.h:
+
+/usr/include/bits/stdio.h:
+
+/usr/include/c++/4.4/fstream:
+
+/usr/include/c++/4.4/bits/codecvt.h:
+
+/usr/include/c++/4.4/x86_64-linux-gnu/bits/basic_file.h:
+
+/usr/include/c++/4.4/x86_64-linux-gnu/bits/c++io.h:
+
+/usr/include/c++/4.4/bits/fstream.tcc:
+
+/usr/include/stdint.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/Config.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureFlags.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/XList.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/XLine.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/BoolMatrix.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/ULongVector.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/Label.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/Histo.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/LabelSet.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/CmdLine.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/Seg.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/SegAbstract.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/SegServer.h:
+
+/usr/include/c++/4.4/map:
+
+/usr/include/c++/4.4/bits/stl_tree.h:
+
+/usr/include/c++/4.4/bits/stl_map.h:
+
+/usr/include/c++/4.4/bits/stl_multimap.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/SegCluster.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/SegServerFileWriter.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FileWriter.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/SegServerFileReaderRaw.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/SegServerFileReaderAbstract.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FileReader.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/DistribGD.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/Distrib.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/DistribGF.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureGD.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/Mixture.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/DistribRefVector.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureGF.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/LabelServer.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureServer.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureDict.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureServer.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureInputStream.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureStat.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/StatServer.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/LKVector.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/ViterbiAccum.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureGDStat.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureGFStat.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FrameAcc.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FrameAccGD.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FrameAccGF.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureMultipleFileReader.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureFileReaderAbstract.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureFileList.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureFileReader.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureFileReaderRaw.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureFileReaderSingle.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureFileReaderSPro3.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureFileReaderSPro4.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureFileReaderHTK.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureInputStreamModifier.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureFileReaderAmiral.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureFileReaderAbstract.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureFileReaderRaw.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureFileReaderXml.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/XmlParser.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureFileReader.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureFileWriter.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureServerFileWriter.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureServerFileReader.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureServerFileReaderAbstract.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureServerFileReaderXml.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/MixtureServerFileReaderRaw.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/FeatureFileWriter.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/ConfigFileReaderRaw.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/ConfigFileReaderAbstract.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/ConfigFileReaderXml.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/ConfigFileWriter.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/XListFileReader.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/LabelFileReader.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/AudioFrame.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/AudioFileReader.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/AudioInputStream.h:
+
+/local/AudioVideoSpkSeg/Tools/LIA_RAL-3.0/../ALIZE//include/ConfigChecker.h:
+
+../../../LIA_SpkTools/include/liatools.h:
+
+../../../include/Eigen/Dense:
+
+../../../include/Eigen/Core:
+
+../../../include/Eigen/src/Core/util/DisableStupidWarnings.h:
+
+../../../include/Eigen/src/Core/util/Macros.h:
+
+/usr/include/c++/4.4/complex:
+
+/usr/include/c++/4.4/cmath:
+
+/usr/include/c++/4.4/bits/cmath.tcc:
+
+/usr/include/c++/4.4/sstream:
+
+/usr/include/c++/4.4/bits/sstream.tcc:
+
+../../../include/Eigen/src/Core/util/MKL_support.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/emmintrin.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/xmmintrin.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/mmintrin.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/mm_malloc.h:
+
+/usr/include/c++/4.4/cerrno:
+
+/usr/include/errno.h:
+
+/usr/include/bits/errno.h:
+
+/usr/include/linux/errno.h:
+
+/usr/include/asm/errno.h:
+
+/usr/include/asm-generic/errno.h:
+
+/usr/include/asm-generic/errno-base.h:
+
+/usr/include/c++/4.4/functional:
+
+/usr/include/c++/4.4/cstring:
+
+/usr/include/c++/4.4/limits:
+
+/usr/include/c++/4.4/climits:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.4.5/include-fixed/limits.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/4.4.5/include-fixed/syslimits.h:
+
+/usr/include/limits.h:
+
+/usr/include/bits/posix1_lim.h:
+
+/usr/include/bits/local_lim.h:
+
+/usr/include/linux/limits.h:
+
+/usr/include/bits/posix2_lim.h:
+
+/usr/include/bits/xopen_lim.h:
+
+/usr/include/c++/4.4/algorithm:
+
+/usr/include/c++/4.4/bits/stl_algo.h:
+
+/usr/include/c++/4.4/bits/algorithmfwd.h:
+
+/usr/include/c++/4.4/bits/stl_heap.h:
+
+/usr/include/c++/4.4/bits/stl_tempbuf.h:
+
+/usr/include/c++/4.4/bits/stl_construct.h:
+
+/usr/include/c++/4.4/bits/stl_uninitialized.h:
+
+../../../include/Eigen/src/Core/util/Constants.h:
+
+../../../include/Eigen/src/Core/util/ForwardDeclarations.h:
+
+../../../include/Eigen/src/Core/util/Meta.h:
+
+../../../include/Eigen/src/Core/util/XprHelper.h:
+
+../../../include/Eigen/src/Core/util/StaticAssert.h:
+
+../../../include/Eigen/src/Core/util/Memory.h:
+
+../../../include/Eigen/src/Core/NumTraits.h:
+
+../../../include/Eigen/src/Core/MathFunctions.h:
+
+../../../include/Eigen/src/Core/GenericPacketMath.h:
+
+../../../include/Eigen/src/Core/arch/SSE/PacketMath.h:
+
+../../../include/Eigen/src/Core/arch/SSE/MathFunctions.h:
+
+../../../include/Eigen/src/Core/arch/SSE/Complex.h:
+
+../../../include/Eigen/src/Core/arch/Default/Settings.h:
+
+../../../include/Eigen/src/Core/Functors.h:
+
+../../../include/Eigen/src/Core/DenseCoeffsBase.h:
+
+../../../include/Eigen/src/Core/DenseBase.h:
+
+../../../include/Eigen/src/Core/../plugins/BlockMethods.h:
+
+../../../include/Eigen/src/Core/MatrixBase.h:
+
+../../../include/Eigen/src/Core/../plugins/CommonCwiseUnaryOps.h:
+
+../../../include/Eigen/src/Core/../plugins/CommonCwiseBinaryOps.h:
+
+../../../include/Eigen/src/Core/../plugins/MatrixCwiseUnaryOps.h:
+
+../../../include/Eigen/src/Core/../plugins/MatrixCwiseBinaryOps.h:
+
+../../../include/Eigen/src/Core/EigenBase.h:
+
+../../../include/Eigen/src/Core/Assign.h:
+
+../../../include/Eigen/src/Core/util/BlasUtil.h:
+
+../../../include/Eigen/src/Core/DenseStorage.h:
+
+../../../include/Eigen/src/Core/NestByValue.h:
+
+../../../include/Eigen/src/Core/ForceAlignedAccess.h:
+
+../../../include/Eigen/src/Core/ReturnByValue.h:
+
+../../../include/Eigen/src/Core/NoAlias.h:
+
+../../../include/Eigen/src/Core/PlainObjectBase.h:
+
+../../../include/Eigen/src/Core/Matrix.h:
+
+../../../include/Eigen/src/Core/Array.h:
+
+../../../include/Eigen/src/Core/CwiseBinaryOp.h:
+
+../../../include/Eigen/src/Core/CwiseUnaryOp.h:
+
+../../../include/Eigen/src/Core/CwiseNullaryOp.h:
+
+../../../include/Eigen/src/Core/CwiseUnaryView.h:
+
+../../../include/Eigen/src/Core/SelfCwiseBinaryOp.h:
+
+../../../include/Eigen/src/Core/Dot.h:
+
+../../../include/Eigen/src/Core/StableNorm.h:
+
+../../../include/Eigen/src/Core/MapBase.h:
+
+../../../include/Eigen/src/Core/Stride.h:
+
+../../../include/Eigen/src/Core/Map.h:
+
+../../../include/Eigen/src/Core/Block.h:
+
+../../../include/Eigen/src/Core/VectorBlock.h:
+
+../../../include/Eigen/src/Core/Transpose.h:
+
+../../../include/Eigen/src/Core/DiagonalMatrix.h:
+
+../../../include/Eigen/src/Core/Diagonal.h:
+
+../../../include/Eigen/src/Core/DiagonalProduct.h:
+
+../../../include/Eigen/src/Core/PermutationMatrix.h:
+
+../../../include/Eigen/src/Core/Transpositions.h:
+
+../../../include/Eigen/src/Core/Redux.h:
+
+../../../include/Eigen/src/Core/Visitor.h:
+
+../../../include/Eigen/src/Core/Fuzzy.h:
+
+../../../include/Eigen/src/Core/IO.h:
+
+../../../include/Eigen/src/Core/Swap.h:
+
+../../../include/Eigen/src/Core/CommaInitializer.h:
+
+../../../include/Eigen/src/Core/Flagged.h:
+
+../../../include/Eigen/src/Core/ProductBase.h:
+
+../../../include/Eigen/src/Core/GeneralProduct.h:
+
+../../../include/Eigen/src/Core/TriangularMatrix.h:
+
+../../../include/Eigen/src/Core/SelfAdjointView.h:
+
+../../../include/Eigen/src/Core/products/GeneralBlockPanelKernel.h:
+
+../../../include/Eigen/src/Core/products/Parallelizer.h:
+
+../../../include/Eigen/src/Core/products/CoeffBasedProduct.h:
+
+../../../include/Eigen/src/Core/products/GeneralMatrixVector.h:
+
+../../../include/Eigen/src/Core/products/GeneralMatrixMatrix.h:
+
+../../../include/Eigen/src/Core/SolveTriangular.h:
+
+../../../include/Eigen/src/Core/products/GeneralMatrixMatrixTriangular.h:
+
+../../../include/Eigen/src/Core/products/SelfadjointMatrixVector.h:
+
+../../../include/Eigen/src/Core/products/SelfadjointMatrixMatrix.h:
+
+../../../include/Eigen/src/Core/products/SelfadjointProduct.h:
+
+../../../include/Eigen/src/Core/products/SelfadjointRank2Update.h:
+
+../../../include/Eigen/src/Core/products/TriangularMatrixVector.h:
+
+../../../include/Eigen/src/Core/products/TriangularMatrixMatrix.h:
+
+../../../include/Eigen/src/Core/products/TriangularSolverMatrix.h:
+
+../../../include/Eigen/src/Core/products/TriangularSolverVector.h:
+
+../../../include/Eigen/src/Core/BandMatrix.h:
+
+../../../include/Eigen/src/Core/BooleanRedux.h:
+
+../../../include/Eigen/src/Core/Select.h:
+
+../../../include/Eigen/src/Core/VectorwiseOp.h:
+
+../../../include/Eigen/src/Core/Random.h:
+
+../../../include/Eigen/src/Core/Replicate.h:
+
+../../../include/Eigen/src/Core/Reverse.h:
+
+../../../include/Eigen/src/Core/ArrayBase.h:
+
+../../../include/Eigen/src/Core/../plugins/ArrayCwiseUnaryOps.h:
+
+../../../include/Eigen/src/Core/../plugins/ArrayCwiseBinaryOps.h:
+
+../../../include/Eigen/src/Core/ArrayWrapper.h:
+
+../../../include/Eigen/src/Core/GlobalFunctions.h:
+
+../../../include/Eigen/src/Core/util/ReenableStupidWarnings.h:
+
+../../../include/Eigen/LU:
+
+../../../include/Eigen/src/misc/Solve.h:
+
+../../../include/Eigen/src/misc/Kernel.h:
+
+../../../include/Eigen/src/misc/Image.h:
+
+../../../include/Eigen/src/LU/FullPivLU.h:
+
+../../../include/Eigen/src/LU/PartialPivLU.h:
+
+../../../include/Eigen/src/LU/Determinant.h:
+
+../../../include/Eigen/src/LU/Inverse.h:
+
+../../../include/Eigen/src/LU/arch/Inverse_SSE.h:
+
+../../../include/Eigen/Cholesky:
+
+../../../include/Eigen/src/Cholesky/LLT.h:
+
+../../../include/Eigen/src/Cholesky/LDLT.h:
+
+../../../include/Eigen/QR:
+
+../../../include/Eigen/Jacobi:
+
+../../../include/Eigen/src/Jacobi/Jacobi.h:
+
+../../../include/Eigen/Householder:
+
+../../../include/Eigen/src/Householder/Householder.h:
+
+../../../include/Eigen/src/Householder/HouseholderSequence.h:
+
+../../../include/Eigen/src/Householder/BlockHouseholder.h:
+
+../../../include/Eigen/src/QR/HouseholderQR.h:
+
+../../../include/Eigen/src/QR/FullPivHouseholderQR.h:
+
+../../../include/Eigen/src/QR/ColPivHouseholderQR.h:
+
+../../../include/Eigen/SVD:
+
+../../../include/Eigen/src/SVD/JacobiSVD.h:
+
+../../../include/Eigen/src/SVD/UpperBidiagonalization.h:
+
+../../../include/Eigen/Geometry:
+
+../../../include/Eigen/src/Geometry/OrthoMethods.h:
+
+../../../include/Eigen/src/Geometry/EulerAngles.h:
+
+../../../include/Eigen/src/Geometry/Homogeneous.h:
+
+../../../include/Eigen/src/Geometry/RotationBase.h:
+
+../../../include/Eigen/src/Geometry/Rotation2D.h:
+
+../../../include/Eigen/src/Geometry/Quaternion.h:
+
+../../../include/Eigen/src/Geometry/AngleAxis.h:
+
+../../../include/Eigen/src/Geometry/Transform.h:
+
+../../../include/Eigen/src/Geometry/Translation.h:
+
+../../../include/Eigen/src/Geometry/Scaling.h:
+
+../../../include/Eigen/src/Geometry/Hyperplane.h:
+
+../../../include/Eigen/src/Geometry/ParametrizedLine.h:
+
+../../../include/Eigen/src/Geometry/AlignedBox.h:
+
+../../../include/Eigen/src/Geometry/Umeyama.h:
+
+../../../include/Eigen/src/Geometry/arch/Geometry_SSE.h:
+
+../../../include/Eigen/Eigenvalues:
+
+../../../include/Eigen/src/Eigenvalues/Tridiagonalization.h:
+
+../../../include/Eigen/src/Eigenvalues/RealSchur.h:
+
+../../../include/Eigen/src/Eigenvalues/./HessenbergDecomposition.h:
+
+../../../include/Eigen/src/Eigenvalues/EigenSolver.h:
+
+../../../include/Eigen/src/Eigenvalues/./RealSchur.h:
+
+../../../include/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h:
+
+../../../include/Eigen/src/Eigenvalues/./Tridiagonalization.h:
+
+../../../include/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h:
+
+../../../include/Eigen/src/Eigenvalues/HessenbergDecomposition.h:
+
+../../../include/Eigen/src/Eigenvalues/ComplexSchur.h:
+
+../../../include/Eigen/src/Eigenvalues/ComplexEigenSolver.h:
+
+../../../include/Eigen/src/Eigenvalues/./ComplexSchur.h:
+
+../../../include/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h:
+
+../../../include/Eigen/Cholesky:
+
+../../../include/Eigen/src/Eigenvalues/EigenSolver.h:
+
+../../../include/Eigen/Eigenvalues:
+
+../../../LIA_SpkTools/include/GeneralTools.h:
+
+../../../LIA_SpkTools/include/liatools.h:
+
+../../../LIA_SpkTools/include/AccumulateStat.h:
+
+../../../LIA_SpkTools/include/AccumulateJFAStat.h:
+
+../../../LIA_SpkTools/include/AccumulateTVStat.h:
+
+../../../LIA_SpkTools/include/TrainTools.h:
+
+../../../LIA_SpkTools/include/SegTools.h:
+
+../../../LIA_SpkTools/include/Hmm.h:
+
+../../../LIA_SpkTools/include/ScoreWarp.h:
+
+../../../LIA_SpkTools/include/IOFormat.h:
+
+../../../LIA_SpkTools/include/SuperVectors.h:
+
+../../../LIA_SpkTools/include/FactorAnalysis.h:
+
+../../../LIA_SpkTools/include/TopGauss.h:
+
+../../../LIA_SpkTools/include/PldaTools.h:
+
+../../../include/Eigen/Core:
+
+../include/IvNorm.h:

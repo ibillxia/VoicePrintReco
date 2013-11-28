@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/LIA_RAL/!svn/ver/269/branches/2.5_BioSpeak/LIA_SpkDet/IvExtractor/src
+END
+IvExtractorMain.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/LIA_RAL/!svn/ver/264/branches/2.5_BioSpeak/LIA_SpkDet/IvExtractor/src/IvExtractorMain.cpp
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/LIA_RAL/!svn/ver/268/branches/2.5_BioSpeak/LIA_SpkDet/IvExtractor/src/Makefile.am
+END
+IvExtractor.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/LIA_RAL/!svn/ver/269/branches/2.5_BioSpeak/LIA_SpkDet/IvExtractor/src/IvExtractor.cpp
+END

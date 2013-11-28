@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="sources">
+      <UniqueIdentifier>{70a29501-c194-4379-bd8b-a24fc104b25a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="header">
+      <UniqueIdentifier>{d5262028-3144-43fd-97e0-e05d59e3e99d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\LIA_SpkDet\ScorpioTest\include\IvExtractor.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\LIA_SpkDet\ScorpioTest\include\ScorpioTest.h">
+      <Filter>header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\LIA_SpkDet\ScorpioTest\src\ScorpioTest.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LIA_SpkDet\ScorpioTest\src\ScorpioTestMain.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

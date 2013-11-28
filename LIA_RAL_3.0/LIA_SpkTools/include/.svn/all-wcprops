@@ -1,0 +1,113 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/LIA_RAL/!svn/ver/261/branches/2.5_BioSpeak/LIA_SpkTools/include
+END
+AccumulateTVStat.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/LIA_RAL/!svn/ver/261/branches/2.5_BioSpeak/LIA_SpkTools/include/AccumulateTVStat.h
+END
+FileInfo.h
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_SpkTools/include/FileInfo.h
+END
+TrainTools.h
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_SpkTools/include/TrainTools.h
+END
+GeneralTools.h
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_SpkTools/include/GeneralTools.h
+END
+ClusteringCriterion.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_SpkTools/include/ClusteringCriterion.h
+END
+SegTools.h
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_SpkTools/include/SegTools.h
+END
+AccumulateJFAStat.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_SpkTools/include/AccumulateJFAStat.h
+END
+Tools.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_SpkTools/include/Tools.h
+END
+PldaTools.h
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/LIA_RAL/!svn/ver/255/branches/2.5_BioSpeak/LIA_SpkTools/include/PldaTools.h
+END
+SuperVectors.h
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_SpkTools/include/SuperVectors.h
+END
+ScoreWarp.h
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_SpkTools/include/ScoreWarp.h
+END
+TopGauss.h
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_SpkTools/include/TopGauss.h
+END
+UnsupervisedTools.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_SpkTools/include/UnsupervisedTools.h
+END
+AccumulateStat.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_SpkTools/include/AccumulateStat.h
+END
+IOFormat.h
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_SpkTools/include/IOFormat.h
+END
+Hmm.h
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_SpkTools/include/Hmm.h
+END
+FactorAnalysis.h
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_SpkTools/include/FactorAnalysis.h
+END
+liatools.h
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_SpkTools/include/liatools.h
+END

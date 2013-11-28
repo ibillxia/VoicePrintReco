@@ -1,0 +1,77 @@
+10
+
+dir
+270
+http://alize.univ-avignon.fr/svn/LIA_RAL/branches/2.5_BioSpeak/LIA_SpkSeg/Segmentation
+http://alize.univ-avignon.fr/svn/LIA_RAL
+
+
+
+2013-02-21T06:24:57.325264Z
+226
+alarcher
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1290fa5e-fd49-494a-a208-9d5a245c2233
+
+cfg
+dir
+
+test
+dir
+
+include
+dir
+
+doc
+dir
+
+src
+dir
+
+Makefile.am
+file
+
+
+
+
+2013-09-02T08:24:37.000000Z
+289ca6681c85409c764d0d5f3b8e8a94
+2012-12-12T06:16:41.155721Z
+204
+alarcher
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+12
+

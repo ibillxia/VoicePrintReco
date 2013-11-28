@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/SequenceExtractor/src
+END
+SequenceExtractor.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/SequenceExtractor/src/SequenceExtractor.cpp
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/SequenceExtractor/src/Makefile.am
+END
+SequenceExtractorMain.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_Utils/SequenceExtractor/src/SequenceExtractorMain.cpp
+END

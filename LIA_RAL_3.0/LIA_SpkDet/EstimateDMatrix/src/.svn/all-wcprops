@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/EstimateDMatrix/src
+END
+EstimateDMatrix.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/EstimateDMatrix/src/EstimateDMatrix.cpp
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/EstimateDMatrix/src/Makefile.am
+END
+EstimateDMatrixMain.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/EstimateDMatrix/src/EstimateDMatrixMain.cpp
+END

@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/IterativeLinearSolvers
+END
+BasicPreconditioners.h
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/IterativeLinearSolvers/BasicPreconditioners.h
+END
+ConjugateGradient.h
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/IterativeLinearSolvers/ConjugateGradient.h
+END
+BiCGSTAB.h
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h
+END
+IterativeSolverBase.h
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/IterativeLinearSolvers/IterativeSolverBase.h
+END
+IncompleteLUT.h
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/IterativeLinearSolvers/CMakeLists.txt
+END

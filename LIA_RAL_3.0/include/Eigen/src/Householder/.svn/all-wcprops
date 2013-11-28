@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/Householder
+END
+HouseholderSequence.h
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/Householder/HouseholderSequence.h
+END
+BlockHouseholder.h
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/Householder/BlockHouseholder.h
+END
+Householder.h
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/Householder/Householder.h
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/include/Eigen/src/Householder/CMakeLists.txt
+END

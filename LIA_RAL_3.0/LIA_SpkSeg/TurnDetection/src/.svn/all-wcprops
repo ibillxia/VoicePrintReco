@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/LIA_RAL/!svn/ver/226/branches/2.5_BioSpeak/LIA_SpkSeg/TurnDetection/src
+END
+TurnDetection.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_SpkSeg/TurnDetection/src/TurnDetection.cpp
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/LIA_RAL/!svn/ver/226/branches/2.5_BioSpeak/LIA_SpkSeg/TurnDetection/src/Makefile.am
+END
+TurnDetectionMain.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/LIA_RAL/!svn/ver/204/branches/2.5_BioSpeak/LIA_SpkSeg/TurnDetection/src/TurnDetectionMain.cpp
+END

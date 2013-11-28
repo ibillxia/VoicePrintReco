@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/LIA_RAL/!svn/ver/255/branches/2.5_BioSpeak/LIA_SpkDet/IvNorm/src
+END
+IvNormMain.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/LIA_RAL/!svn/ver/255/branches/2.5_BioSpeak/LIA_SpkDet/IvNorm/src/IvNormMain.cpp
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/LIA_RAL/!svn/ver/226/branches/2.5_BioSpeak/LIA_SpkDet/IvNorm/src/Makefile.am
+END
+IvNorm.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/LIA_RAL/!svn/ver/216/branches/2.5_BioSpeak/LIA_SpkDet/IvNorm/src/IvNorm.cpp
+END

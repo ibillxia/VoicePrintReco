@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/LIA_RAL/!svn/ver/255/branches/2.5_BioSpeak/LIA_SpkDet/CovIntra/src
+END
+CovIntra.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/LIA_RAL/!svn/ver/205/branches/2.5_BioSpeak/LIA_SpkDet/CovIntra/src/CovIntra.cpp
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/LIA_RAL/!svn/ver/205/branches/2.5_BioSpeak/LIA_SpkDet/CovIntra/src/Makefile.am
+END
+CovIntraMain.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/LIA_RAL/!svn/ver/205/branches/2.5_BioSpeak/LIA_SpkDet/CovIntra/src/CovIntraMain.cpp
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/LIA_RAL/!svn/ver/205/branches/2.5_BioSpeak/LIA_SpkDet/CovIntra/src/README
+END

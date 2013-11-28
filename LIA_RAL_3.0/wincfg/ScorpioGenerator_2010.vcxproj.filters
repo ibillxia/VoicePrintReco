@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="header">
+      <UniqueIdentifier>{9600a514-efee-4470-a201-faacce1d58ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sources">
+      <UniqueIdentifier>{bb1ed45d-3357-4f0c-a117-ccc6cdc810bc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\LIA_SpkDet\ScorpioGenerator\include\ScorpioGenerator.h">
+      <Filter>header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\LIA_SpkDet\ScorpioGenerator\src\ScorpioGenerator.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\LIA_SpkDet\ScorpioGenerator\src\ScorpioGeneratorMain.cpp">
+      <Filter>sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

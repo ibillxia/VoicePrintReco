@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/LIA_RAL/!svn/ver/268/branches/2.5_BioSpeak/LIA_SpkDet/ComputeJFAStats/src
+END
+ComputeJFAStatsMain.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/ComputeJFAStats/src/ComputeJFAStatsMain.cpp
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/LIA_RAL/!svn/ver/268/branches/2.5_BioSpeak/LIA_SpkDet/ComputeJFAStats/src/Makefile.am
+END
+ComputeJFAStats.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/LIA_RAL/!svn/ver/202/branches/2.5_BioSpeak/LIA_SpkDet/ComputeJFAStats/src/ComputeJFAStats.cpp
+END
