@@ -1,0 +1,85 @@
+\input texinfo @c -*-texinfo-*-
+@setfilename spro.info
+@settitle SPro
+
+@finalout
+@setchapternewpage odd
+@setcontentsaftertitlepage
+
+@include version.texi
+
+@syncodeindex fn cp
+@syncodeindex pg cp
+
+@ifinfo
+SPro: Speech Signal Processing Toolkit.
+
+This file documents the SPro toolkit, release @value{VERSION}, for
+speech signal analysis.
+
+Copyright 1996 -- 2010, Guillaume Gravier.
+
+@c Permission is granted to copy, distribute and/or modify this document
+@c under the terms of the GNU Free Documentation License, Version 1.1 or
+@c any later version published by the Free Software Foundation; with no
+@c Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+@c Texts.  A copy of the license is included in the section entitled ``GNU
+@c Free Documentation License''.
+@end ifinfo
+
+@titlepage
+@title SPro
+@subtitle Speech Signal Processing Toolkit, release @value{VERSION}.
+@subtitle Last updated @value{UPDATED}.
+@author Guillaume Gravier
+
+@page
+@vskip 0pt plus 1filll
+Copyright @copyright{} 1996 -- 2010, Guillaume Gravier.
+
+@c Permission is granted to copy, distribute and/or modify this document
+@c under the terms of the GNU Free Documentation License, Version 1.1 or
+@c any later version published by the Free Software Foundation; with no
+@c Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
+@c Texts.  A copy of the license is included in the section entitled ``GNU
+@c Free Documentation License''.
+@end titlepage
+
+@c -- Top node
+@ifnottex
+@node Top, Introduction, (dir), (dir)
+@top Spro
+@end ifnottex
+
+@ifinfo
+This file documents the SPro toolkit for speech signal processing, for
+SPro release @value{VERSION}.
+@end ifinfo
+
+@c Top level menu
+
+@menu
+* Introduction::                What is SPro?
+* Speech analysis::             Basics of speech analysis techniques
+* SPro tools::                  The SPro user manual
+* SPro library::                The SPro programmer manual
+* Reference guide::             Quick reference guide
+* Changes::                     Changes in SPro
+* Index::                       Index
+@end menu
+
+@include intro.texi
+@include speech.texi
+@include user.texi
+@include library.texi
+@include reference.texi
+@include changes.texi
+@c @include license.texi
+@include index.texi
+
+@contents
+@bye
+
+@c Local Variables:
+@c ispell-local-dictionary: "american"
+@c End:

@@ -1,0 +1,105 @@
+@c
+@c changes.texi -- SPro Reference Manual
+@c
+@c Copyright (C) 2003 Guillaume Gravier (guig@irisa.fr)
+@c
+@c $Author: guig $
+@c $Date: 2010-11-09 16:57:22 +0100 (Tue, 09 Nov 2010) $
+@c $Revision: 151 $
+@c
+
+@c --*-- -------- --*--
+@c --*-- Changes  --*--
+@c --*-- -------- --*--
+@node Changes, Index, Reference guide, Top
+@chapter Changes
+
+@c
+@c --*-- History --*--
+@c
+@menu
+* History::                     The history of SPro
+* Changes from previous version::  What's new from the previous version?
+* Compatibility::               Is th current version compatible with the previous one?
+@end menu
+
+@node History, Changes from previous version, Changes, Changes
+@section History
+
+Here is a little bit of history before going into the details of the
+changes between the two last version of SPro.
+
+I started the SPro project in 1996 while working at @acronym{ELAN}
+Informatique. At the time, SPro was nothing but a simple linear
+prediction analysis library for a @acronym{CELP} coder.  
+
+After I left this company to go as a Ph. D. Student at @acronym{ENST}
+Paris, the project rapidly turned into a speech processing toolkit to
+design front-end processing for speech and speaker recognition
+algorithms. In particular, all those nice variable resolution spectral
+analysis programs were developed for my work there. I left
+@acronym{ENST} with SPro version 3.2, a rather stable version of the
+toolkit but dependent upon non GPL code and upon other toolkits I used
+to maintain.
+
+After a short pause, the project restarted when I joined @acronym{IRISA}
+as a @acronym{CNRS} fellow researcher. Version 3.2 then quickly turned
+into version 3.3 which is the first truly GPL stand-alone distribution
+of SPro. Version 3.3 also introduced the use of the @command{configure}
+script which has made SPro developer's life easier since. 
+
+Finally, it took quite a long time and several non fully documented
+(3.3.1) or non distributed (3.3.2) intermediate versions of SPro before
+the major rewrite that lead to version 4.0. Version 4.0 had basically
+the same functionalities as had versions 3.x with the immense advantage
+that the new version can handle signals of virtually infinite length via
+the use of signal and feature streams. Implementing streamed I/O
+mechanisms for waveforms and features required rewriting a lot of
+functions and changing the SPro feature file format, @strong{thus
+loosing both the command and the library compatibility} (see note on the
+compatibility below). I took this opportunity of a major rewrite to
+undergo modifications I had been willing to do for a long time.
+
+Finally, in release 4.1, I added PLP analysis and a few goodies (see
+changes below).
+
+Apart from a few features that I would like to add to SPro, the toolkit
+is pretty stable and no major modifications are scehduled in the near
+(or even mid-term) future.
+ 
+@c
+@c --*-- Changes from previous version --*--
+@c
+@node Changes from previous version, Compatibility, History, Changes
+@section Changes from previous version
+
+The distribution license has been changed from GPL to a more permissive
+MIT License.  Release 5.0 is in all point similar to 4.1 except for the
+license change.
+
+@c
+@c --*-- Compatibility --*--
+@c
+@node Compatibility,  , Changes from previous version, Changes
+@section Compatibility
+
+Release 5.0 is fully compatible with 4.* releases.
+
+In case you did not get it, @strong{from version 4.0, the compatibility
+is lost with previous releases}. As mentioned previously, the main
+reason for a new organization of SPro starting with version 4.0 is the
+ability to process arbitrary length streams.
+
+To enable arbitrary length streams, the feature file format has changed
+and feature files (formerly known as data files) generated with a
+version of SPro prior to 4.0 can not be used directly in 4.0 and above
+versions. However, the @command{scopy} tool provides a compatibility
+option which enables the import of feature files from previous SPro
+releases.
+
+The lack of compatibility also extends to the library. Programs based on
+former releases of the library will not compile anymore.
+
+@c Local Variables:
+@c ispell-local-dictionary: "american"
+@c End:
