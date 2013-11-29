@@ -1,0 +1,137 @@
+###########################################################
+#	i-Vector_system_with_ALIZE3.0
+#
+#	Several options are available as ALIZE include most of the state-of-the-art 
+#	classifiers used for speaker verification.
+#	This tutorial gives an example of how to build a complete i-vector system.
+#
+#	This tutorial has been created to help new users to use ALIZE LIA_SpkDet tools.
+#	The author does not give ANY waranty about the performance and the usability.
+#
+#	GOOD LUCK !
+#
+#		by Anthony Larcher
+#		alarcher - at- i2r.a-star.edu.sg
+#
+#		02/09/2013
+#
+###########################################################
+
+
+
+HOW TO START?
+
+	* download ALIZE and LIA_RAL
+	* compile alize and liaspktools libraries then all executables from LIA_SpkDet
+	* copy the libraries together with the binaries into the ./bin/ directory.
+	* in a terminal, enter the directory ./02_i-vector_system_with_ALIZE3.0/ and follow the steps below
+
+
+This tutorial is organised in four parts.
+Parts 1, 2 and 3 are mandatory while part 4 propose different scenario to use i-vectors.
+
+1. Feature extraction using SPRO or HTK
+	configuration files provided with this tutorial extract 60 dimension MFCC feature vectors 
+	(19 MFCC + log-energy and first and second order derivative)
+
+	To Run the tutorial, you need:
+
+		sfbcep from the SPRO toolkit (http://www.irisa.fr/metiss/guig/spro/)
+			note that if SPRO is not lined to the SPHERE library, you will need 
+			w_decode and h_strip from the NIST speech processing toolkit 
+			(http://www.speech.cs.cmu.edu/comp.speech/Section1/AudioSoftware/nist.html) 
+			to convert the SPHERE files in raw PCM format.
+			
+	or:
+			
+		HCopy from the HTK toolkit (http://htk.eng.cam.ac.uk/)
+
+	Choose the way you want to extract the acoustic features in:
+		
+		01_RUN_feature_extraction.sh
+	
+	and run in a terminal:
+	
+		>bash 01_RUN_feature_extraction.sh <options>
+		
+
+2. Feature selection and normalization 
+	In this part, simple feature processing is applied using NormFeat 
+	and EnergyDetector from the LIA_SpkDet toolkit
+	
+	if you extracted Spro features, run in a terminal:
+		
+		>bash 02a_RUN_spro_front-end.sh
+	
+	for HTK features, run:
+	
+		>bash 02a_RUN_htk_front-end.sh
+
+
+3.	Background training required for i-vector speaker verification system
+
+	3.1. Train a Universal Background Model (UBM) using TrainWorld
+
+	3.2. Train a Total Variability matrix (TV) using TotalVariability
+
+	3.3. Extract i-vectors using IvExtractor
+
+	To complete these 3 steps, run in a terminal:
+		
+		>bash 03_RUN_i-vector_background.sh
+
+
+4. I-vector processing
+
+	In this part, we propose different processing of i-vectors depending of the metric that will be used to compare 
+	the i-vectors. Those metrics can be:
+		
+		4.1. Cosine similarity (including Within Class Covariance Normalization and Linear Discriminant Analysis)
+		
+		4.2. Mahalanobis distance (including Eigen Factor Radial normalization)
+		
+		4.3. Two-covariance modeling (including Spherical Nuisance projection)
+		
+		4.4. Probabilistic Linear Discriminant Analysis (including Spherical Nuisance projection)
+
+	To complete these 4 steps, run in a terminal:
+		
+		>bash 04_RUN_i-vector_processing.sh
+
+5. Step-by-step i-vector processing
+	
+	In the previous examples, i-vectors are normalized and compared at once.
+	The meta-parameters require for their normalization as well as the PLDA model, are trained at once by only 
+	running "IvTest".
+	The "IvTest" will save the meta-parameters and the PLDA model to allow you to re-use them later.
+	However, in case you are interested in keeping the normalized version of i-vectors and/or to train a PLDA model
+	without scoring any i-vector, the following steps are for you.
+	
+		5.1. Train i-vector normalization meta-parameter and generate a normalized version of a list of i-vectors
+	
+		5.2. Train a Probabilistic Linear Dicriminant Analysis model
+
+		5.3. Compare i-vectors using PLDA modeling (do not include i-vector normalization nor PLDA model training 
+			as it has been done in steps 5.1. and 5.2)
+
+	To complete these 3 steps, run in a terminal:
+		
+		>bash 05_RUN_i-vector_step-by-step.sh
+
+
+
+WARNING: All binaries included in the ./bin/ directory have been compiled using LINUX Ubuntu 13.04
+	For another OS you MUST recompile the executables.
+	Authors recommend to recompile the executables on your machines anyway.
+
+ACKNOWLEDGEMENT:
+
+	The author of this tutorial would like to thank LDC and the NIST for allowing the use 
+	of NIST-SRE 2004 data in this tutorial.
+
+	SRE04 was created by NIST from data and annotations provided by LDC.
+	Sponsors and participants of the NIST Speaker Recognition Evaluations have 
+	also shaped the corpus through their requirements, analysis and feedback.
+
+
+ 

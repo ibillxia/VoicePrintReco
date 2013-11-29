@@ -1,0 +1,52 @@
+#######
+For more information about the speech/non speech process as well as the speaker diarization steps, refer to the following publication:
+C. Fredouille, S. Bozonnet, and N. W. D. Evans, “The LIA- EURECOM RT‘09 Speaker Diarization System,” in RT’09, NIST Rich Transcription Workshop, Florida, USA, 2009. (http://www.itl.nist.gov/iad/mig/tests/rt/2009/workshop/LIA-EURECOM_paper.pdf)
+Following commands are launched on a unique file (file.prm). The file.sph is not provided for distribution permission reasons.
+#######
+
+########
+Parameter computation from sphere signal file using the SPRO toolkit (http://www.irisa.fr/metiss/guig/spro/)
+12LFCC+Energy+Delta+DeltaDelta for speech/non speech segmentation
+20LFCC+energy for segmentation and resegmentation steps
+########
+
+#./scripts/feature_extract.sh lst/list.lst 39 prm_39LFCC ""
+#./scripts/feature_extract.sh lst/list.lst 21 prm_21LFCC ""
+
+
+########
+ Segmentation process in acoustic classes (speech, telephone, music+speech depending on the number of acoustic models and acoustic types (GMM models) given in the config file. Resulting files are in the lblAcousticSegmentationWithMusic directory
+########
+
+./bin/AcousticSegmentation --config cfg/AcousticSegmentation.cfg --listFileToSegment ./lst/list.lst > log/AcousticSegmentation.log
+
+#######
+ To launch the speaker diarization steps, you need to remove all the non-speech segments from the label files. You will need also (but not necessary) to rename all the speech+music segments in speech segments. In some cases (not here), it can be better to merge successive speech and music+speech segments in order to have longer segments for the following steps.
+#######
+
+cat lblAcousticSegmentationWithMusic/file.lbl | sed 's/musicspeech/speech/g' | egrep -ve "music[0-9]+" > lblAcousticSegmentation/file.lbl
+
+#######
+First step of the speaker diarization process : segmentation
+Resulting files are in the lblSegmentation directory
+#######
+
+./bin/Segmentation --config cfg/Segmentation.cfg --listFileToSegment ./lst/list.lst > log/Segmentation.log
+
+
+#######
+Second step of the speaker diarization process : ReSegmentation
+Resulting files are in the lblReSegmentation directory
+#######
+
+./bin/ReSegmentation --config cfg/ReSegmentation.cfg --listFileToSegment ./lst/list.lst > log/ReSegmentation.log
+
+#######
+To be able to use the NIST scoring script, segmentation file must follow the RTTM format. So, this binary converts the label file into RTTM file
+#######
+./bin/SpkMoulinette --filesList lst/list.lst --inputFormat LBL --inputFilesPath lblReSegmentation/ --inputFilesExtension .lbl --outputFormat RTTM --outputFilesPath rttmTmp/ --outputFilesExtension .rttm
+
+#######
+Scoring script provided by NIST
+#######
+scripts/md-eval-v21.pl -af -m -1 -c 0.25 -r data/file.rttm -s rttmTmp/file.rttm -u data/file.uem > score/Resegmentation.nistres

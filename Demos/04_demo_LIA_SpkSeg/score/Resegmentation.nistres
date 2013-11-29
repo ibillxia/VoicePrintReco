@@ -1,0 +1,91 @@
+command line (run on 2013 May 30 at 01:34:05):  scripts/md-eval-v21.pl -af -m -1 -c 0.25 -r data/file.rttm -s rttmTmp/file.rttm -u data/file.uem
+
+Time-based metadata alignment
+
+Metadata evaluation parameters:
+    time-optimized metadata mapping
+        max gap between matching metadata events = 1 sec
+        max extent to match for SU's = 0.5 sec
+
+Speaker Diarization evaluation parameters:
+    The max time to extend no-score zones for NON-LEX exclusions is 0.5 sec
+    The no-score collar at SPEAKER boundaries is 0.25 sec
+
+Exclusion zones for evaluation and scoring are:
+                             -----MetaData-----        -----SpkrData-----
+     exclusion set name:     DEFAULT    DEFAULT        DEFAULT    DEFAULT
+     token type/subtype      no-eval   no-score        no-eval   no-score
+             (UEM)              X                         X
+         LEXEME/un-lex                    X                          
+        NON-LEX/breath                                              X
+        NON-LEX/cough                                               X
+        NON-LEX/laugh                                               X
+        NON-LEX/lipsmack                                            X
+        NON-LEX/other                                               X
+        NON-LEX/sneeze                                              X
+        NOSCORE/<na>            X         X               X         X
+ NO_RT_METADATA/<na>            X                                    
+             SU/unannotated               X                          
+
+file
+----------------------------------
+'andre_chassaigne' => 'speech0_l0'
+   120.97 secs matched to 'speech0_l0'
+     0.06 secs matched to 'speech0_l7'
+'bernard_accoyer' => 'speech0_l6'
+     0.04 secs matched to 'speech0_l0'
+     7.12 secs matched to 'speech0_l6'
+     0.72 secs matched to 'speech0_l7'
+     0.23 secs matched to 'speech0_l8'
+'christian_jacob' => 'speech0_l8'
+    85.08 secs matched to 'speech0_l8'
+'francois_baroin' => 'speech0_l5'
+   114.58 secs matched to 'speech0_l5'
+'jean-baptiste_predali' => 'speech0_l1'
+    27.51 secs matched to 'speech0_l1'
+     0.11 secs matched to 'speech0_l6'
+'jerome_chartier' => 'speech0_l4'
+   103.89 secs matched to 'speech0_l4'
+     0.12 secs matched to 'speech0_l6'
+     0.02 secs matched to 'speech0_l7'
+'luc_chatel' => 'speech0_l14'
+   102.10 secs matched to 'speech0_l14'
+     0.07 secs matched to 'speech0_l6'
+'xavier_bertrand' => 'speech0_l7'
+    81.86 secs matched to 'speech0_l7'
+
+*** Performance analysis for Speaker Diarization for f=file ***
+
+    EVAL TIME =    696.59 secs
+  EVAL SPEECH =    646.51 secs ( 92.8 percent of evaluated time)
+  SCORED TIME =    611.01 secs ( 87.7 percent of evaluated time)
+SCORED SPEECH =    598.51 secs ( 98.0 percent of scored time)
+---------------------------------------------
+MISSED SPEECH =      0.14 secs (  0.0 percent of scored time)
+FALARM SPEECH =     10.78 secs (  1.8 percent of scored time)
+---------------------------------------------
+SCORED SPEAKER TIME =    598.51 secs (100.0 percent of scored speech)
+MISSED SPEAKER TIME =      0.14 secs (  0.0 percent of scored speaker time)
+FALARM SPEAKER TIME =     10.78 secs (  1.8 percent of scored speaker time)
+ SPEAKER ERROR TIME =      0.47 secs (  0.1 percent of scored speaker time)
+---------------------------------------------
+ OVERALL SPEAKER DIARIZATION ERROR = 1.90 percent `(f=file)
+---------------------------------------------
+
+*** Performance analysis for Speaker Diarization for ALL ***
+
+    EVAL TIME =    696.59 secs
+  EVAL SPEECH =    646.51 secs ( 92.8 percent of evaluated time)
+  SCORED TIME =    611.01 secs ( 87.7 percent of evaluated time)
+SCORED SPEECH =    598.51 secs ( 98.0 percent of scored time)
+---------------------------------------------
+MISSED SPEECH =      0.14 secs (  0.0 percent of scored time)
+FALARM SPEECH =     10.78 secs (  1.8 percent of scored time)
+---------------------------------------------
+SCORED SPEAKER TIME =    598.51 secs (100.0 percent of scored speech)
+MISSED SPEAKER TIME =      0.14 secs (  0.0 percent of scored speaker time)
+FALARM SPEAKER TIME =     10.78 secs (  1.8 percent of scored speaker time)
+ SPEAKER ERROR TIME =      0.47 secs (  0.1 percent of scored speaker time)
+---------------------------------------------
+ OVERALL SPEAKER DIARIZATION ERROR = 1.90 percent `(ALL)
+---------------------------------------------

@@ -1,0 +1,73 @@
+###########################################################
+#	GMM-UBM_system_with_ALIZE3.0
+#
+#	Several options are available as ALIZE include most of the state-of-the-art 
+#	classifiers used for speaker verification.
+#	This first tutorial gives an example of how to build a simple GMM/UBM system.
+#
+#	For a better understanding of the basics of speaker verification and the ALIZE toolkit,
+#	we recommand to read the GMM_UBM tutorial carefully as it also contains functionnalities
+#	which are not described in other parts but may be useful.
+#
+#	This tutorial has been created to help new users to use ALIZE LIA_SpkDet tools.
+#	The author does not give ANY waranty about the performance and the usability.
+#
+#	GOOD LUCK !
+#
+#		by Anthony Larcher
+#		alarcher - at- i2r.a-star.edu.sg
+#
+#		01/03/2013
+#
+###########################################################
+
+This tutorial is organised in three parts:
+
+1. Feature extraction using SPRO or HTK
+	configuration files provided with this tutorial extract 60 dimension MFCC feature vectors 
+	(19 MFCC + log-energy and first and second order derivative)
+
+	To Run the tutorial, you need:
+
+		sfbcep from the SPRO toolkit (http://www.irisa.fr/metiss/guig/spro/)
+			note that if SPRO is not lined to the SPHERE library, you will need 
+			w_decode and h_strip from the NIST speech processing toolkit (http://www.speech.cs.cmu.edu/comp.speech/Section1/AudioSoftware/nist.html) 
+			to convert the SPHERE files in raw PCM format.
+			
+	or:
+			
+		HCopy from the HTK toolkit (http://htk.eng.cam.ac.uk/)
+
+
+2. Feature selection and normalization 
+	In this part, simple feature processing is applied using NormFeat 
+	and EnergyDetector from the LIA_SpkDet toolkit
+
+3. Training of a standard GMM/UBM speaker verification system
+
+	3.1. Train a Universal Background Model (UBM) using TrainWorld
+
+	3.2. Adapt speaker dependent GMM models using TrainTarget
+
+	3.3. Compare test segments to the speaker models using ComputeTest
+
+	3.4. Normalize the scores with a T or Z or ZT-norm using ComputeNorm (also possible to compute TZ-norm)
+
+
+WARNING: All binaries included in the ./bin/ directory have been compiled using LINUX Ubuntu 13.04
+	For another OS you MUST recompile the executables.
+	Authors recommend to recompile the executables on your machines anyway.
+
+BONUS:	CreateNormLists.pl
+		Perl script that generates trial lists for score normalization (input for ComputeNorm)
+
+ACKNOWLEDGEMENT:
+
+	The author of this tutorial would like to thank LDC and the NIST for allowing the use 
+	of NIST-SRE 2004 data in this tutorial.
+
+	SRE04 was created by NIST from data and annotations provided by LDC.
+	Sponsors and participants of the NIST Speaker Recognition Evaluations have 
+	also shaped the corpus through their requirements, analysis and feedback.
+
+
