@@ -3,7 +3,7 @@
 #
 #     Author: Bill Xia
 #     Email: ibillxia@gmail.com
-#     Blog: http://ibillxia.github.com
+#     Blog: http://ibillxia.github.io
 ##########################################################
 
 This package is based on 
@@ -16,4 +16,5 @@ There are four directories:
 	./ALIZE_3.0
 	./LIA_RAL_3.0
 	./Demos
-The Demos directory are some simple tutorials of how to use some of the related tools.
+The Demos directory are some simple tutorials of how to use some of the related tools. You can start from these demos. To start the demo, you need to compile the SPro_5.0, ALIZE_3.0 and LIA_RAL_3.0 in order and copy the executable files to the bin directory in each demo in the Demos directory.
+
