@@ -1,0 +1,58 @@
+.\" @(#)w_encode.1 91/05/20 NIST;
+.\" NIST ASRG
+.\" Jonathan G. Fiscus
+.\"
+.TH W_ENCODE 1 "9 Apr 93"
+
+.SH NAME
+.nf
+w_encode \- Encode the input file into the output format specified by "-o".
+.fi
+
+.SH SYNOPSIS
+.nf
+\fBw_encode\fP [-mvf] [ -t ENC ] file_in file_out
+\fBw_encode\fP [-mvi] [ -t ENC ] file1 file2 . . .
+
+.fi
+
+.SH DESCRIPTION
+
+Compress/Encode the file as the type defined by the "-t" option.  The
+output compression/encodings may be:
+
+.RS
+wavpack | shorten | ulaw
+.RE
+
+The program will use the header information to optimize the
+compression scheme.  The default operation is to encode the file
+specified in "file_in" and place the contents into the file specified
+in "file_out".  If the filenames specified in "file_in" or "file_out"
+are "-", then stdin and stdout are used respectively.  In addition, an
+error will be generated if "file_out" already exists. The "-f" option
+causes an existing "file_out" to be overwritten.
+
+The waveform I/O routines automatically convert the byte order of a
+file to the host machine's natural format.  The "-m" option forces
+the encoding to maintain the original byte order of "file_in".
+
+The "-i" option forces w_encode to replace the input file with it's
+encoded version.  When this "in place" option is used, the header is
+modified to indicate the new encoding as well.  This option also
+allows more than one input file to be specified on the command line.
+
+The "-v" option gives verbose output.
+
+.SH EXAMPLES
+.PD 0
+.TP
+.B "w_encode -o wavpack uncomp.wav comp.wav"
+compress a SPHERE headered file into \fIcomp.wav\fP.
+.PD
+
+.SH SEE ALSO
+w_decode(1)
+
+.SH AUTHOR
+Jon Fiscus (jon@jaguar.ncsl.nist.gov)

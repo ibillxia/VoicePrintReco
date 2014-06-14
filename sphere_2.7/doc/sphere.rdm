@@ -1,0 +1,55 @@
+                                   SPHERE
+                        NIST SPeech HEader REsources
+
+                                 Release 2.7
+                                  March 2012
+
+0. Introduction:
+
+SPeech HEader REsources (SPHERE) is a set of library functions and
+command-level programs which can be used to read and modify
+NIST-formatted speech waveform files.  The documentation for SPHERE
+is located in the file, 'doc/sphere.doc'.  The SPHERE directory
+hierarchy is organized as follows:
+
+	bin                  - final destination of command line 
+                               executables and UNIX shell scripts
+	doc                  - SPHERE documentation
+	doc/man/man1         - UNIX style manual pages for command
+                               line executables
+	doc/man/man3         - SPHERE function library UNIX style
+                               manual pages 
+	doc/man/man5         - SPHERE file formats
+	include              - SPHERE include files
+	include/sp           - SPHERE library include files
+	include/shorten      - SHORTEN library include files
+	include/wavpack      - WAVPACK library include files
+	include/shpack       - SHORTPACK library include files
+	include/util         - internal function include files
+	lib                  - compiled link libraries
+	lib/data             - Example/test waveform files
+	src                  - SPHERE source code
+	src/bin              - source code for SPHERE command line 
+                               programs
+	src/bin/h_edit.c     - source code for h_edit
+	src/bin/h_delete.c   - source code for h_delete
+	src/bin/h_nlrm.c     - source code for h_nlrm
+	src/bin/w_edit.c     - source code for a waveform modification program
+	src/bin/w_decode.c   - source code for a standalone waveform
+			       decompressor
+	src/bin/w_encode.c   - source code for a standalone waveform
+			       compressor
+	src/bin/tsphere.c    - source code to test the compiled SPHERE library
+	src/bin/w_diff.c     - source code for a SPHERE file comparison pgm.
+	src/lib              - SPHERE library source code
+	src/lib/sp           - SPHERE functions source code
+	src/lib/shorten      - SHORTEN library source code
+	src/lib/wavpack      - WAVPACK library source code
+	src/lib/util         - SPHERE internal functions source
+                               code
+	src/scripts          - SPHERE command line scripts
+	
+
+
+
+

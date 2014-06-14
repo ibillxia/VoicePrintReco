@@ -1,0 +1,2323 @@
+
+	     SPeech HEader REsources (SPHERE) Version 2.7
+			     March 2012
+
+                         Original Document:
+                   John Garofolo and Jonathan Fiscus
+                                 NIST
+
+                             2.7 additions:
+                   Jonathan Fiscus and Martial Michel
+
+
+Table of Contents:
+
+I.      Introduction to SPHERE
+
+II.     C-language Programmer Interface Library
+
+	II.A   File Access Functions
+
+		II.A.1	sp_open()
+		II.A.1	sp_close()
+
+	II.B   Header Manipulation Functions
+
+		II.B.1	sp_h_get_field()
+		II.B.2	sp_h_set_field()
+		II.B.3	sp_h_delete_field()
+		II.B.4  sp_copy_header()
+	
+	II.C   Waveform I/O and Conversion Functions
+
+		II.C.1	sp_read_data()
+		II.C.2	sp_write_data()
+                II.C.3  sp_set_data_mode()
+		II.C.4  sp_rewind()
+		II.C.5  sp_seek()
+		II.C.6  sp_tell()
+		II.C.7  sp_compute_checksum();
+
+	II.D   Status Functions
+
+                II.D.1  sp_eof()
+                II.D.2  sp_error()
+                II.D.3  sp_print_return_status()
+                II.D.4  sp_get_return_status()
+		II.D.5  sp_get_version()
+
+	II.E   Data (Waveform) Buffer Allocation/Deallocation Functions
+
+		II.E.1  sp_data_alloc()
+		II.E.2  sp_data_free()
+
+III.    File Format Definition
+
+IV.     File Pointer Structure
+
+VI.     Linking to the SPHERE library
+
+VII.    Example Interface Library Usage
+
+VIII.   System-Level Utilities
+
+IX.     Revision History
+
+X.      Bug Reports
+
+XI.	Supported Hardware
+
+XII.    Disclaimer
+
+XIII.   Acknowledgements
+
+
+
+I.  Introduction to SPHERE
+
+SPeech HEader REsources (SPHERE) is a software package developed by
+the National Institute of Standards and Technology (NIST) Automated
+Speech Recognition Group to provide an interface to NIST
+SPHERE-formatted speech waveform files.  (The acronym, SPHERE, has now
+come to represent the format of the files as well as the software
+package.)  
+
+The SPHERE package contains two primary user-oriented software
+components:
+
+	1.  C-language programmer interface library
+
+	2.  C-language system-level file manipulation utilities
+
+The C-language programmer interface library has been developed to
+provide a simple, intuitive interface to access and manipulate SPHERE
+files.  The library has been specifically designed to mimic the syntax
+and functionality of standard C-language file I/O functions.
+Functions are provided to open, close, read, and write SPHERE files.
+C-like header field manipulation functions have been included as well.
+
+The system-level file manipulation utilities have been written using
+the SPHERE library and provide command-line-level manipulation of
+SPHERE files as well as functional examples of the usage of the SPHERE
+libraries.
+
+Where former versions of SPHERE provided only speech file header
+access, Version 2.0 provides waveform access as well in both the
+C-language programmer interface and system-level utilities.  Embedded
+u-law, shorten, and wavpack compression/decompression is also
+supported.
+
+
+
+II.  C-language Programmer Interface Library.
+
+    The SPHERE interface library functions provide a high-level
+C-program interface to access and manipulate SPHERE-formatted files.
+Many of the interface functions have been designed specifically 
+to mimic standard C-language I/O functions.  Functions are 
+included to provide SPHERE file access and separate manipulation
+of file headers and bodies (waveforms). The functions have been
+logically divided into five broad types:
+
+	1.  File access functions (open and close SPHERE FILES)
+	2.  Header manipulation functions
+	3.  Waveform I/O and conversion functions
+	4.  File I/O error status functions
+	5.  Data (waveform) buffer allocation/deallocation functions
+
+
+1.  File access functions:
+
+   SPHERE file access is achieved via the 'sp_open' function.  The
+'sp_open' function is analogous to the C-language 'fopen' function and
+controls the opening of files.  Upon opening for read operations, a
+SPHERE file structure is formed and the header is loaded.  For
+write operations, a SPHERE file structure is formed and an empty
+header is created.
+
+   The 'sp_close' function is analogous to the C-language 'fclose' function
+and closes the specified SPHERE file and frees up associated allocated
+memory.
+
+
+2.  Header manipulation functions:
+
+   Opened SPHERE header structures are manipulated via a set of header
+field functions to retrieve, write, and delete fields.  The function,
+'sp_h_get_field', is used to retrieve the contents of the three types
+of SPHERE fields.  Likewise, the function, 'sp_h_set_field', is used
+to establish the contents of the three types of SPHERE fields.  These
+functions are somewhat analogous to the C-language 'gets' and 'puts'
+functions.  The function, 'sp_h_delete_field', is used to remove a
+field from a header. 
+
+   The function, 'sp_copy_header', is used to copy the header of an
+opened SPHERE header to another opened SPHERE header.
+
+
+3.  Waveform I/O and conversion functions
+
+   A set of three functions has been established to handle waveform
+I/O.  The first, 'sp_read_data', is used to load a block of waveform
+data from a SPHERE file into memory.  This function is analogous to
+the C-language 'fread' function.  Likewise, the function,
+'sp_write_data', is used to flush a block of waveform data in memory
+to SPHERE file and is analogous to the C-language 'fwrite' function.
+The function, 'sp_set_data_mode', is used to change the default
+behavior of 'sp_read_data' and 'sp_write_data' and controls such
+variables as the conversion of waveform encodings and the byte order
+during I/O.
+
+Currently, only block-style sequential file access is supported.
+
+
+4.  File I/O error status functions
+
+   The functions, 'sp_eof' and 'sp_error', have been added to
+provide file I/O status information analogous to the C-language
+'feof' and 'ferror' functions.
+
+5.  Data (waveform) buffer allocation/deallocation functions
+
+    The functions, 'sp_data_alloc' and 'sp_data_free' have been added
+to allocate and de-allocate memory and create data structures to hold
+waveform data.  The functions use the header information to compute
+the size required for the buffers.
+	
+
+
+The following sub-sections contain a detailed description template for
+each function.  The templates are comprised of the following fields:
+
+	Description - Brief general description of the purpose of the function
+	Syntax - Function type and syntax including argument list
+	Arguments - Description of arguments passed to the function
+	Remarks - General comments and advisories regarding the function
+	Return Value - Interpretation of the return values of the function
+	See Also - List of related functions
+
+
+II.A   File Access Functions
+
+
+II.A.1 sp_open()
+
+Description:
+
+    Opens a SPHERE-formatted file and returns a SPHERE file pointer to
+    the opened file.
+
+Syntax:
+
+    struct SP_FILE *sp_open(char *filename, char *mode)
+	
+Arguments:
+
+    sp_open opens the file named by the string, 'filename', as
+    instructed by the string, 'mode'.  
+
+    The 'mode' string has the following values:
+
+	"r[v]" -> Open a SPHERE file specified by the string, 'filename',
+                  for reading.
+
+	"w[v]" -> Open a SPHERE file specified by the string, 'filename',
+                  for writing.
+
+Remarks:
+
+    Although a checksum is always generated upon completion of
+    reading or writing any SPHERE file, an extra checksum verification
+    may be performed using the optional 'v' modifier to
+    'r' and 'w'.
+
+    'rv' Checksum Verification:
+
+    If a file is opened for read operations with the checksum
+    verification flag, the checksum is verified before the
+    file is made available for read operations.  Normally, the
+    checksum is verified upon completion of reading a file.
+
+    'wv' Checksum Verification:
+   
+    If a file is opened for write operations with the checksum
+    verification flag, after a file is written, it is re-read and
+    the checksum is verified.  Normally, if a checksum is present in the 
+    file header before initiating write operations, then the existing
+    checksum is verified against a checksum generated upon closing
+    the file (with sp_close).  If a checksum is not present in the
+    file header before initiating write operations, then a initial
+    checksum is computed and no checksum verification takes placed.
+    
+    The 'filename' option may be '-' to signify stdin or stdout for
+    files opened for read or write operations respectively.  As a special case,
+    files opened in this manner do need to have a 'sample_count' field present
+    in the header.  If the file is opened for read operations, the
+    'sp_read_data()' function will read data until End-of-File is detected.
+    If the file is opened for write operations, a flag value is placed
+    in the output header so as to allow pipe-lined SPHERE operations to 
+    work together.
+
+Return Value:
+
+    Returns a pointer to an opened SP_FILE structure.  If an error
+    occurs during the open, returns a null pointer to a SP_FILE
+    structure, "(SP_FILE *)0".
+
+See Also:
+    sp_read_data(), sp_write_data(), sp_set_data_mode(), sp_close()
+
+
+II.A.2 sp_close()
+
+Description:
+
+    Closes an opened SPHERE-formatted file.
+
+Syntax:
+
+    int sp_close(SP_FILE *sp)
+	
+Arguments:
+
+    sp_close closes the file pointed to by 'sp'.  
+
+Remarks:
+
+    Upon closing the file, '*sp' sp_close frees the memory allocated
+for the file buffer.
+
+Return Value:
+
+    Returns 100 or greater on failure, otherwise returns a zero.
+
+See Also:
+    sp_read_data(), sp_write_data(), sp_set_data_mode(), sp_open()
+
+
+
+II.B   Header Manipulation Functions
+
+II.B.1 sp_h_get_field()
+
+Description:
+
+    Gets the specified header field value from an opened SPHERE file
+header.
+
+Syntax:
+
+    int sp_h_get_field(SP_FILE *sp_file, char *field_name,
+                       int field_type, void **field_value)
+
+Arguments:
+
+    sp_h_get_field copies the header field named by, 'field_name', of
+type, 'field_type', from the opened SPHERE file pointed to by
+'sp_file', to address pointed to by 'field_value'.
+
+Remarks:
+
+        Permitted        Library Defined            Field
+    field_type values:        C-Types:           Definitions
+    ------------------   ---------------         -----------	
+       T_STRING           SP_STRING        string field type [char *]
+       T_INTEGER   	  SP_INTEGER       integer field type [long]
+       T_REAL             SP_REAL          real field type [double]
+
+
+Note: in the case of a string field type (T_STRING), sp_h_get_field()
+allocates sufficient dynamic memory for the string to be copied.  The
+copied string is a NULL terminated sequence of characters.  It is the
+programmer's responsibility to deallocate this memory using the
+C-Language 'free()' function when the string is no longer needed.
+
+In order to avoid mis-typing of header values, the SPHERE library has a
+'typedef' for each of the header field types.
+
+Return Value:
+
+    sp_h_get_field() returns a 0 upon success, 1 to 99 for a warning,
+and 100 or greater for an error.
+
+See Also:
+
+    sp_open()
+
+
+II.B.2 sp_h_set_field()
+
+Description:
+
+    Sets the specified header field value in an opened SPHERE file
+header.
+
+Syntax:
+
+    int sp_h_set_field(SP_FILE *sp_file, char *field_name, 
+                       char* field_type, void *field_value)
+	
+Arguments:
+
+    sp_h_set_field sets the header field value named by, 'field_name',
+of type, 'field_type', in the opened SPHERE file pointed to by
+'sp_file' with the value, 'field_value'.
+
+Remarks:
+
+        Permitted        Library Defined            Field
+    field_type values:        C-Types:           Definitions
+    ------------------   ---------------         -----------	
+       T_STRING           SP_STRING        string field type [char *]
+       T_INTEGER   	  SP_INTEGER       integer field type [long]
+       T_REAL             SP_REAL          real field type [double]
+
+    If the specified header field, 'field_name', does not exist in the
+opened SPHERE file header, then the field is created.
+
+Note: If a file is opened for write (using 'sp_open'), then this
+function may only be called before using 'sp_write_data'.  Also, the
+fields, 'sample_coding', 'sample_byte_format', 'sample_count',
+'sample_n_bytes', 'sample_checksum', are set automatically by the
+function, 'sp_set_data_mode', and should not be set manually if
+'sp_set_data_mode' has been called.
+
+In order to avoid mis-typing of header values, the SPHERE library has a
+'typedef' for each of the header field types.
+
+Return Value:
+    sp_h_get_field() returns a 0 upon success, 1 to 99 for a warning,
+and 100 or greater for an error.
+
+See Also:
+    sp_open()
+
+
+II.B.3 sp_h_delete_field()
+
+Description:
+
+    Deletes the specified header field from an opened SPHERE file
+header.
+
+Syntax:
+
+    int sp_h_delete_field(SP_FILE *sp_file, char *field_name)
+	
+Arguments:
+
+    sp_h_delete_field deletes the header field named by,
+'field_name', in the opened SPHERE file pointed to by 'sp_file'.
+
+Remarks:
+
+    If the specified header field to be deleted, 'field_name', does
+not exist in the opened SPHERE file header, sp_h_delete_field() will
+not complain, but will return a special value (see below).  Return
+Value:
+
+Return Value:
+
+    sp_h_delete_field() returns a 0 on success, a 1 if the header
+field does not exist, and a 100 or greater on error.
+
+See Also:
+    sp_open(), sp_h_set_field(), sp_h_get_field()
+
+
+II.B.4  sp_copy_header()
+
+Description:
+
+    Copies the SPHERE header fields and their values from a source
+header pointed by an SP_FILE pointer to a destination header pointed
+to by another SP_FILE pointer.  Overwrites any existing fields common
+to both the source and destination headers.
+
+Syntax:
+
+    int sp_copy_header(SP_FILE *source_sp, SP_FILE *destination_sp)
+	
+Arguments:
+
+    sp_copy_header copies the fields and their values from the header
+pointed to by 'source_sp' to the header pointed to by 'destination_sp'.
+
+Return Value:
+
+    sp_copy_header() returns a zero on success, and 100 or greater
+on error.
+
+See Also:
+    sp_open(), sp_close()
+
+
+II.C   Waveform I/O Functions
+
+II.C.1 sp_read_data()
+
+Description:
+   
+    Reads blocks of waveform data from an opened SPHERE file.
+
+Syntax:
+
+    /* New syntax for SPHERE version 2.2 or later              */
+    int sp_read_data(void *ptr, size_t n, SP_FILE *sp_file)
+
+    /* Syntax prior to SPHERE version 2.2, still supported for */
+    /* backwards compatibility                                 */
+    int sp_read_data(void *ptr, size_t size, size_t n, SP_FILE *sp_file)
+
+
+Arguments:
+
+    Reads 'n' elements from the waveform data section of the opened
+SPHERE file pointed to by 'sp_file'.  An element is defined to be the
+sample values of all channels for a particular sample number (common
+time point).  The function performs the read (including any
+conversions as necessary) to format the data according to the first
+encoding specified in the header field, 'sample_coding'.  This
+excludes subsequent encodings used on the stored waveform such as
+compression, etc.
+
+   The 'ptr' argument can be either a linear array of interleaved
+channel samples, or a 2-dimensional array of non-interleaved channel
+samples, with each channel contained in a separate array.  Either data
+structure can be created by a call to the 'sp_data_alloc' function.
+The form of the data structure is determined by the mode string passed
+to the 'sp_set_data_mode' function.  By default, the function expects
+the data to be structured in a linear array.  To change the format to
+a multi-channel 2-dimensional array, use the sp_set_data_mode
+function.
+
+Remarks:
+
+    In order to support multi-channel data, the manner of specifying
+the waveform parameters has been simplified in SPHERE version 2.2.
+Instead of extracting the information from the a variable number of
+function arguments, the function now extracts the necessary
+information from the SPHERE header.  Therefore, the function argument
+list has changed from previous versions of SPHERE.  However, the
+SPHERE 2.1 argument list is still supported for backward compatibility.
+The 'size' argument although accepted, is now ignored.  Section VI,
+"Linking to the SPHERE library" describes how to use either the 3 or 4
+argument function call by using the C-define'd preprocessor variable
+"SPHERE_PRE_2_2".
+
+    If there is no 'sample_coding' field in the header, the default
+operation is to read the data as PCM data.  The default behavior of
+'sp_read_data()' can be modified by the function 'sp_set_data_mode()'
+before 'sp_read_data()' is called.  If a checksum is present in
+the header, the checksum is verified after reading the last 
+block of data.
+
+Return Value:
+
+    The value returned by 'sp_read_data' indicates the number of
+elements read in from the file.  If no elements are read, a zero is
+returned.  Likewise, if an error or checksum verification error
+occurs, a zero is returned.  The functions 'sp_eof()' and 'sp_error()'
+may be used to determine if an error or an immediate end-of-file
+caused the zero to be returned.
+
+See Also:
+
+    sp_eof(), sp_error(), sp_set_data_mode(), sp_data_alloc(),
+    sp_data_free()
+
+
+II.C.2 sp_write_data()
+
+Description:
+   
+    Writes blocks of waveform data to an opened SPHERE file.
+
+Syntax:
+
+    /* New syntax for SPHERE version 2.2 or later              */
+    int sp_write_data(void *ptr, size_t n, SP_FILE *sp_file)
+
+    /* Syntax prior to SPHERE version 2.2, still supported for */
+    /* backwards compatibility                                 */
+    int sp_write_data(void *ptr, size_t size, size_t n, SP_FILE *sp_file)
+
+Arguments:
+
+    Appends 'n' elements to the end of the waveform data section of
+the opened SPHERE file pointed to by 'sp_file'.  An element is defined
+to be the sample values of all channels for a particular sample number
+(common time point).  The function outputs the data in the form
+specified by the mode string passed to 'sp_set_data_mode'.  By
+default, the data is written with interleaved channels (if the data is
+multi-channel data) and without further conversions.
+
+   The 'ptr' argument can be either a linear array of interleaved
+channel samples, or a 2-dimensional array of non-interleaved channel
+samples, with each channel contained in a separate array.  The data is
+written from an existing waveform data structure. 
+
+   [ A waveform data structure is created by a call to the
+'sp_data_alloc' function.  The form of the data structure is
+determined by the mode string passed to the 'sp_set_data_mode'
+function.  By default, the function expects the data to be structured
+in a linear array.  To change the format to a multi-channel
+2-dimensional array, use the sp_set_data_mode function. ]
+
+Remarks:
+
+    In order to support multi-channel data, the manner of specifying
+the waveform parameters has been simplified in SPHERE version 2.2.
+Instead of writing the data according to a variable number of function
+arguments, the function now extracts the necessary information from a
+SPHERE header constructed prior to the write.  Therefore, the function
+argument list has changed from previous versions of SPHERE.  However,
+the SPHERE 2.1 argument list is still supported for backward
+compatibility.  The 'size' argument although accepted, is now ignored.
+Section VI, "Linking to the SPHERE library" describes how to use
+either the 3 or 4 argument function call by using the C-define'd
+preprocessor variable "SPHERE_PRE_2_2".
+
+    sp_write_data() uses the 'sample_coding', 'channel_count'
+'sample_byte_format' and 'sample_n_bytes' fields of the header in the
+'sp_file' structure to identify the format of the data in memory to
+be written.  The default behavior is for the data to be written as
+it is represented in memory (as specified by the above header fields).
+
+    The default behavior of 'sp_write_data()' can be modified by the
+function 'sp_set_data_mode()' before 'sp_write_data()' is called.
+'sp_set_data_mode()' allows the programmer to specify waveform data
+transformations as the data is written.
+
+Return Value:
+
+    The value returned by 'sp_write_data' indicates the number of
+elements written to the file pointed to by the 'sp_file' structure.
+Incomplete writes are not flagged by the function.  It is the
+programmer's responsibility to make sure that the return value equals
+'n'.
+
+See Also:
+
+    sp_eof(), sp_error(), sp_set_data_mode(), sp_data_alloc(),
+    sp_data_free()
+
+
+II.C.3 sp_set_data_mode()
+
+Description:
+   
+    Changes the default behavior of the SPHERE File I/O functions, 
+'sp_read_data()' and 'sp_write_data()'.
+
+Syntax:
+
+    int sp_set_data_mode(SP_FILE *sp_file, char *mode)
+
+Arguments:
+
+    Specifies the waveform transformations for data read from, or
+written to, the file pointed to by 'sp_file'.  The transformations are
+specified in the string, 'mode'.  See the "Remarks" section for the
+format and permissible values of this string.
+
+Remarks:
+
+    The 'mode' string argument specifies sample encoding and byte
+order transformations to be performed by the SPHERE File I/O
+functions, 'sp_read_data()' and 'sp_write_data()'.  (Future versions
+may support sample rate transformations as well.) 
+
+    When reading from a file via sp_read_data(), sp_set_data_mode()
+sets the format of the data which is output from the sp_read function.
+
+    When writing to a file via sp_write_data(), sp_set_data_mode()
+sets the format of the data which is ultimately written to the file.
+While the format of the data passed to sp_write_data() is controlled
+by header field values for the fields: "sample_coding",
+"channel_count", "sample_byte_format", and "sample_n_bytes", which
+have been set by sp_h_set_field().
+
+    The 'mode' string has the following format:
+
+
+        MODE        :==  <MODE_FLAG> | <MODE_FLAG>:<MODE>
+        MODE_FLAG   :==  SE-<SE_OPTIONS> | SBF-<SBF_OPTIONS> |
+			 DF-<DF_OPTIONS> | CH-<CHANNEL_OPTIONS>
+        SE_OPTIONS  :==  PCM | PCM-1 | PCM-2 | ULAW | RAW | ORIG |
+                         SHORTEN | WAVPACK
+	SBF_OPTIONS :==  01 | 10 | 1 | N | ORIG
+
+Mode Flag and Option Descriptions:
+
+
+    DF -> specifies the data structure of the buffer passed
+	  into the functions 'sp_read_data()' and 'sp_write_data()'.  The
+	  default format, "DF-RAW", specifies interleaved channels in a
+	  1-dimensional array.
+
+	DF_OPTIONS:
+	    "RAW"     -> Data buffers are 1-dimensional arrays of contiguous
+		 	 memory.  If multiple channels are present, they
+			 are assumed to be interleaved.
+	    "ARRAY"   -> Data buffers are 2-dimensional arrays (double 
+			 pointers) where the data for each channel is in a
+			 1-dimensional array of contiguous data.  The channel
+			 number, starting at zero for the first channel, is
+			 the first index in 2-dimensional array and the
+			 sample number the second index.  See
+			 'sp_data_alloc()' for a  description of the memory
+			 layout.
+
+	  The functions 'sp_data_alloc()' and 'sp_data_free()' allocate and 
+	  deallocate data buffers in either format.
+
+    CH -> specifies the channels to be read from a file, or written
+	  to a file via the <CHANNEL_OPTIONS>.  If the file is being
+	  read, the function 'sp_read_data()' returns the requested
+	  channels from the input file.  If the files is being written
+	  or updated, the library extracts the channels from the input
+	  buffer before writing the samples to the file.  The default
+	  operation (without channel selection), is to not perform any
+	  modifications.
+
+	  The <CHANNEL_OPTIONS> can select and re-order channels.  If the
+	  sample type is pcm, pculaw or ulaw, the <CHANNEL_OPTIONS> can 
+	  sum two or more channels together.
+
+	  The <CHANNEL_OPTIONS> format is a comma separated list of 
+	  channel identifiers.  The channel identifiers start at 1 
+	  for the first channel.  The <CHANNEL_OPTIONS> are of the
+	  following format:
+
+	CHANNEL_OPTIONS :== <CHANNEL_ID> | <CHANNEL_ID>,<CHANNEL_OPTIONS>
+	CHANNEL_ID      :== <CHANNEL_NUMBER> | <CHANNEL_NUMBER>+<CHANNEL_ID>
+	CHANNEL_NUMBER  :== the channel number, starting with 1 for
+	 		    the first channel.
+	  
+		   	 
+    SE -> specifies a transformation to the encoding of the sampled
+	  waveform data.
+
+        SE_OPTIONS:
+
+            "PCM-2"   -> Read or write data as 2-byte PCM samples.
+            "PCM-1"   -> Read or write data as 1-byte PCM samples.
+            "PCM"     -> Synonym for "PCM-2"
+            "ULAW"    -> Read or write data as 1-byte ULAW samples.
+  	    "RAW"     -> Read or write data as 1-byte character
+	                 stream (for unsupported data types).
+            "ORIG"    -> Read or write data as-is.
+	    "SHORTEN" -> Write data as Shorten-compressed byte stream.
+	    "WAVPACK" -> Write data as Wavpack-compressed byte stream.
+    
+    SBF -> specifies a transformation to the byte format (byte order)
+	   of the sampled waveform data.  This is only appropriate for
+           multi-byte sampled data.
+
+        SBF_OPTIONS:
+            "01"      -> Read or write data as LSB/MSB.
+            "10"      -> Read or write data as MSB/LSB.
+            "1"       -> Read or write data as 1-byte samples.
+            "N"       -> Read or write data as natural to the host.
+            "ORIG"    -> Read or write data as-is.
+
+Currently Supported Sample Encoding (SE) Read Transformations: ***
+
+    PCM-2   -->  ULAW | RAW | ORIG
+    ULAW    -->  PCM-2 | RAW | ORIG
+    RAW     -->  ORIG
+    SHORTEN -->  PCM-2 | ULAW | RAW | ORIG
+    WAVPACK -->  PCM-2 | ULAW | RAW | ORIG
+    
+Currently Supported Sample Encoding (SE) Write Transformations: ***
+
+    PCM-2   -->  ULAW | ORIG | SHORTEN | WAVPACK 
+    ULAW    -->  PCM-2 | ORIG | SHORTEN | WAVPACK 
+    RAW     -->  ORIG
+
+Return Value:
+
+    The value returned by 'sp_set_data_mode()' are:
+
+	0     - if the transformation specified by 'mode' is supported
+  	        and successfully performed.
+	1     - if the mode of a compressed file has been set to
+	        'SE-ORIG'.  In this case, the waveform is not readable or
+		writable until the sample encoding has been changed, but
+		the header is.
+	100   - if the transformation is not supported.
+	> 100 - if an error occurs,
+
+See Also:
+
+    sp_read_data(), sp_write_data(), sp_open(), sp_close(),
+    sp_data_alloc(), sp_data_free()
+
+
+II.C.4 sp_rewind()
+
+Description:
+   
+    Rewind to the beginning of a SPHERE waveform if the file was
+opened for reading.
+
+Syntax:
+
+    int sp_rewind(SP_FILE *sp_file)
+
+Arguments:
+
+    Rewind to the beginning of a waveform if the SPHERE file,
+'sp_file', was opened for reading.  
+
+Remarks:
+
+    If the data mode was changed via 'sp_set_data_mode()', the changes
+are in effect until subsequent calls to 'sp_set_data_mode()' are made.
+
+    Using the rewind function is more efficient than closing the file
+using 'sp_close()' and then re-opening the file using 'sp_open()'.
+Overhead is saved by not re-parsing the SPHERE header and not
+re-decompressing a compressed waveform.
+
+    This function is unable to rewind SPHERE files which are read from
+stdin.
+
+    Although this function could be written solely with sp_seek(),
+using this function resets the SPHERE file so that sp_set_data_mode()
+can be called again on the file.
+
+Return Value:
+
+    The value returned by 'sp_rewind()' is 0 if the operation was
+successful and greater than 100 on error.
+
+See Also:
+
+    sp_set_data_mode(), sp_read_data(), sp_open(), sp_close()
+
+
+II.C.5 sp_seek()
+
+Description:
+   
+    Perform a 'seek' operation to a specific sample of opened SPHERE
+waveform which has been opened for read.
+
+Syntax:
+
+    int sp_seek(SP_FILE *sp_file, int offset, int origin)
+
+Arguments:
+
+    Move the SPHERE file pointer 'sp_file' to the sample defined by
+'offset' and 'origin'.  The SPHERE waveform file must be opened for
+read.
+
+Remarks:
+
+    Sp_seek() takes the opened-for-read SPHERE file and moves the file
+pointer to the sample defined by the 'offset' and 'origin' arguments.
+
+    The 'offset' and 'origin' arguments specify the sample position at
+which the next read will occur.  Offset must be an integer (which may
+be negative) and origin must be one of the following:
+ 
+     0    The new access position will be offset samples from  the
+          start of the file.
+ 
+     1    The new access position will be offset samples from  the
+          current  access  position;  a negative offset moves the
+          access position backwards in the file.
+ 
+     2    The new access position will be offset samples from  the
+          end  of  the file.  A negative offset places the access
+          position before the end-of-file, and a positive  offset
+          is illegal.
+
+    For multi-channel interleaved data, the file pointer is moved to
+the nth sample of all channels.
+
+    If the opened SPHERE file is a pipe, then the seek can only go
+forward in the file.  In this case, the seek is performed via
+sequential reads to the appropriate location.
+
+    When sp_seek() is called, checksum computation and verification
+are disabled unless the file is seek'd to sample 0 in which case
+the sample checksum computations are reset.
+
+Return Value:
+
+    If an error occurs, 1 is return.  Otherwise 0 is returned.
+
+See Also:
+
+    sp_set_data_mode(), sp_read_data(), sp_open(), sp_close()
+
+
+II.C.6 sp_tell()
+
+Description:
+   
+    Return the waveform sample position at which the next read or
+write to a SPHERE file will occur.
+
+Syntax:
+
+    int sp_tell(SP_FILE *sp_file)
+
+Arguments:
+
+    Return the sample position in 'sp_file' at which the next read or
+write will occur.
+
+Remarks:
+
+    Sp_tell() works for SPHERE files opened for read or write access
+only.
+
+    For multi-channel interleaved data, the value returned is
+the nth sample of all channels.
+
+Return Value:
+
+    If an error occurs, -1 is return.  Otherwise the sample number is
+returned.
+
+See Also:
+
+    sp_read_data(), sp_write_data(), sp_open(), sp_close()
+
+II.C.6 sp_compute_checksum()
+
+Description:
+   
+    Compute and return the checksum for a SPHERE file opened for read.
+
+Syntax:
+
+    int sp_compute_checksum(SP_FILE *sp_file, SP_CHECKSUM *checksum)
+
+Arguments:
+
+    Compute a checksum for the SPHERE file 'sp_file' which has been
+opened for read and return the checksum in the pointer '*checksum'.
+
+Remarks:
+
+    Sp_compute_checksum() first calls sp_tell() to save the current
+sample pointed to by the SP_FILE pointer.  Then an sp_seek() to the
+0th sample of the SPHERE file is performed and the entire waveform is
+read in to compute the checksum.  After the checksum is calculated,
+another sp_seek() is performed to return the SP_FILE to it's original
+sample position.
+
+Return Value:
+
+    Successful execution returns a 0, otherwise a number greater than 
+100 is returned.
+
+See Also:
+
+    sp_tell(), sp_seek(), sp_open(), sp_close()
+
+
+II.D   Status Functions
+
+II.D.1 sp_eof()
+
+Description:
+
+    Returns the End-of-File (EOF) status of an opened SPHERE file.
+
+Syntax:
+
+    int sp_eof(SP_FILE *sp_file)
+	
+Arguments:
+
+    sp_eof takes as it's argument a SPHERE file pointer, 'sp_file',
+and returns the EOF status of that file.
+
+Return Value:
+
+    sp_eof returns a non-zero value if the end-of-file has been
+reached during the last file read.  Otherwise, it returns a zero.
+
+See Also:
+    sp_read_data(), sp_error()
+
+
+II.D.2 sp_error()
+
+Description:
+
+    Returns the error status of an opened SPHERE file.
+
+Syntax:
+
+    int sp_error(SP_FILE *sp_file)
+	
+Arguments:
+
+    sp_error takes as it's argument a SPHERE file pointer, 'sp_file',
+and returns the error status of that file.
+
+Return Value:
+
+    sp_error returns a zero if no errors occurred during the last file
+I/O operation, a 100 if a checksum verification error occurred, or greater
+than 100 if a fatal file I/O error occurred.
+
+See Also:
+    sp_read_data(), sp_write_data(), sp_eof()
+
+
+II.D.3 sp_print_return_status()
+
+Description:
+
+    Prints the return status of the last SPHERE function call.
+
+Syntax:
+
+    int sp_print_return_status(FILE *fp)
+
+Arguments:
+    
+    sp_return_status takes as it's argument an opened file pointer,
+'fp', and prints a message indicating the success or failure and
+library version number of the last SPHERE function called to 'fp'.
+
+Remarks:
+
+    sp_return_status prints the following report for the last
+function called:
+
+    Procedure: <function-name> V2.4
+        Status code: <integer-value>
+        Status type: <Success|Warning|Error>
+        Message: <message-string>
+
+Failures of child functions are recorded in the Message string.
+
+Note: This is currently only defined for the SPHERE 2.0 C-language
+Programmer Interface Library functions.
+
+Return Value:
+    
+    sp_return_status a zero on success and a 100 or greater on error.
+
+
+II.D.4 sp_return_status()
+
+Description:
+
+    Returns the return status of the last SPHERE function call.
+
+Syntax:
+
+    int sp_return_status()
+
+Return Value:
+    
+    sp_return_status returns the status of the last SPHERE function
+call.  The SPHERE 2.0 C-Language Programmers Interface Library functions
+follow the conventions below for indicating Success, Warnings, or
+Errors:
+
+     	Return Condition	Possible Range of Values
+	---------------- 	------------------------
+	   Success		           0
+	   Warning                        1-99
+	   Fatal Error	             100 or greater
+
+Note: This is currently only defined for the SPHERE 2.0 C-language
+Programmer Interface Library functions.
+
+II.D.5  sp_get_version()
+
+Description:
+
+    Returns a pointer to a character string that identifies the SPHERE
+library version.
+
+Syntax:
+
+    char *sp_get_version(void)
+
+Return Value:
+    
+    sp_get_version returns a pointer to a character string that
+defines the SPHERE Library version.  An example of the string would
+be: "SPHERE Lib V2.4".
+
+
+Note: The character string should NOT by "free()'d" by the programmer.
+
+
+II.E   Data (Waveform) Buffer Allocation/Deallocation Functions
+
+II.E.1 sp_data_alloc()
+
+Description:
+
+    Return a pointer to memory allocated for N samples of all data
+channels for an opened SP_FILE.
+
+Syntax:
+
+    void *sp_data_alloc(SP_FILE *sp, int nsamp)
+	
+Arguments:
+
+sp_data_alloc takes as it's argument a SP_FILE pointer, 'sp', and the
+number of samples 'nsamp' and returns an allocated buffer large enough
+to hold 'nsamp' samples times the number of channels.  If the SP_FILE
+pointer is opened for read and 'nsamp' is -1, the returned buffer will
+be size of the entire file.  If the SP_FILE is opened for write, and
+'nsamp' is -1, an error will occur.
+
+Remarks:
+
+   The returned buffer can be either a linear array of interleaved
+channel samples, or a 2-dimensional array of non-interleaved channel
+samples, with each channel contained in a separate array.  The form of
+the data structure is determined by the mode string passed to the
+'sp_set_data_mode' function.
+
+If 'nsamp' is greater than 0, and if a linear array
+(interleaved channels) is specified in the mode string, the buffer
+byte size is computed as follows:
+
+	sample_n_bytes * channel_count * nsamp
+
+	The sample_n_bytes and channel_count values are obtained from
+	the SP_FILE's header.    
+
+If 'nsamp' is greater than zero and a 2-dimensional array is specified
+in the mode string, then the memory structure below is created and
+returned.  The SP_FILE's sample_n_bytes and channel_count fields are
+used to create a structure large enough to hold the data.
+
+The structure consists of an array of double pointers for each
+channel, and each double pointer points to an array of 'nsamp'
+samples.
+
+                	 <--- 'nsamp' samples --->    
+		___      _________________________
+     	^	| |  ->  |  |  |  |  |  |  |  |  |
+        |	| |	 -------------------------
+     	|	|-|      _________________________
+     channel	| |  ->  |  |  |  |  |  |  |  |  |
+      count	| |	 -------------------------
+	|	|-|      _________________________
+	|	| |  ->  |  |  |  |  |  |  |  |  |
+	|	| |	 -------------------------
+	v	---
+
+The programmer must 'cast' the returned pointer to a double pointer of
+the expected type.  The programmer has a choice to access the data in
+two ways: 
+
+	1. as a 2-dimensional array where the first subscript is the
+	   channel (zero for the first channel), and the second
+	   subscript is the sample number, e.g. arr[0][40].
+
+	2. as a pointer to each channel's data, e.g. arr[0], arr[1] ...
+
+If the defaults are not to be used, sp_set_data_mode must be called
+before sp_data_alloc.  Further calls to sp_set_data_mode after the
+structure is created can result in unknown spurious errors.
+
+Return Value:
+
+    sp_data_alloc() returns a pointer to memory allocated for waveform
+data.  The returned value must be 'cast' to the programmer's expected
+data type.  If an error occurs, a NULL is returned.
+
+See Also:
+    sp_read_data(), sp_write_data(), sp_set_data_mode(), sp_data_free()
+
+I.E.2 sp_data_free()
+
+Description:
+
+    Frees a memory structure created by a call to sp_data_alloc().
+
+Syntax:
+
+    int sp_data_free(SP_FILE *sp, void *buffer)
+	
+Arguments:
+
+    sp_data_free takes as it's argument a SPHERE file pointer, 'sp',
+and a pointer to a memory buffer created by a call to sp_data_alloc()
+and "frees" the memory associated with the buffer.
+
+Remarks:
+
+   The buffer can be either a linear array of interleaved channel
+samples, or a 2-dimensional array of non-interleaved channel samples,
+with each channel contained in a separate array.  The form of the data
+structure is determined by the mode string passed to the
+'sp_set_data_mode' function.
+
+Return Value:
+
+    sp_data_free() returns a zero on success, and 100 or greater
+on error.
+
+See Also:
+    sp_read_data(), sp_write_data(), sp_set_data_mode(), sp_data_alloc()
+
+
+III.  File Format Definition
+
+SPHERE files contain a strictly defined header portion followed by
+the file body (waveform).  Any waveform encoding may be used, but the
+encoding must be sufficiently described in the header.
+
+The header is an object-oriented, 1024-byte blocked, ASCII structure
+which is prepended to the waveform data.  The header is composed of a
+fixed-format portion followed by an object-oriented variable portion.
+The fixed portion is as follows:
+
+NIST_1A<new-line>
+   1024<new-line>
+
+The first line specifies the header type and the second line specifies the
+header length.  Each of these lines are 8 bytes long (including new-line) and
+are structured to identify the header as well as allow those who do not wish
+to read the subsequent header information to programmatically skip over it. 
+
+The remaining object-oriented variable portion is composed of
+object-type-value "triple" lines which have the following format:
+
+
+<LINE> --> <TRIPLE><new-line> |
+           <COMMENT><new-line> | 
+           <TRIPLE><COMMENT><new-line> | 
+
+  <TRIPLE> --> <OBJECT><space><TYPE><space><VALUE><OPT-SPACES>
+
+    <OBJECT> --> <PRIMARY-SUBOBJECT> | 
+                 <PRIMARY-SUBOBJECT><SECONDARY-SUBOBJECT>
+
+    <PRIMARY-SUBOBJECT> --> <ALPHA> | <ALPHA><ALPHA-NUM-STRING>
+    <SECONDARY-SUBOBJECT> --> _<ALPHA-NUM-STRING> | 
+                              _<ALPHA-NUM-STRING><SECONDARY-SUBOBJECT>
+
+    <TYPE> --> -<INTEGER-FLAG> | -<REAL-FLAG> | -<STRING-FLAG>
+
+      <INTEGER-FLAG> --> i
+      <REAL-FLAG> --> r
+      <STRING-FLAG> --> s<DIGIT-STRING>
+      
+    <VALUE> --> <INTEGER> | <REAL> | <STRING>  (depending on object type)
+
+      <INTEGER> --> <SIGN><DIGIT-STRING>
+      <REAL> --> <SIGN><DIGIT-STRING>.<DIGIT-STRING> 
+
+    <OPT-SPACES> --> <SPACES> | NULL
+
+  <COMMENT> --> ;<STRING>  (excluding embedded new-lines)
+
+<ALPHA-NUM-STRING> --> <ALPHA-NUM> | <ALPHA-NUM><ALPHA-NUM-STRING>
+<ALPHA-NUM> --> <DIGIT> | <ALPHA>
+<ALPHA> --> a | ... | z | A | ... | Z
+<DIGIT-STRING> --> <DIGIT> | <DIGIT><DIGIT-STRING>
+<DIGIT> --> 0 | ... | 9
+<SIGN> --> + | - | NULL
+<SPACES> --> <space> | <SPACES><space>
+<STRING> -->  <CHARACTER> | <CHARACTER><STRING>
+<CHARACTER> --> char(0) | char(1) | ... | char(255)
+
+The following fields are required for proper SPHERE I/O handling.
+These fields completely describe the geometry of the data contained in
+the SPHERE file.
+
+        Field_name         Field_type
+	----------         ----------
+	sample_count           -i      (Defined to be the number of samples
+					per channel)
+	sample_n_bytes         -i
+	channel_count          -i
+
+The following fields are optional:
+
+        Field_name         Field_type
+	----------         ----------
+	sample_checksum        -i       
+        sample_coding          -s       (If missing, defaults to 'pcm')
+        sample_byte_format     -s       (If missing, defaults to the Host's
+                                         natural byte format.)
+
+The following fields are conditionally required:
+
+        Field_name         Field_type   Required if:
+	----------         ----------   ------------
+	sample_rate            -i       (the 'sample_coding' field is
+					 missing, or contains 'pcm' or 'ulaw')
+
+Possible values for these fields are:
+
+	sample_count -> 1 .. MAXINT
+	sample_n_bytes -> 1 | 2
+	channel_count -> 1 .. 32
+	sample_byte_format -> 01 | 10 | 1 (* See below for exception)
+	sample_checksum -> 0 .. 32767
+	sample_rate -> 1 .. MAXINT
+	sample_coding -> pcm | ulaw | pcm,embedded-shorten-vX.X | 
+			 ulaw,embedded-shorten-vX.X |
+			 pcm,embedded-wavpack-X.X | 
+			 ulaw,embedded-wavpack-X.X |
+			 pcm,embedded-shortpack-X.X (Read Only)
+
+	* Note: The original recordable CD-ROM release of WSJ0 incorporated
+	        "shortpack" waveform compression.  The compression was 
+		indicated by the now outmoded presence of the string,
+		'shortpack-v0',	in the 'sample_byte_format' field.
+		Since this software attempts to support all previous
+		NIST releases of speech corpora, this "non-standard"
+		field value is permitted.  Please note that this
+		software will not generate files with this field value
+		and that the LDC is producing a CD-ROM release of WSJ0
+		which conforms to the specifications defined in SPHERE 2.0.
+
+The single object "end_head" marks the end of the active header and the
+remaining unused header space is undefined. A sample header is included
+below.
+
+Example SPHERE header from the TIMIT corpus (NIST Speech Disc 1-1.1):
+
+NIST_1A
+   1024
+database_id -s5 TIMIT
+database_version -s3 1.0
+utterance_id -s8 aks0_sa1
+channel_count -i 1
+sample_count -i 63488
+sample_rate -i 16000
+sample_min -i -6967
+sample_max -i 7710
+sample_n_bytes -i 2
+sample_byte_format -s2 01
+sample_sig_bits -i 16
+end_head
+
+
+Example SPHERE header from the CSR Phase II corpus:
+
+NIST_1A
+   1024
+microphone -s21     Sennheiser HMD414
+recording_site -s4  SRI
+database_id -s8     wsj1
+database_version -s3 1.0
+recording_environment -s38 quiet office, door closed (room EJ186)
+speaker_session_number -s2 01
+session_utterance_number -s2 01
+prompt_id -s8 adapt.01
+utterance_id -s8 460a0101
+speaking_mode -s15 read-adaptation
+speaker_id -s3 460
+sample_count -i 82561
+sample_min -i -560
+sample_max -i 655
+sample_checksum -i 27320
+recording_date -s11 11-Nov-1992
+recording_time -s11 12:14:16.00
+channel_count -i 1
+sample_rate -i 16000
+sample_n_bytes -i 2
+sample_byte_format -s2 01
+sample_sig_bits -i 16
+sample_coding -s25 pcm,embedded-shorten-v1.1
+end_head
+
+
+
+IV.  File Pointer Structure
+
+The following is a description of the file pointer structure used by
+SPHERE to address opened files.
+
+The structure includes pointers to the parsed header, the waveform,
+and a structure used by SPHERE to track the status of various
+operations on the opened file.
+
+NOTE:   The SPHERE file pointer structure has been designed to be used
+	exclusively by the SPHERE library functions.  The programmer
+	should only include the structure in argument lists passed to
+	SPHERE function calls.  The programmer should NOT attempt to
+	manipulate this structure directly.
+
+
+    SPHERE Structure 'SP_FILE' 
+
+	typedef struct sphere_t SP_FILE;
+
+	struct sphere_t {
+       		struct header_t *header;
+                struct waveform_t *waveform;
+		struct spfile_status_t *status;
+	};
+
+        struct waveform_t {
+	        /* This structure is intended for use only by */
+		/* the SPHERE-library functions               */
+        };
+
+        struct spfile_status_t {
+	        /* This structure is intended for use only by */
+		/* the SPHERE-library functions               */
+	};
+
+	struct header_t {
+	        /* This structure is intended for use only by */
+		/* the SPHERE-library functions               */
+	};
+
+
+
+V.  Installation
+
+To install SPHERE on a Unix system, cd into the 'nist' directory of
+the SPHERE distribution hierarchy and type the command:
+
+	sh src/scripts/install
+
+The SPHERE libraries will be created and placed in the 'lib'
+directory, and the sample programs, described in the 'System-Level
+Utilities' section, will be compiled and placed in the 'bin'
+directory.  Installation on non-Unix systems without "make" and "sh"
+will probably require manual compilation.  The next release of SPHERE
+will support compilation of SPHERE on PC's.
+
+Included with this release is a functional interface test program
+which exercises various header manipulation and waveform
+compression/decompression functions.  To run the test, execute the
+command from the 'nist' directory in the distribution hierarchy:
+
+	tsphere -d lib/data
+
+The program requires the files in the 'lib/data' directory of the
+SPHERE distribution hierarchy.  If all is well, the program will run
+without errors.  If an error occurs, send a bug report as specified in
+the 'Bug Reports' section.
+
+
+
+VI.  Linking to the SPHERE library
+
+User programs are linked with two object code libraries:
+
+	libsp.a       - user level SPHERE functions
+			include compression code
+	libutil.a     - SPHERE-internal functions
+
+Both libraries must be 'linked' for successful use of SPHERE.
+During the installation process, the source code for these
+libraries is placed in the 'lib' directory of the distribution
+hierarchy.   
+
+User programs must include the following line in order to link
+with the SPHERE libraries:
+
+	#include <sp/sphere.h>
+
+This include file references all of the required library files.
+
+If the user's programs were written using a SPHERE version 2.0 beta 1
+to SPHERE version 2.1, the new syntax for sp_read_data and
+sp_write_data needs to be taken into consideration, (see Section II
+for function descriptions).  There are two ways to use the old code,
+either change the code to conform to the new syntax, or do not
+re-write the code, but set a pre-processor variable, "SPHERE_PRE_2_2".
+The pre-processor variable can be set in two locations, the choice
+of location depends on the choice of the programmer. 
+
+	1. The first location is in each source file which includes
+	   the "sp/sphere.h" file.  Before the include statement for
+	   "sp/sphere.h", put in the define statement
+	   "#define SPHERE_PRE_2_2".  This allows flexibility for each
+	   source code file.
+
+	2. The second location is in the "sp/sphere.h" file itself.
+	   Simply uncomment the define for "SPHERE_PRE_2_2" on line 36.
+	   Now every program which includes "sp/sphere.h" must use
+	   the old syntax of sp_read_data and sp_write_data.
+
+In either case, the include file will then properly handle all
+references to sp_read_data and sp_write_data.
+
+To compile a program, such as the command-line SPHERE utility,
+'w_decode', which is found in the 'src/prog' directory, execute
+the following command:
+
+	cc -L<INSTALL_DIR>/nist/lib -I<INSTALL_DIR>/nist/include \
+		-o w_decode w_decode.c -lsp -lutil -lm
+
+        where "INSTALL_DIR" is the directory where the SPHERE library
+        source code is located.
+
+If an unresolvable error occurs in compiling a program which uses the
+SPHERE library, you may send a bug report as specified in the 'Bug
+Reports' section and someone will assist you.
+
+
+
+VII.  Example Interface Library Usage
+
+Example 1: To load the embedded shorten-compressed 2-byte-per-sample
+PCM file, "file.wav", into memory in its uncompressed form.  This version
+uses the SPHERE 2.2 and later function call to sp_read_data.
+
+    SP_FILE *sp;
+    short *waveform;
+    SP_INTEGER sample_count;
+    int wave_byte_size, total_samples;
+
+    if ((sp = sp_open("file.wav","r")) == (SP_FILE *)0) {
+        fprintf(stderr,"Error: Unable to open SPHERE file %s\n","file.wav");
+        return(-1);
+    }
+
+    if (sp_h_get_field(sp,"sample_count",T_INTEGER,&sample_count) > 0)
+	return(-1);
+
+    if ((waveform=(short *)sp_data_alloc(-1)) == (short *)0){
+        fprintf(stderr,"Error: Unable to allocate waveform memory\n");
+        exit(-1);
+    }
+    
+    if (sp_read_data(waveform,total_samples,sp) != samples_count){
+        fprintf(stderr,"Error: reading speech waveform\n");
+	sp_return_status(stderr);
+        exit(-1);
+    }
+                     .
+                     .
+                     .
+
+    sp_data_free(sp,(void *)waveform);
+    sp_close(sp);  /* deallocates the header & buffers */
+
+
+Example 2: To load a single-channel ulaw file, "ulaw.wav", and convert
+it to a 2-byte-per-sample PCM format.  This 
+
+    #define SPHERE_PRE_2_2
+    #include <sp/sphere.h>
+    SP_FILE *sp=SPNULL;
+    short *waveform;
+    SP_INTEGER channel_count, sample_n_bytes, sample_count;
+    int wave_byte_size, total_samples, samp_read;
+
+    printf("-- Documentation Example 2\n");
+    if ((sp = sp_open(EX4_ULAW,"r")) == SPNULL) {
+        fprintf(stderr,"Error: Unable to open SPHERE file %s\n",EXAMPLE4_ULAW);
+	sp_print_return_status(stdout);
+	exit(-1);
+    }
+
+    if (sp_set_data_mode(sp, "SE-PCM-2") > 0){
+	sp_print_return_status(stdout);
+	sp_close(sp);
+	exit(-1);
+    }
+    if (sp_h_get_field(sp,"channel_count",T_INTEGER,&channel_count) > 0){
+	fprintf(stderr,"Error: Unable to get the '%s' field\n",
+		"channel_count");
+	sp_close(sp);
+	exit(-1);
+    }
+    /*  When the sd_set_data_mode() function is called to convert the file */
+    /*  from ulaw to pcm, the sample_n_bytes in the header is automatically*/
+    /*  changed to 2                                                       */
+    if (sp_h_get_field(sp,"sample_n_bytes",T_INTEGER,&sample_n_bytes) > 0){
+	fprintf(stderr,"Error: Unable to get the '%s' field\n",
+		"sample_n_bytes");
+	sp_close(sp);
+	exit(-1);
+    }
+    if (sp_h_get_field(sp,"sample_count",T_INTEGER,&sample_count) > 0){
+	fprintf(stderr,"Error: Unable to get the '%s' field\n","sample_count");
+	sp_close(sp);
+	exit(-1);
+    }
+
+    total_samples=sample_count * channel_count;
+    wave_byte_size=sample_n_bytes * total_samples;
+
+    printf("---- Example 2: Expected channel_count=1,      Actually=%d\n",
+		channel_count);
+    printf("---- Example 2: Expected sample_n_bytes=2,     Actually=%d\n",
+		sample_n_bytes);
+    printf("---- Example 2: Expected sample_count=16000,   Actually=%d\n",
+		sample_count);
+    printf("---- Example 2: Expected total_samples=16000,  Actually=%d\n",
+		total_samples);
+    printf("---- Example 2: Expected wave_byte_size=32000, Actually=%d\n",
+	wave_byte_size);
+
+    if ((waveform=(short *)malloc(wave_byte_size)) == (short *)0){
+        fprintf(stderr,"Error: Unable to allocate %d bytes for the waveform\n",
+                       wave_byte_size);
+	sp_close(sp);
+	exit(-1);
+    }
+    
+    if ((samp_read=sp_read_data(waveform,sample_n_bytes,total_samples,sp)) !=
+                     total_samples){
+        fprintf(stderr,"Error: Unable to read speech waveform, ");
+	fprintf(stderr,"%d samples read\n",samp_read);
+	sp_print_return_status(stderr);
+	sp_close(sp);
+	exit(-1);
+    }
+    sp_close(sp); /* deallocates the header & buffers */
+
+
+
+Example 3: To load the SPHERE file, "file.wav", update the contents
+of the header, and then change the header on disk.
+
+    SP_FILE *sp;
+    char *db_version, new_db_version[10];
+    SP_REAL stnr=55.4;
+
+    if ((sp = sp_open("file.wav","u")) == (SP_FILE *)0) {
+        fprintf(stderr,"Error: Unable to open SPHERE file %s\n","file.wav");
+        return(-1);
+    }
+
+    /******  Delete a header field  ******/
+    if (sp_h_delete_field(sp,"prompt_id") == 0){
+        fprintf(stderr,"Error: Unable to delete header field");
+	fprintf(stderr," 'prompt_id' from %s\n", "file.wav");
+        fprintf(stderr,"       Field does not exist\n");
+        break;
+    } else {
+        fprintf(stderr,"Error: Unable to delete header field");
+	fprintf(stderr," 'prompt_id' from %s\n", "file.wav");
+	sp_return_status(stderr);
+        return(-1);
+    }
+
+    /******  Add a header field  ******/
+    if (sp_h_set_real(sp, "signal-to-noise", &stnr) > 0){
+	fprintf(stderr,"Error: Unable to add the 'signal-to-noise' field ");
+        fprintf(stderr," %s\n","file.wav");
+	sp_return_status(stderr);
+        return(-1);
+    }
+
+    /******  Change a header field  ******/
+    if (sp_h_get_string(sp, "database_version", &db_version) > 0){
+	fprintf(stderr,"Error: Unable to get the 'database_version' field from %s\n",
+	               "file.wav");
+	sp_return_status(stderr);
+        return(-1);
+    }
+    sprintf(new_db_version,"%3.2f",atof(db_version)+1.0);
+    if (sp_h_set_string(sp, "database_version", new_db_version) > 0){
+	fprintf(stderr,"Error: Unable to set the 'database_version' field from %s\n",
+	               "file.wav");
+	sp_return_status(stderr);
+        return(-1);
+    }
+    free(db_version);
+
+
+             .
+             .
+             .
+
+    sp_close(sp);  /* deallocates the header & buffers */
+
+
+Example 4: Create a single-channel PCM file, "example4.wav", using
+the SPHERE libraries.  Note: This example has been implemented in the
+SPHERE library testing program 'tsphere.c'.
+
+    SP_FILE *spp;
+    short *wavbuf;
+    SP_INTEGER lint;
+    SP_INTEGER buf_nsamp = 16000;
+    SP_INTEGER nbyte = 2;
+    SP_INTEGER srate = 16000;
+    int stow, i;
+    int samps_written=0, size=64000, status;
+    char *name="example4.wav";
+    double factor;	
+
+    fprintf(spfp,"-- Documentation Example 4: File Creation example\n");
+    fprintf(spfp,"---- filename: %s\n",name);
+
+    if ((spp = sp_open(name, "w")) == SPNULL) {
+	fprintf(spfp,"Couldn't open NIST waveform file: %s\n", name);
+	sp_print_return_status(spfp); 	exit(-1);
+    }
+
+    fprintf(spfp,"---- Setting header fields\n");
+    lint = size;
+    if (sp_h_set_field(spp, "sample_count", T_INTEGER,(void *) &lint) != 0){
+	fprintf(spfp,"Error: unable to set sample_count field\n");
+	sp_print_return_status(spfp); 	exit(-1);
+    }
+    if (sp_h_set_field(spp, "sample_rate", T_INTEGER,(void *) &srate)){
+	fprintf(spfp,"Error: unable to set sample_rate field\n");
+	sp_print_return_status(spfp); 	exit(-1);
+    }
+    if (sp_h_set_field(spp, "sample_n_bytes", T_INTEGER, (void *) &nbyte)){
+	fprintf(spfp,"Error: unable to set sample_n_bytes field\n");
+	sp_print_return_status(spfp); 	exit(-1);
+    }
+    if (sp_h_set_field(spp, "sample_byte_format", T_STRING, (void *)"10")){
+	fprintf(spfp,"Error: unable to set sample_byte_format field\n");
+	sp_print_return_status(spfp); 	exit(-1);
+    }
+    if (sp_h_set_field(spp, "sample_coding", T_STRING, (void *)"pcm")){
+	fprintf(spfp,"Error: unable to set sample_coding field\n");
+	sp_print_return_status(spfp); 	exit(-1);
+    }
+    lint = 1;
+    if (sp_h_set_field(spp, "channel_count", T_INTEGER, (void *)&lint)){
+	fprintf(spfp,"Error: unable to set channel_count field\n");
+	sp_print_return_status(spfp); 	exit(-1);
+    }
+
+    if (sp_set_data_mode(spp,"SE-PCM-2") != 0){
+	fprintf(spfp,"Error: sp_set_data_mode failed\n");
+	sp_print_return_status(spfp);
+	exit(-1);
+    }
+
+    fprintf(spfp,"---- Allocating a waveform buffer\n");
+    if ((wavbuf=(short *)sp_data_alloc(spp,buf_nsamp)) == (short *)0){
+	fprintf(spfp,"Unable to malloc memory for wav buffer\n");
+	exit(-1);
+    }
+
+    factor = 1.0 / 100.0 ;
+    for (i=0; i<buf_nsamp; i++)
+	wavbuf[i] = (short)(1000 * cos( M_PI * 2.0 * i * factor));
+
+
+    fprintf(spfp,"---- Writing the waveform\n");
+    while (samps_written < size){
+	stow = (samps_written + buf_nsamp) < size ? buf_nsamp :
+	    size - samps_written;
+	status = sp_write_data((void *)wavbuf, sizeof(short), stow, spp);
+	if (status != stow){
+	    fprintf(spfp,"Couldn't write NIST waveform file: %s\n", name);
+	    sp_print_return_status(spfp);
+	    status = sp_error(spp);
+	    sp_print_return_status(spfp);
+	    sp_close(spp);
+	    (void) mtrf_free((char *)wavbuf);
+	    exit(-1);
+	}	
+	samps_written += stow;
+    }
+    fprintf(spfp,"---- Closing the file\n");
+    sp_data_free(spp,wavbuf);
+    if (sp_close(spp) != 0) {
+	fprintf(spfp,"SP_close failed\n");
+	sp_print_return_status(spfp);
+	exit(-1);
+    }
+    fprintf(spfp,"\n");
+
+
+VIII.  System-Level Utilities
+
+    The following are command-line utilities which have been created using
+    the SPHERE libraries.  These programs provide the ability to read,
+    write, and modify SPHERE headers and to compress/decompress
+    SPHERE-headered waveforms.
+
+    h_read [options] [file ...]
+        reads headers from the files listed on the command line; by default,
+	output is lines of tuples consisting of all fieldnames and values;
+	many options modify the program's behavior; see the manual page
+	"h_read.1";
+
+    h_add [-vh] inputfile outputfile
+        adds an empty header to the "raw" unheadered speech samples in
+	inputfile and stores the result in outputfile;
+
+    h_strip inputfile outputfile
+        strips the SPHERE header from inputfile, stores the remaining data in
+	outputfile; if outputfile is "-", writes the sample data to "stdout";
+
+    h_edit [-uf] [-D dir] -opchar fieldname=value -K fieldname ... file ...
+    h_edit [-uf] [-o outfile] -opchar fieldname=value -K fieldname ... file
+        edit specified header fields in the specified file(s).  In the first
+	form, it either modifies the file(s) in place or copies them to the
+	specified directory "dir".  In the second form, it either modifies
+	the file in place or copies it to the specified file "outfile".
+
+        The "-u" option causes the original files to be unlinked (deleted)
+	after modification.  The "-f" option forces the program to continue
+	after reporting any errors.
+
+        The "opchar" must be either "S","I", or "R" to denote string,
+	integer, or real field types respectively.  
+
+|	The opchar, "K", can be used to delete, or (K)ill, the field.
+	
+
+    h_delete [-uf] [-D dir] -F fieldname ... file ...
+    h_delete [-uf] [-o outfile] -F fieldname ... file
+        delete specified header fields in the specified file(s). In the first
+	form, it either modifies the file(s) in place or copies them to the
+	specified directory "dir".
+
+        In the second form, it either modifies the file in place or copies it
+	to the specified file "outfile".
+
+        The "-u" option causes the original files to be unlinked (deleted)
+	after modification.  The "-f" option forces the program to continue
+	after reporting any errors.
+
+    w_encode [-mvf] -t [ wavpack | shorten | ulaw ]  file_in file_out
+    w_encode [-mvi] -t [ wavpack | shorten | ulaw ]  file1 file2 . . . 
+        Encode the file as the type defined by the "-t" option.  The program
+	will use the header information to optimize the compression scheme.
+	The default operation is to encode the file specified in
+	"file_in" and place the contents into the file specified in
+	"file_out".  If the filenames specified in "file_in" or "file_out"
+	are "-", then stdin and stdout are used respectively.  In addition,
+	an error will be generated if "file_out" already exists. The "-f"
+	option causes an existing "file_out" to be overwritten.
+
+        The waveform I/O routines automatically convert the byte order of a
+	file to the host machine's natural format.  The "-m" option forces
+	the encoding to maintain the original byte order of "file_in".
+
+        The "-i" option forces w_encode to replace the input file with it's
+	encoded version.  When this "in place" option is used, the header is
+	modified to indicate the new encoding as well.  This option also
+	allows more than one input file to be specified on the command line.
+
+        The "-v" option gives verbose output.
+
+    w_decode [-vf] [ -o OUTTYPE ] file_in file_out
+    w_decode [-vi] [ -o OUTTYPE ] file1 file2 . . . 
+	Where:
+		OUTTYPE = short_10 | pcm_10 | 
+			  short_01 | pcm_01 |
+			  short_natural | pcm |
+			  ulaw 
+
+        Decode the input file into the output format specified by "-o".  If
+	the file is already encoded as specified, no action is taken.  The 
+	qualifiers "_10" and "_01" on the output types "short" and "pcm" 
+	stand for byte orders MSB/LSB and LSB/MSB respectively.  The output
+	types "pcm" and "short_natural" forces the byte order to be
+	converted if necessary to the local machine's natural byte order.
+
+        w_decode reads the header and sample data and performs conversions on
+	the output as necessary.  The default operation is to decode the file
+	specified in "file_in" and place the contents into the file specified
+	in "file_out".  If the filenames specified in "file_in" or "file_out"
+	are "-", then stdin and stdout are used respectively.  In addition,
+	an error will be generated if "file_out" already exists.  The "-f"
+	option causes an existing "file_out" to be overwritten.
+
+        The "-i" option forces w_encode to replace the input file with it's
+	encoded version.  When this "in place" option is used, the header is
+	modified to indicate the new encoding as well.  This option also
+	allows more than one input file to be specified on the command line.
+
+        The "-v" option gives verbose output.
+
+    w_edit [-vf] -o [-[t|p]F:T]] [-oOUT ] { filein | - } { fileout | - }
+
+        W_edit is a  waveform  editing  command  to  manipulate  and
+        extract  samples  the  waveform  data in a sphere file.  The
+        following functions can be performed on a file:
+
+
+        -tF:T   Set the range for output from time  F  (seconds)  to
+                time  T.  If F is missing, it defaults to the begin-
+                ing of the file, if T is missing, go to the end  of
+                the file.
+
+        -sF:T   Set the range for output from F samples  to  T  sam-
+                ples.  If F is missing, it defaults to the beginning
+                of the file, if T is missing, go to the end  of  the
+                file.
+
+        -cEXP   Extract only the samples from channels in EXP.   The
+                expression  will  also  add channels together if the
+                '+' is used.
+
+        -oOUT   Set the output format to the following formats:
+
+                ulaw
+                   output the samples as ulaw encoding.
+
+                pcm_01 | short_01
+                   output  the  samples  as   PCM   values   in   01
+                   sample_byte_format
+
+                pcm_10 | short_10
+                   output  the  samples  as   PCM   values   in   10
+                   sample_byte_format
+ 
+                pcm | short_natural
+                   output the samples as PCM  values  in  the  cpu's
+                   natural byte format
+
+        -v      option gives verbose output.
+
+	If the file size has been changed by either the '-t' or '-s' option,
+	the program adds (or modifies) three header fields to describe 
+	the origins of the data.  Two "REAL" type header fields, 'start_time'
+	and 'end_time', are added to store the begin and end times of the
+	new file in relation to the original file.  The third field, 
+	'data_origins', is added to identify original file.  The field
+	contains a comma separated list of fields from the original file
+	including, "database_id", "database_version" (if present), and
+	either "conversation_id", "utterance_id", or by default 'file1' from
+	the command line.
+
+     w_diff w_diff [-hvdws] [-cCSTR] file1 file2
+
+        W_diff is a waveform comparing program.  It can compare  the
+        SPHERE  headers of two files as well as the data portions of
+        two SPHERE files.  If the files do not  differ,  a  zero  is
+        returned  by  the  program,  otherwise  a  non-zero value is
+        returned.
+
+
+        -cCSTR  Convert the files by the 'CSTR' used in  a  call  to
+                sp_set_data_mode()
+
+        -d      Compare the data portions of the files byte by byte.
+  
+        -h      Print this help message.
+
+        -s      Compare the SPHERE headers of the files.
+
+        -w      Compare the waveforms of the two  files  after  con-
+                verting  them using the conversion string in 'CSTR'.
+                This is the default
+
+        -v      Set the verbosity level up by one, repeat the v  for
+                higher  levels.   A verbosity setting of 1 will pro-
+                vide a description of each tests outcome.
+
+
+IX.  Revision History
+
+Changes in Release 1.5:
+
+	1. New functions were added to the Sphere library:
+		sp_get_fieldnames()
+		sp_get_type()
+		sp_get_size()
+		sp_is_std()
+
+		(see the sphere library man page for descriptions)
+
+	2. h_read: command line options were changed
+
+	3. h_strip: writes to stdout if destination is "-"
+
+	4. man page for h_read
+
+
+Changes in Release 1.6:
+
+	1. Utilities that use h_modify.c are now much faster in
+		most cases when editing in-place -- if the size
+		of the header does not change, the new header is
+		copied over the old one.
+
+	2. Modified sp_write_header() to work when writing to
+		objects other than files. The function ftell()
+		was previously used directly on the output
+		stream to ascertain the number of bytes
+		in the header; now the header is written
+		to a temp file to ascertain the header size,
+		then to the output stream.
+
+	3. Modified to sp_open_header() and spx_read_header()
+		to no longer test if the input file is at
+		position 0. This will allow reading from
+		pipes, etc.
+
+	4. h_add: can read from stdin and/or write to stdout;
+		no longer puts any dummy fields in the header.
+
+	5. h_strip: can now read from stdin in addition to
+		writing to stdout.
+
+	6. Added h_header and raw2nist to the Sphere package.
+		They are Bourne shell scripts (/bin/sh) to,
+		respectively, print file headers and convert raw
+		data (no header) to Sphere format.
+
+	7. Manual pages for commands h_edit, h_delete, h_add,
+		h_strip and raw2nist
+
+Changes in Release 1.7:
+
+	1. h_read: added "-C field" option to check that the
+		specified field(s) is in the headers of all files
+		on the command line.
+
+Changes in Release 2.0 Beta:
+
+	1. SPHERE now has a new functional interface to waveform data
+		and headers.  The unified approach is detailed in the
+                "C-Language Programmer Interface Library" section.
+
+	2. Library libsp.a won't be removed if "make" is interrupted.
+
+	3. Using ANSI functions instead of BSD equivalents:
+		index() -> strchr()
+		rindex() -> strrchr()
+		bcopy() -> memcpy()
+		bzero() -> memset()
+
+	4. Include file changes:
+		<stdlib.h>: rand(), malloc(), realloc(), etc.
+		<string.h>: replaces <strings.h>
+		<errno.h>: errno
+		"getopt.h": getopt(), optind, optarg
+
+	5. The function getopt() is now expected to return -1
+		when there are no more command line arguments
+		to be parsed. Previously, it was expected  to
+		return EOF.  resetopt() clears the history state
+		of getopt() to enable re-using getopt().
+
+	6. New programs "w_encode" and "w_decode" allow sampled
+                waveform data to be compressed (w_encode) or
+                decompressed (w_decode) using either the "wavpack" or
+                "shorten" algorithms.
+
+	7. Waveform encoding functions added including a set
+                to allow data to be compressed using the "wavpack" or
+		"shorten" algorithms with input and/or output
+		data coming from memory or a file pointer, and
+		a set of analogous functions for decompression.
+	
+Changes in Release 2.0 Beta 2:
+
+	1. Corrected Known Software Bugs:
+		a. The function 'set_data_mode' should have been named 
+		   'sp_set_data_mode'.
+		b. Waveforms without checksums are now readable.
+		c. the installation process was updated.
+
+	2. Function Changes:
+		a. The function 'sp_return_status' was renamed to 
+		   'sp_print_return_status'.
+		b. A new function was written 'sp_get_return_status'
+		   which allows the programmer to retrieve the return
+		   status of the last function call.		   
+
+	3. Merged the libraries to simplify the linking procedures.
+		- see the Linking to the SPHERE library Section of the
+		  SPHERE Manual
+
+	4. Re-designation of required header fields.
+		- see the File Format Definition Section of the
+		  SPHERE Manual
+
+	5. Decompression will use a temporary file if the waveform size
+	   is larger the a specified byte size.  (Details of modifying the
+	   variable will be added to the installation script in a future
+	   release.)
+
+	6. Addition of 'shortpack' decompression to facilitate reading
+	   of the WSJ0 Write-Once CD-ROMS.
+
+
+Changes in Release 2.0 Beta 2.1:
+	
+	1. Corrected an unclosed file pointer problem which was activated
+	   when uncompressing files.
+
+
+Changes in Release 2.1:
+ 
+        1. Corrected an improperly defined variable in sphio.c.
+ 
+	2. Create the following new command line utilities:
+		tsphere
+
+
+Changes in Release 2.2:
+	
+	1. Added the ability to read and write ulaw data files.  This 
+	   includes the following new abilities:
+		a. Compute and verify a checksum for the one-byte 
+		   sample data using the same algorithm but using
+		   one byte data.
+		b. Add the capability to read/write ulaw data as ulaw
+		   or converted to 2-byte PCM data.  If the sample
+		   type changes, a new checksum is computed.
+
+	2. Added support for stereo (multi-channel) data files which
+	   includes the following abilities:
+		a. Added the ability to selectively read channels from a 
+		   multi-channel file.
+		b. Added the ability to add channels together for PCM
+	 	   and ulaw data.
+	   
+	3. Changed the syntax for the sp_read_data and sp_write_data
+	   functions.
+
+	4. Created the following new library functions:
+		sp_copy_header()
+		sp_data_free()
+		sp_data_alloc()
+
+	5. Create the following new command line utilities:
+		w_diff
+		w_edit
+
+	6. Added typedef's for the header values:
+	  	SP_STRING, SP_INTEGER, SP_REAL
+	
+	7. Added setjmp to allow compression packages to return error
+	   coded rather than aborting execution.	   
+
+	8. All library messages now print to stderr.
+	
+	9. Update to tsphere to test new capabilties.
+		a. Added Document Example 2 to the Tests.
+
+	10. Converted the source code to be ANSI C Compliant.
+
+	11. Added synonyms for the 'short', 'short_10' and 'short_01'
+	   options to w_decode. 
+
+	12. Made the default waveform format of a written file to
+	   be 2-byte pcm data.  This correct a problem with missing
+	   'sample_coding' fields in written files.
+
+	13. Added a new library function, correct_out_of_date_headers(),
+	   to handle out-of-date headers.  Currently, the function 
+	   correct the incorrect sample count header field of Switchboard
+	   files.
+
+	14. Added a new library function, sp_compute_char_checksum()
+	    to compute a 2-byte checksum one byte data.
+
+	15. Fixed a bug in h_read's verify option '-V' when used on
+	    multi-channel data.
+
+
+Changes in Release 2.3:
+
+	1. Repaired Non-ANSIism reported by Charles Hemphill.
+		a. Removed the use of bcopy in favor of memcpy (everywhere).
+		b. Added the include of "string.h" into
+		   'src/lib/util/string.c', 'src/bin/tsphere.c',
+		   'src/lib/sp/nat_bord.c', 'src/lib/util/hsgetopt.c',
+		   'src/lib/sp/dif_wavf.c'
+		c. Removed the use of index() in favor of strchr (everywhere).
+		   'src/lib/sp/sdatamod.c'
+		d. Added code to allow the use of 'ntohl()' and 'htons()'
+	 	   in the shortpack library.
+
+	2. Fixed a problem in the Shortpack library.  The function
+	   getw() was used instead of fob_getw().
+
+	3. Removed prototypes for function prototype in shorten.h.
+
+	4. Changed the function prototypes for strlen and strcmp in
+	   'hs_getops.c'.
+
+	5. Improved SPHERE's ability to be used with pipe-based software.
+	   This makes an exception for a missing 'sample_count' field
+	   if the SPHERE file was opened for stdin or stdout.
+
+	6. Corrected some errors in 'src/lib/dif_wav.c'.
+
+
+Changes in Release 2.4:
+
+	1. Corrected a return message for 'sp_set_data_mode()' error
+	   code 128.
+	
+	2. Added a fourth example to the documentation and to 'tsphere'.
+	   The example creates a SPHERE headered signal file.
+
+	3. Corrected an error in spoutput.c, proceedure sp_write_header().
+	   The temporary files where not being deleted properly. 
+
+	4. Repaired an error in sp_write_header() that was only activated
+	   on specific platforms.  The code used sprintf to create a
+	   fixed portion of the sphere header and on some machines, sprintf
+	   writes extra data after the end of the string.
+
+	5. Fixed problems in sp_write_data() and sp_read_data() where
+	   the functions were converting sample codings from PCM to ULAW
+	   and when summing ULAW channels together.
+
+	6. Fixed a conditional printing statement in h_modify.c in the
+	   src/bin/h_edit and src/bin/h_delete directories.
+
+
+Changes in Release 2.5:
+	
+	1: Added a function to retrieve the version information of the SPHERE
+	   library, "sp_get_version()".
+
+	2: Added the capability print the version number of the SPHERE
+	   library linked to during compilation.  In addition, all command-
+	   line programs print the SPHERE library version number when the
+	   '-v' option is used.  The function 'sp_print_return_status()' 
+	   prints the version number of the SPHERE library.
+
+	3: Changed the command line arguments for "h_add" to include "-v"
+	   and "-h".
+
+	4: Update the installation scripts to be compatible with the
+	   DEC Alpha and HP UNIX operating systems.
+
+	5: Changed the use of bcmp() to memcmp() in tsphere.h and dif_wavf.c
+	   to be ANSI compliant.
+
+	6: Solaris does not like '(char *)0' passed for a string to printf.
+	   Had to change the tsphere.c to use "" for an empty character 
+	   string.
+
+	7: Removed h_nlrm from the distribution.  This was a non-documented
+	   program with limited usefulness.
+
+	8: Added the ability to delete fields from the h_edit command line
+	   utility via the 'K' option.
+
+
+Changes in Release 2.6:
+
+	1: Added the functions 'sp_rewind()', 'sp_tell()', 'sp_seek()'
+	   and 'sp_compute_checksum()'.
+	
+	2: Added code to 'w_edit' to store the name of a source file
+	   when a derived file is created.  Also stores the start and end 
+	   times for a derived wrt. the original file.
+	   - Increased 'w_edit's' efficiency by using 'sp_seek()' rather that
+	     sequential reads.
+	   - Improved error condition handling in 'w_edit'.
+
+	3: Changed 'h_add' to use blocked I/O instead of character I/O to
+	   improve performance.
+
+	4: Created versions of 'ntohl' and 'htons' within SPHERE to support
+	   cross-platform portablity of 'shortpack'.
+
+	5: Added support for bit-reverse ulaw, a format frequently used
+	   in digital telephony hardware.
+
+	6: Updated support of Shorten within SPHERE to version 2.0.
+
+	7: Updated 'tsphere.c' to test additional functionality added
+	   in this release.
+
+	8: Added support for using the argument "SE-ORIG" in a call to
+	   sp_set_data_mode() when the file is compressed.  This allows
+	   access to the value of the 'sample_coding' of the SPHERE file
+	   as stored on disk  (before any automatic decompression is 
+	   used).
+
+	   If the file on disk is compressd, sp_set_data_mode() returns the
+	   warning stating "reads can not be performed on a compressed file".
+	   Fixes supplied by J.Thompson@swansea.ac.uk.
+
+	9. Added #ifndef's to all include files so as to never include a
+	   file's contents more than once.
+
+	10. Modified SPHERE library structure 
+	    sp->write_spifr->waveform->header_data_len to contain the
+	    SPHERE header size rather than the data size.
+
+	11. Added elements to the SP_FILE structure.  This will neccessitate
+	    all local C code which uses the structure to be re-compiled.
+
+	11. Corrected detection and recovery from failed 'shorten' 
+	    decompression execution.
+
+	12. Added a new option '-c' to 'h_edit' to compute a checksum and
+	    add the checksum to a specified sphere-headered file.
+
+	SPHERE 2.6 has been tested on the following platforms:
+		SUN OS 4.1.X using gcc
+		SUN Solaris OS 5.4
+		SGI IRIX Release 5.3
+		DEC OSF/1 V2.0 using cc and gcc
+
+
+Changes in 2.7 release:
+
+        Made to compile (and pass 'make check') under:
+             Mac OS X (10.6)
+             Linux (Ubuntu 11.04) 
+             Cygwin (1.7 under Windows XP)
+
+
+
+X.  Bug Reports
+
+Please send bug reports to 'sphere_poc@nist.gov'.
+
+
+
+XI.  Supported Hardware
+
+The original SPHERE functions and programs have been developed using ANSI
+compliant gcc version 2.4.4 on a Sun Microsystems workstation running
+SunOS 4.1.1 and 4.1.4.  To date, SPHERE 2.6 has been tested on
+SPARC-based UNIX systems, SGI Indigo workstations, and DEC Alpha
+workstations running ULTRIX using gcc and cc. 
+
+SPHERE 2.7 has been confirmed to compile and succesfuly complete the 'make check' 
+on Max OS X (10.6), Linux (Ubuntu 11.04), Cygwin (1.7 under Windows XP)
+
+
+
+XII.  Disclaimer
+
+These software tools have been developed for use within the ARPA
+speech research community.  Although care has been taken to ensure
+that this software is complete and error-free, it may not meet all
+users' requirements.  As such, it is made available to the speech
+research community at large, without endorsement, or express or
+implied warranties by the National Institute of Standards and
+Technology, the Department of Defense, or the United States
+Government.
+
+
+
+XIII.  Acknowledgements
+
+The SPHERE file format was designed by John Garofolo at NIST.
+
+The SPHERE-internal low-level functions were designed by John Garofolo
+and Stanley Janet and coded by Stanley Janet at NIST.
+
+The SPHERE 2.0 Programmer Interface Library was designed by John
+Garofolo and Jon Fiscus and coded by Jon Fiscus at NIST.
+
+The Shorten compression algorithm was developed and implemented by
+Tony Robinson at Cambridge University.
+
+The Wavpack compression algorithm was developed and implemented by
+Doug Paul at MIT Lincoln Laboratories.
+
+NIST would like to thank those people who provided constructive
+suggestions during the design of SPHERE 2.0. and NIST would like to
+particularly thank Tony Robinson for his help in integrating 'shorten'
+into the SPHERE interface.

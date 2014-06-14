@@ -1,0 +1,67 @@
+.\" @(#)h_delete.1 91/04/23 NIST;
+.\" I Image Recognition Group
+.\" Stan Janet
+.\"
+.TH H_DELETE 1 "21 May 91"
+
+.SH NAME
+.nf
+h_delete \- delete fields from Sphere-format speech file headers
+.fi
+
+.SH SYNOPSIS
+.nf
+\fBh_delete\fP [-uvf] -Ffield ... [-D dir] file ...
+\fBh_delete\fP [-uvf] -Field ... -o outfile file
+.fi
+
+.SH DESCRIPTION
+Fields can be deleted from Sphere file headers using the utility \fIh_delete\fP.
+In its first form, the specified file(s) is copied to a new directory
+the \fI-D dir\fP option is present; otherwise the file(s) is to be
+modified in-place. In its second form, the specified file is written
+to a new file if the \fI-o outfile\fP option is present; otherwise
+the file is to be modified in-place. The \fI-D\fP and \fI-o\fP options
+are not compatible.
+
+At least one file must be present on the command line, as well as
+at least one field.
+
+If a file is to be modified in-place and the changes do not
+alter the size of its header, the new header is written over the old
+one and the speech samples do not need to be copied.
+
+.SH OPTIONS
+.PD 0
+.TP
+.B \-u
+unlink the source files after creating new ones (requires -D or -o)
+.TP
+.B \-v
+turns on verbose output
+.TP
+.B \-f
+if deletes fail for some fields of a file, continue trying others
+.TP
+.B "\-F field"
+add \fIfield\fP to the list of fields to be deleted
+.TP
+.B "\-D directory"
+copy output files to new directory, retaining source file basenames
+.TP
+.B "\-o outfile"
+copy output file to specified destination file
+.PD
+
+.SH "EXIT STATUS"
+Zero if all deletes succeed on all files, non-zero otherwise
+
+.SH EXAMPLES
+.PD 0
+.TP
+.B "h_delete -Ffoo -Fbar f1.wav f2.wav"
+Remove fields "foo" and "bar" from files f1.wav and f2.wav.
+.PD
+
+.SH AUTHOR
+Stan Janet (stan@jaguar.ncsl.nist.gov)

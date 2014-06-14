@@ -1,0 +1,33 @@
+.\" @(#)h_add.1 91/05/20 NIST;
+.\" I Image Recognition Group
+.\" Stan Janet
+.\"
+.TH H_ADD 1 "20 May 91"
+
+.SH NAME
+.nf
+h_add \- add an empty NIST Sphere header to raw speech data
+.fi
+
+.SH SYNOPSIS
+.nf
+\fBh_add\fP [-vh] { infile | - } { outfile | - }
+.fi
+
+.SH DESCRIPTION
+\fBH_add\fP adds an empty NIST Sphere header to raw speech data.  The option
+-v shows the sphere library version.  The option -h shows the command usage.
+
+.SH EXAMPLES
+.PD 0
+.TP
+.B "h_add r.dat f.wav"
+adds an empty NIST Sphere header to the raw speech data in \fIr.dat\fP, storing
+the output in \fIf.wav\fP.
+.PD
+
+.SH SEE ALSO
+raw2nist(1)
+
+.SH AUTHOR
+Stan Janet (stan@jaguar.ncsl.nist.gov)

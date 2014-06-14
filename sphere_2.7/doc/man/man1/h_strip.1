@@ -1,0 +1,36 @@
+.\" @(#)h_strip.1 91/04/23 NIST;
+.\" I Image Recognition Group
+.\" Stan Janet
+.\"
+.TH H_STRIP 1 "21 May 91"
+
+.SH NAME
+.nf
+h_strip \- strip header Sphere-format speech file headers
+.fi
+
+.SH SYNOPSIS
+.nf
+\fBh_strip\fP { - | infile } { - | outfile }
+.fi
+
+.SH DESCRIPTION
+Sphere file headers can be removed using the utility \fIh_strip\fP.
+The Sphere file is read from the standard input if argument
+one is a dash, otherwise it is read from the file
+specified by argument one.
+The speech samples are written to the standard output if the
+second argument is a dash, otherwise they are written
+to the file specified by the argument two.
+
+.SH "EXIT STATUS"
+Zero if the header is removed successfully, non-zero otherwise
+
+.SH EXAMPLES
+.PD 0
+.TP
+.B "h_strip foo.wav foo.dat"
+.PD
+
+.SH AUTHOR
+Stan Janet (stan@jaguar.ncsl.nist.gov)

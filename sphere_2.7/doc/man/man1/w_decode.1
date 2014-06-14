@@ -1,0 +1,71 @@
+.\" @(#)w_decode.1 91/05/20 NIST;
+.\" NIST ASRG
+.\" Jonathan G. Fiscus
+.\"
+.TH W_DECODE 1 "9 Apr 93"
+
+.SH NAME
+.nf
+w_decode \- Decode the input file into the output format specified by "-o".
+.fi
+
+.SH SYNOPSIS
+.nf
+\fBw_decode\fP [-vf] [ -oOUT ]  file_in file_out
+\fBw_decode\fP [-vi] [ -oOUT ]  file1 file2 . . . 
+.fi
+
+.SH DESCRIPTION
+
+Decode the input file into the output format specified by "-o".  The output
+formats may be:
+
+.RS
+ulaw
+.RE
+.RS
+pcm_01 | short_01
+.RE
+.RS
+pcm_10 | short_10
+.RE
+.RS
+pcm | short_natural
+.RE
+
+If the file is already encoded as specified, no action is taken.
+
+\fBw_decode\fP reads the header and sample data and performs
+conversions on the output as necessary.  The default operation is to
+decode the file specified in "file_in" and place the contents into the
+file specified in "file_out".  If the filenames specified in "file_in"
+or "file_out" are "-", then stdin and stdout are used respectively.
+In addition, an error will be generated if "file_out" already exists.
+
+The "-o" option specifies the output format.  The qualifiers "_10" and
+"_01" on the output types "short" and "pcm" stand for byte orders
+MSB/LSB and LSB/MSB respectively.  The output types "pcm" and
+"short_natural" forces the byte order to be converted if necessary to
+the local machine's natural byte order.
+
+The "-f" option causes an existing "file_out" to be overwritten.
+
+The "-i" option forces w_encode to replace the input file with it's
+encoded version.  When this "in place" option is used, the header is
+modified to indicate the new encoding as well.  This option also
+allows more than one input file to be specified on the command line.
+
+The "-v" option gives verbose output.
+
+.SH EXAMPLES
+.PD 0
+.TP
+.B "w_decode -o short_01 comp.wav uncomp.wav"
+uncompress a SPHERE headered file into \fIuncomp.wav\fP.
+.PD
+
+.SH SEE ALSO
+w_encode(1)
+
+.SH AUTHOR
+Jon Fiscus (jon@jaguar.ncsl.nist.gov)

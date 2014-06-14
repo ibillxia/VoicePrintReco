@@ -1,0 +1,40 @@
+.\" @(#)raw2nist.1 91/05/20 NIST;
+.\" I Image Recognition Group
+.\" Stan Janet
+.\"
+.TH RAW2NIST 1 "20 May 91"
+
+.SH NAME
+.nf
+raw2nist.sh \- convert raw speech data to NIST Sphere format file
+.fi
+
+.SH SYNOPSIS
+.nf
+\fBraw2nist.sh\fP { infile | - } outfile
+.fi
+
+.SH DESCRIPTION
+\fBRaw2nist\fP converts raw speech data to NIST Sphere format by first running
+\fIh_add(1)\fP, passing its first two arguments.
+If any other arguments appear on the command line,
+they are assumed to be options to \fIh_edit\fP.
+Therefore that program is run with those arguments followed by \fIoutfile\fP.
+
+.SH EXAMPLES
+.PD 0
+.TP
+.B "raw2nist.sh r1 r1.wav -Sdatabase_id=xyz -Isample_count=16000"
+converts raw file \fIr1\fP to NIST Sphere file \fIr1.wav\fP, adding string
+field \fIdatabase_id\fP and integer field \fIsample_count\fP.
+.PD
+
+.SH SEE ALSO
+h_add(1), h_edit(3)
+
+.SH NOTES
+Should have been called \fIraw2sphere\fP,
+but that name is too long for DOS.
+
+.SH AUTHOR
+Stan Janet (stan@jaguar.ncsl.nist.gov)

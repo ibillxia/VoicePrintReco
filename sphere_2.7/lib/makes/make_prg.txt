@@ -1,0 +1,133 @@
+# **********************************************************
+# Project:		ARG General libraries
+# SubTree:		PROJECT_DIR_NAME/src/progs
+# Filename:		Makefile
+# Programmer:		J. Fiscus
+# Organization:		NIST/NCSL/DIV 670/Auto Rec. Group
+# Host System:		SUN 4 OS/4.1.1 (UNIX)
+# Date Created:		05/28/92
+# Revision history:
+#
+# Apr 04, 1994
+#	- fixes the make 'depend' and 'makefile' commands to not fail
+# 	  on the SGI
+#	- fixed the problem with an executable not being remade if it's
+#	  source file had changed.
+#
+#
+#
+# **********************************************************
+# Makefile for SRC Binary Directory
+# **********************************************************
+SHELL = /bin/sh
+
+PROJECT_ROOT	= PROJECT_DIR_NAME
+
+# **************************************************
+# INDIVIDUAL PROGRAM MODIFICATIONS SHOULD BEGIN HERE
+# **************************************************
+
+# Program to make (binary name)
+EXECUTABLE	= EXECUTABLE_NAMES
+# Supporting functions to make if any (They will be included in every compile)
+OBJ		= OBJECT_NAMES
+# List all .c source code files
+SRC		= SOURCE_NAMES
+# Enable converting the distribution to K&R C
+# KRC             = $(SRC:%.c=%.kr.c)
+
+# Subdirectorys to make 
+SUBS		= PROG_SUBDIR_NAMES
+# LIBS needed to compile the EXECUTABLE
+# (Full paths eg: /usr/local/image/lib/libimage.a)
+# use $(LIBDIR) defined above for path extensions if appropriate
+LIBS	= $(PROJECT_ROOT)/lib
+# How the libraries look when invoked on the compile line (eg: -limage)
+LLIBS	= LINK_LIBRARY_COMBINED -lm
+# Local additions for CFLAG options (eg: -g)
+LOCAL_CFLAGS	= -g LOCAL_CC_DEFINES
+
+# *******************************************************
+# THE REST OF THE MAKEFILE SHOULD NOT NEED TO BE MODIFIED
+#       (EXCEPT UPON APPROVAL OF PROJECT MANAGER)
+# *******************************************************
+
+BIN	= $(PROJECT_ROOT)/bin
+INCLUDE = $(PROJECT_ROOT)/include
+LIBDIR	= $(LIBS)
+
+CFLAGS	= -I$(INCLUDE) -L$(LIBDIR) $(LOCAL_CFLAGS)
+CC	= COMPILER_COMMAND
+INSTALL	= INSTALL_COMMAND
+
+MAKEFILE	= Makefile
+.PRECIOUS: $(MAKEFILE)
+
+#.c: $(BIN)/$@ stub.o
+#	$(CC) $@.c $(FUNCT_O) $(LLIBS) -o $@
+#
+#.c.o:
+#	cc -c $@.c
+
+it: $(EXECUTABLE) $(SUBS)
+	@-X=`pwd`; \
+        for i in $(SUBS) ; do \
+		echo '<<' $$i '>>'; \
+		cd $$X/$$i; make $@ PROJDIR=$(PROJDIR); \
+	done
+
+install: $(MAKEFILE) $(EXECUTABLE)
+	$(INSTALL) $(EXECUTABLE) $(BIN)
+	@-X=`pwd`; \
+        for i in $(SUBS) ; \
+		do echo '<<' $$i '>>'; \
+		cd $$X/$$i; make $@ PROJDIR=$(PROJDIR); \
+	done
+
+#$(EXECUTABLE): $$@.c
+.c:
+	$(CC) $(CFLAGS) $@.c $(OBJ) $(LLIBS) -o $@
+
+#build_kr: $(KRC)
+#	@-X=`pwd`; \
+#        for i in $(SUBS) ; \
+#		do echo '<<' $$i '>>'; \
+#		cd $$X/$$i; make $@ PROJDIR=$(PROJDIR); \
+#	done
+#
+#$(KRC): $@
+#	cp `echo $@ | sed 's/.kr//'` $@
+#	unprotoize -c "-I$(INCLUDE)" $@
+#	rm -f $@.save
+
+# if there are other separate programs to compile, add the name to
+#	SRC, OBJ, ... and the redo the last 3 lines EXPLICITLY
+#	for each program.
+#	Install will also have to be changed.
+
+clean :
+	rm -f *.o $(EXECUTABLE) core a.out *.BAK
+	@-X=`pwd`; \
+	for i in `echo $(SUBS)` ; do \
+		echo '<<' $$i '>>'; cd $$X/$$i; make $@ PROJDIR=$(PROJDIR); \
+	done;
+
+bare: clean
+	rm -f $(EXECUTABLE)
+	@-X=`pwd`; \
+	for i in `echo $(SUBS)` ; do \
+		echo '<<' $$i '>>'; cd $$X/$$i; make $@ PROJDIR=$(PROJDIR); \
+	done;
+
+depend $(MAKEFILE): $(SRC)
+	$(CC) $(CFLAGS) -M $(SRC) > dependlist
+	@sed -e '1,/^# DO NOT DELETE/!d' $(MAKEFILE) > $(MAKEFILE).tmp.$$$$; \
+	cat dependlist >> $(MAKEFILE).tmp.$$$$; \
+	cp $(MAKEFILE) $(MAKEFILE).BAK; \
+	mv $(MAKEFILE).tmp.$$$$ $(MAKEFILE); \
+	rm -f dependlist; \
+	X=`pwd`; \
+        if test -n "$(SUBS)" ; then for i in $(SUBS) ; do echo '<<' $$i '>>';\
+	cd $$X/$$i; make $@ PROJDIR=$(PROJDIR); done ; fi;
+
+# DO NOT DELETE THIS LINE - make depend uses it

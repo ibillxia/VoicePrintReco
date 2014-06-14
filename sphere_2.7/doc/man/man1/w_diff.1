@@ -1,0 +1,61 @@
+.\" @(#)w_diff.1 94/06/01 NIST;
+.\" NIST ASRG
+.\" Jonathan G. Fiscus
+.\"
+.TH W_DIFF 1 "9 Apr 93"
+
+.SH NAME
+.nf
+w_diff \-  Compare two NIST SPHERE header waveform files
+.fi
+
+.SH SYNOPSIS
+.nf
+\fBw_diff\fP w_diff [-hvdws] [-cCSTR] file1 file2
+.fi
+
+.SH DESCRIPTION
+
+W_diff is a waveform comparing program.  It can compare the SPHERE
+headers of two files as well as the data portions of two SPHERE files.
+If the files do not differ, a zero is returned by the program, otherwise
+a non-zero value is returned.
+
+.TP 8
+.B "\-cCSTR"
+Convert the files by the 'CSTR' used in a call to 
+sp_set_data_mode()
+.TP 8
+.B "\-d"
+Compare the data portions of the files byte by byte.
+.TP 8
+.B "\-h"
+Print this help message.
+.TP 8
+.B "\-s"
+Compare the SPHERE headers of the files.
+.TP 8
+.B "\-w"
+Compare the waveforms of the two files after converting them
+using the conversion string in 'CSTR'.  This is the default
+.TP 8
+.B "\-v"
+Set the verbosity level up by one, repeat the v for higher levels.  A
+verbosity setting of 1 will provide a description of each tests
+outcome.
+
+.SH EXAMPLES
+.PD 0
+.TP
+.B "w_diff -vdws lib/data/ex1_01.wav lib/data/ex1_01.wav"
+Compare a file to itself.  
+.TP
+.B "w_diff -vdws lib/data/ex1_01.wav lib/data/ex1_10.wav"
+Compare a files of differing byte order.  
+.PD
+
+.SH SEE ALSO
+sp_set_data_mode(3)
+
+.SH AUTHOR
+Jon Fiscus (jon@jaguar.ncsl.nist.gov)

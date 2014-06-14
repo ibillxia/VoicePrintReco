@@ -1,0 +1,251 @@
+.\" @(#)sphere.3 90/04/16 NIST;
+.\" I Speech Recognition Group
+.\" Stan Janet
+.\"
+.TH SPHERE_I 3  "24 Oct. 1990"
+
+.SH NAME
+sphere_i \- NIST \s+1SP\s-1eech \s+1HE\s-1ader \s+1RE\s-1sources internal functions
+
+.SH NOTE
+These functions pre-date SPHERE 2.0 and are now only used
+internally by the SPHERE libraries.  Applications developed under
+SPHERE 2.0 should call only the functions in the SPHERE C-Language
+Programmer Interface Library.
+
+.SH SYNOPSIS
+.nf
+#include <header.h>
+#include <sp.h>
+
+struct header_t *\fBsp_create_header\fP()
+
+struct header_t *\fBsp_open_header\fP(fp,parse_flag,error)
+FILE *fp;
+char **error;
+int parse_flag;
+
+int \fBsp_close_header\fP(h)
+struct header_t *h;
+
+int \fBsp_clear_fields\fP(h)
+struct header_t *h;
+
+int \fBsp_get_nfields\fP(h)
+struct header_t *h;
+
+int \fBsp_get_field\fP(h,name,type,size)
+struct header_t *h;
+char *name;
+int *type, *size;
+
+int \fBsp_get_data\fP(h,name,buf,len)
+struct header_t *h;
+char *name, *buf;
+int *len;
+
+int \fBsp_add_field\fP(h,name,type,p)
+struct header_t *h;
+int type;
+char *name, *p;
+
+int \fBsp_delete_field\fP(h,name)
+struct header_t *h;
+char *name;
+
+int \fBsp_change_field\fP(h,name,type,p)
+struct header_t *h;
+char *name, *p;
+int type;
+
+int \fBsp_write_header\fP(fp,h,hbytes,databytes)
+FILE *fp;
+struct header_t *h;
+long *hbytes, *databytes;
+
+int \fBsp_format_lines\fP(h,fp)
+struct header_t *h;
+FILE *fp;
+
+int \fBsp_print_lines\fP(h,fp)
+FILE *fp;
+struct header_t *h;
+
+.fi
+
+.SH DESCRIPTION
+The \fBSPHERE\fP function library supports disk I/O and in-memory
+creation and modification of NIST speech file headers.
+This software has been developed at The National Institute of Standards
+and Technology for use within the DARPA speech research
+community.  Although care has been taken to ensure that all software is
+complete and bug-free, it is made available to the speech research
+community without endorsement or express or implied warranties.  
+
+The abstract data type that programs use is a pointer to a \fIheader_t\fP
+structure. This pointer is a handle used by the functions that operate
+on the header, much like a FILE pointer is used as a handle by functions
+in the C \fIstdio\fP library that operate on files.
+All arguments \fIh\fP in this document refer to a header structure
+that has been associated with a header pointer.
+
+There are two ways to return a program may obtain a header pointer.
+The first method is to call
+.B sp_create_header
+which returns a pointer to an empty header.
+The other is to call
+.B sp_open_header
+which reads the fields from a NIST SPHERE-format speech file
+into a header data structure.
+Argument
+.I fp
+must be a file pointer associated with a NIST SPHERE-format
+speech file that has been opened for reading.
+On success, the file pointer is positioned at the end of
+the header, which is the start of the speech samples.
+On failure, the argument
+.I error
+will point to a string describing the cause
+of the failure.
+If the
+.I parse_flag
+argument is non-zero, the header is parsed and all
+fields in the header file are associated with the header
+structure. If the argument is zero, the header is not parsed
+and no fields are associated with the structure.
+
+The memory for header structures is obtained dynamically via malloc(3).
+Therefore, the function
+.B sp_close_header
+should be used to deallocate the memory header structure
+associated with a header pointer. This function
+uses free(3) to deallocate all memory associated with
+the fields in the header structure, then the space for
+the header structure itself.
+
+The function
+.B sp_get_nfields
+returns the number of fields stored in the
+header structure associated with a header pointer.
+The function
+.B sp_clear_fields
+deletes all fields from the header structure associated
+with a header pointer.
+
+Programs may determine the type and size in bytes
+of a header field via \fBsp_get_field\fP. Valid types
+are T_INTEGER, T_REAL, and T_STRING, which are defined in header.h.
+The sizes of integer and double fields are
+sizeof(long) and sizeof(double), respectively.
+The sizes of strings vary and do not include
+null-terminator bytes, since all byte values including
+zero are allowed in a string
+by the NIST header grammar.
+The function
+.B sp_get_data
+copies the value of the field specified by
+\fIname\fP into buffer \fIbuf\fP.
+No more than
+.I len
+bytes are copied;
+.I len
+must be positive.
+On return, the value of len will be the number of bytes actually
+copied into the buffer.
+
+A field
+.I name
+may be added to a header by calling
+.B sp_add_field
+with a
+.I type
+field of either T_INTEGER, T_REAL, or T_STRING.
+Argument
+.I p
+should be a pointer to a long, double, or character, respectively,
+and cast, if necessary, to a character pointer.
+The specified field must not already exist in the header.
+A field
+.I name
+may be deleted from a header via \fBsp_delete_field\fP.
+The function fails if the specified field does not exist
+in the header.
+An existing field's type and/or value may changed
+by calling
+.B sp_change_field
+with arguments
+.I type
+and
+.I p
+as in \fBsp_add_field\fP.
+ 
+A header structure can be written to disk in NIST SPHERE format
+via \fBsp_write_header\fP.
+Argument \fBfp\fP must be a file pointer associated with
+a file that has been opened for writing.
+The format is:
+.nf
+.in +.5i
+.sp
+fieldname -typespec fieldvalue
+.sp
+.in -.5i
+.fi
+where
+.I typespec
+is \fIi\fP, \fIr\fP, or \fIs\fPstringlength.
+On success,
+.I hbytes
+and
+.I databytes
+contain the total number of bytes written to disk
+including padding and not including padding, respectively.
+On failure, the variables are undefined.
+The function
+.B sp_format_lines
+writes the fields to stream
+.I fp
+one-per-line.
+The function
+.B sp_print_lines
+writes a header
+.I h
+to stream
+.I fp
+in a more-readable format:
+.nf
+.in +.5i
+.sp
+fieldnumber: fieldtype fieldname "fieldvalue"
+.in -.5i`
+.sp
+.fi
+where fieldtype is either
+\fIs\fP, \fIi\fP, or \fIr\fP.
+Field numbering begins at zero.
+
+.SH RETURN VALUES
+All functions in the library that return pointers return NULL
+pointers on failure/error.
+All numeric functions return negative values on failure/error.
+
+.SH FILES
+.PD 0
+.TP 20
+.B libsp.a
+Sphere library
+.TP
+.B header.h
+basic type definitions and constants
+.TP
+.B sp.h
+Sphere function type definitions
+.PD
+
+.SH NOTES
+Comments in speech headers are ignored when encountered
+on input. No mechanism is provided yet
+for writing comments into headers.
+
+.SH AUTHOR
+Stan Janet (stan@jaguar.ncsl.nist.gov)

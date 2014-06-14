@@ -1,0 +1,19 @@
+# **********************************************************
+# Project:		ARG General libraries
+# SubTree:		PROJECT_DIR_NAME/src
+# Filename:		Makefile
+# Programmer:		J. Fiscus
+# Organization:		NIST/NCSL/DIV 670/Auto Rec. Group
+# Host System:		SUN 4 OS/4.1.1 (UNIX)
+# Date Created:		05/28/92
+#
+# **********************************************************
+# Makefile for SRC Directory
+# **********************************************************
+SUBS = SRC_DIR_NAMES
+SHELL = /bin/sh
+
+it install depend clean bare:
+	@-X=`pwd`; \
+	for i in $(SUBS); \
+	do echo '<<' $$i '>>'; cd $$X/$$i; make $@ PROJDIR=$(PROJDIR); done

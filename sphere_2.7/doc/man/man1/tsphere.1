@@ -1,0 +1,48 @@
+.\" @(#)tsphere.1 91/05/20 NIST;
+.\" I Image Recognition Group
+.\" Stan Janet
+.\"
+.TH TSHPERE 1 "20 May 91"
+
+.SH NAME
+.nf
+tsphere \- test the SPHERE speech waveform utilities
+.fi
+
+.SH SYNOPSIS
+.nf
+\fBtsphere\fP [-vmeMhw] [-l n] -d data_dir
+.fi
+
+.SH DESCRIPTION
+
+\fBtsphere\fP performs a series of tests using the example SPHERE
+headered waveform files found in the 'lib/data' directory of the
+SPHERE distribution directory structure.  If the program the program
+fails for any reason, contact Jon Fiscus immediately.
+
+The -h option prints a usage statement.
+
+The -v option turns on the verbose mode.
+
+The -m option allows memory allocation without actually freeing any
+allocated memory.
+
+The -M option does the same as the '-m' option, but the memory is
+deallocated.
+
+The -l option makes the program loop n times
+
+The -e turns on the debugging statements for the error utility.
+
+The -w option will cause the test case to exit with error on any warning.
+
+.SH EXAMPLES
+.PD 0
+.TP
+.B "tsphere -d lib/data"
+.PD
+
+
+.SH AUTHOR
+Jon Fiscus (jon@jaguar.ncsl.nist.gov)

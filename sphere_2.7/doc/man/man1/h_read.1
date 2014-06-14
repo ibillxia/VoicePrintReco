@@ -1,0 +1,121 @@
+.\" @(#)h_read.1 90/04/16 NIST;
+.\" I Speech Recognition Group
+.\" Stan Janet
+.\"
+.TH H_READ 1  "24 Oct. 1990"
+
+.SH NAME
+h_read \- scan NIST SPHERE-format '.wav' file
+
+.SH SYNOPSIS
+.nf
+h_read [options] [file ...]
+.fi
+
+.SH DESCRIPTION
+The command
+.B h_read
+reads the headers of the '.wav' files specified on the command line and,
+by default, prints the names and values of all
+header fields one-per-line.
+Various options alter the behavior of the program.
+
+.SH OPTIONS
+.TP
+.B \-f h
+print filename (between ":::::" strings) before processing every file
+.TP
+.B \-f a
+print filename with every field
+.TP
+.B \-n
+suppress printing of fieldnames
+.TP
+.B \-t
+print field types (i, r, or s) with field values
+.TP
+.B \-d
+suppress printing of field values
+.TP
+.B \-N f
+number fields printed on per-file basis
+.TP
+.B \-N t
+number fields printed on per-run basis
+.TP
+.B \-C fieldname
+check that the specified field is in all headers
+.TP
+.B \-S
+restrict field output to standard NIST fields
+.TP
+.B \-F fieldname
+restrict field output to explicitly-named fields
+.TP
+.B \-c
+complement fieldname selection test (for output)
+.TP
+.B \-s string
+delimit components of field lines by
+.I string
+[one blank]
+.TP
+.B \-a
+check for odd characters in string fields
+(by default, odd characters are non-printable characters)
+.TP
+.B -o string
+characters in
+.I string
+are added to the list of characters to be considered not odd
+.TP
+.B \-V
+verify that the number of bytes in each file is correct
+based on the fields
+.I sample_count
+and
+.I sample_n_bytes
+.TP
+.B \-e n
+verify that the number of fields in each file is
+.I n
+.TP
+.B \-B n
+separate output for different files by
+.I n
+blank lines [0]
+.TP
+.B \-T string
+restrict output to fields of type integer, real, and/or string
+as specified by characters i, r, and s in
+.I string
+[irs]
+.TP
+.B \-v
+select verbose output
+.TP
+.B \-q
+print field values between quotes
+.TP
+.B \-0
+number fields starting at 0 [1]
+
+Options
+.B \-F
+and
+.B \-S
+cannot both be specified.
+No more than one
+.B \-o
+option may be specified.
+
+.SH "EXIT STATUS"
+Exit status is 0 if no errors
+occur in processing the entire set of files.
+Otherwise, the exit status is non-zero.
+
+.SH "SEE ALSO"
+isalnum(3), isprint(3)
+
+.SH AUTHOR
+Stan Janet (stan@jaguar.ncsl.nist.gov)
